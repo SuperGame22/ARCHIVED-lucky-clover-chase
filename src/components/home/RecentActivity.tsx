@@ -15,7 +15,7 @@ const activities = [
   {
     type: "gold",
     title: "Gold Machine",
-    subtitle: "Collected flakes",
+    subtitle: "Gold Flakes Produced",
     amount: "+$0.42",
     time: "4h ago",
     icon: GoldCoinIcon,
