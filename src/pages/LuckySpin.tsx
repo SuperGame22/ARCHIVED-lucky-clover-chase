@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Button } from "@/components/ui/button";
 import { CloverIcon } from "@/components/icons/CloverIcon";
+import { WeeklyRaffle } from "@/components/lucky/WeeklyRaffle";
 import { Gift, Clock, MapPin, Ticket, Star, Sparkles } from "lucide-react";
 
 const prizes = [
@@ -21,6 +22,7 @@ const LuckySpin = () => {
   const [rotation, setRotation] = useState(0);
   const [result, setResult] = useState<typeof prizes[0] | null>(null);
   const [spinsRemaining, setSpinsRemaining] = useState(1);
+  const weeklyCloverCount = 12; // Mock weekly clover count
 
   const spin = () => {
     if (spinning || spinsRemaining <= 0) return;
@@ -193,6 +195,9 @@ const LuckySpin = () => {
               : "Purchase more spins to continue"}
           </p>
         </motion.div>
+
+        {/* Weekly Raffle */}
+        <WeeklyRaffle weeklyCloverCount={weeklyCloverCount} />
 
         {/* Recent Wins */}
         <motion.div
