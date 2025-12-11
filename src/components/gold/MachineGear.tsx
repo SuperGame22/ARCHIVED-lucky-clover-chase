@@ -92,12 +92,12 @@ export const MachineGear = ({
         fill="hsl(var(--background))"
       />
       
-      {/* Gradient definition */}
+      {/* Gradient definition - GOLD */}
       <defs>
         <linearGradient id="gearGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="hsl(35 70% 45%)" />
-          <stop offset="50%" stopColor="hsl(30 60% 35%)" />
-          <stop offset="100%" stopColor="hsl(25 50% 30%)" />
+          <stop offset="0%" stopColor="hsl(48 96% 60%)" />
+          <stop offset="50%" stopColor="hsl(43 90% 50%)" />
+          <stop offset="100%" stopColor="hsl(38 85% 45%)" />
         </linearGradient>
       </defs>
     </motion.svg>
