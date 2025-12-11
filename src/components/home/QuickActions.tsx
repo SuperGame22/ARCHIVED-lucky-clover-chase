@@ -5,6 +5,12 @@ import { cn } from "@/lib/utils";
 
 const actions = [
   {
+    icon: Trophy,
+    label: "Scorecard",
+    path: "/scorecard",
+    color: "bg-primary/10 text-primary hover:bg-primary/20",
+  },
+  {
     icon: Target,
     label: "Rangefinder",
     path: "/rangefinder",
@@ -14,19 +20,13 @@ const actions = [
     icon: Gift,
     label: "Lucky Spin",
     path: "/spin",
-    color: "bg-accent/10 text-accent hover:bg-accent/20",
+    color: "bg-primary/10 text-primary hover:bg-primary/20",
     badge: "$7",
   },
   {
     icon: ShoppingBag,
     label: "Shop",
     path: "/shop",
-    color: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-  },
-  {
-    icon: Trophy,
-    label: "Scorecard",
-    path: "/scorecard",
     color: "bg-primary/10 text-primary hover:bg-primary/20",
   },
 ];
