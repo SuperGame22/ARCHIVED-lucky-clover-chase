@@ -11,16 +11,15 @@ export const CloverIcon = ({ className, animate = false }: CloverIconProps) => (
     fill="currentColor"
     className={cn(animate && "animate-float", className)}
   >
-    {/* Four heart-shaped leaves */}
-    {/* Top leaf */}
-    <path d="M50 12 C40 12 32 20 32 30 C32 40 50 50 50 50 C50 50 68 40 68 30 C68 20 60 12 50 12" />
-    {/* Right leaf */}
-    <path d="M88 50 C88 40 80 32 70 32 C60 32 50 50 50 50 C50 50 60 68 70 68 C80 68 88 60 88 50" />
-    {/* Bottom leaf */}
-    <path d="M50 88 C60 88 68 80 68 70 C68 60 50 50 50 50 C50 50 32 60 32 70 C32 80 40 88 50 88" />
-    {/* Left leaf */}
-    <path d="M12 50 C12 60 20 68 30 68 C40 68 50 50 50 50 C50 50 40 32 30 32 C20 32 12 40 12 50" />
+    {/* Top leaf - heart shape */}
+    <path d="M50 8c-6 0-11 4-13 10-2-6-7-10-13-10-8 0-14 6-14 14 0 12 27 28 27 28s27-16 27-28c0-8-6-14-14-14z" transform="rotate(0 50 50) translate(13 0)" />
+    {/* Right leaf - heart shape */}
+    <path d="M50 8c-6 0-11 4-13 10-2-6-7-10-13-10-8 0-14 6-14 14 0 12 27 28 27 28s27-16 27-28c0-8-6-14-14-14z" transform="rotate(90 50 50) translate(13 0)" />
+    {/* Bottom leaf - heart shape */}
+    <path d="M50 8c-6 0-11 4-13 10-2-6-7-10-13-10-8 0-14 6-14 14 0 12 27 28 27 28s27-16 27-28c0-8-6-14-14-14z" transform="rotate(180 50 50) translate(13 0)" />
+    {/* Left leaf - heart shape */}
+    <path d="M50 8c-6 0-11 4-13 10-2-6-7-10-13-10-8 0-14 6-14 14 0 12 27 28 27 28s27-16 27-28c0-8-6-14-14-14z" transform="rotate(270 50 50) translate(13 0)" />
     {/* Stem */}
-    <path d="M46 50 L44 92 Q44 96 50 96 Q56 96 56 92 L54 50 Z" />
+    <path d="M47 55v35c0 2 1.5 3 3 3s3-1 3-3V55h-6z" />
   </svg>
 );
