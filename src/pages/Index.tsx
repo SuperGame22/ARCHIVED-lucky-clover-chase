@@ -22,13 +22,19 @@ const Index = () => {
           </div>
         </motion.div>
 
-        {/* Clover Balance Card */}
-        <CloverBalance balance={47} todayEarned={3} />
+        {/* Clover Balance Card with Jackpot/Tee Times previews */}
+        <CloverBalance 
+          balance={47} 
+          todayEarned={3} 
+          jackpotAmount={2500}
+          teeTimesCount={3}
+          unreadMessages={2}
+        />
 
-        {/* Leprechaun Alert (conditional) */}
+        {/* Leprechaun Alert - moved up to second position */}
         <LeprechaunAlert />
 
-        {/* Quick Actions Grid */}
+        {/* Quick Actions Grid - reordered with Scorecard first, Shop last */}
         <QuickActions />
 
         {/* Gold Machine Preview */}
