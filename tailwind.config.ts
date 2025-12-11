@@ -113,7 +113,7 @@ export default {
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "celtic-knot": `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2300A86B' stroke-opacity='0.08' stroke-width='1.2'%3E%3Cpath d='M30 12c-4 0-7 3-7 7 0 4 7 11 7 11s7-7 7-11c0-4-3-7-7-7z'/%3E%3Cpath d='M41 30c0-4-3-7-7-7-4 0-11 7-11 7s7 7 11 7c4 0 7-3 7-7z'/%3E%3Cpath d='M30 48c4 0 7-3 7-7 0-4-7-11-7-11s-7 7-7 11c0 4 3 7 7 7z'/%3E%3Cpath d='M19 30c0 4 3 7 7 7 4 0 11-7 11-7s-7-7-11-7c-4 0-7 3-7 7z'/%3E%3Cpath d='M28 38l2 12 2-12'/%3E%3C/g%3E%3C/svg%3E")`,
+        "celtic-knot": `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2300A86B' stroke-opacity='0.08' stroke-width='2'%3E%3Cpath d='M50 8c-6 0-11 4-13 10-2-6-7-10-13-10-8 0-14 6-14 14 0 12 27 28 27 28s27-16 27-28c0-8-6-14-14-14z' transform='rotate(0 50 50) translate(13 0)'/%3E%3Cpath d='M50 8c-6 0-11 4-13 10-2-6-7-10-13-10-8 0-14 6-14 14 0 12 27 28 27 28s27-16 27-28c0-8-6-14-14-14z' transform='rotate(90 50 50) translate(13 0)'/%3E%3Cpath d='M50 8c-6 0-11 4-13 10-2-6-7-10-13-10-8 0-14 6-14 14 0 12 27 28 27 28s27-16 27-28c0-8-6-14-14-14z' transform='rotate(180 50 50) translate(13 0)'/%3E%3Cpath d='M50 8c-6 0-11 4-13 10-2-6-7-10-13-10-8 0-14 6-14 14 0 12 27 28 27 28s27-16 27-28c0-8-6-14-14-14z' transform='rotate(270 50 50) translate(13 0)'/%3E%3Cpath d='M47 55v35c0 2 1.5 3 3 3s3-1 3-3V55h-6z'/%3E%3C/g%3E%3C/svg%3E")`,
       },
     },
   },
