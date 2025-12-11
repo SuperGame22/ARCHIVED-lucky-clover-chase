@@ -75,18 +75,20 @@ export const CloverBalance = ({
           
           {/* Messages preview - only if there's space and unread messages */}
           {unreadMessages > 0 && (
-            <motion.div 
-              whileHover={{ scale: 1.02 }}
-              className="bg-secondary border border-border rounded-lg px-3 py-1.5 transition-colors hover:bg-secondary/80 cursor-pointer"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <MessageCircle className="w-3.5 h-3.5 text-muted-foreground" />
-                  <span className="text-xs text-foreground">Messages</span>
+            <Link to="/chat" className="block">
+              <motion.div 
+                whileHover={{ scale: 1.02 }}
+                className="bg-secondary border border-border rounded-lg px-3 py-1.5 transition-colors hover:bg-secondary/80 cursor-pointer"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    <MessageCircle className="w-3.5 h-3.5 text-muted-foreground" />
+                    <span className="text-xs text-foreground">Messages</span>
+                  </div>
+                  <span className="text-sm font-bold text-foreground">{unreadMessages}</span>
                 </div>
-                <span className="text-sm font-bold text-foreground">{unreadMessages}</span>
-              </div>
-            </motion.div>
+              </motion.div>
+            </Link>
           )}
         </div>
       </div>
