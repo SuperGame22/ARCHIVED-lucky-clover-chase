@@ -18,7 +18,7 @@ const Index = () => {
         >
           <div>
             <h1 className="text-2xl font-display font-bold">Welcome back!</h1>
-            <p className="text-muted-foreground text-sm">Practice. Play. Buy. Get Lucky. 🍀</p>
+            <p className="text-muted-foreground text-sm">Shop. Swing. Win. 🍀</p>
           </div>
         </motion.div>
 
@@ -31,11 +31,11 @@ const Index = () => {
           unreadMessages={2}
         />
 
-        {/* Leprechaun Alert - moved up to second position */}
-        <LeprechaunAlert />
-
-        {/* Quick Actions Grid - reordered with Scorecard first, Shop last */}
+        {/* Quick Actions Grid - moved above leprechaun alert */}
         <QuickActions />
+
+        {/* Leprechaun Alert */}
+        <LeprechaunAlert />
 
         {/* Gold Machine Preview */}
         <GoldMachinePreview potValue={4.72} generationRate={12} health={78} />

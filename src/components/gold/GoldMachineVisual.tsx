@@ -31,33 +31,39 @@ export const GoldMachineVisual = ({ machineLevel, isCollecting }: GoldMachineVis
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         className="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-40"
       >
-        {/* Hopper/Funnel at top */}
+        {/* Hopper/Funnel at top - GOLD */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2">
           {/* Hopper rim */}
-          <div className="w-24 h-5 bg-gradient-to-b from-amber-700 to-amber-900 rounded-t-lg border-2 border-amber-600 relative overflow-hidden">
+          <div className="w-24 h-5 bg-gradient-to-b from-yellow-400 to-amber-500 rounded-t-lg border-2 border-yellow-300 relative overflow-hidden">
             {/* Clover emblem on hopper */}
             <motion.div 
               animate={{ rotate: [0, 5, -5, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
               className="absolute inset-0 flex items-center justify-center"
             >
-              <CloverIcon className="w-4 h-4 text-primary/60" />
+              <CloverIcon className="w-4 h-4 text-primary/80" />
             </motion.div>
+            {/* Shimmer */}
+            <motion.div
+              animate={{ x: [-30, 30] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-0 w-4 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12"
+            />
           </div>
           
-          {/* Funnel body */}
+          {/* Funnel body - GOLD */}
           <div className="relative mx-auto">
             <svg width="96" height="24" viewBox="0 0 96 24" className="block">
               <defs>
                 <linearGradient id="funnelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="hsl(35 70% 35%)" />
-                  <stop offset="100%" stopColor="hsl(30 60% 25%)" />
+                  <stop offset="0%" stopColor="hsl(43 96% 56%)" />
+                  <stop offset="100%" stopColor="hsl(35 90% 45%)" />
                 </linearGradient>
               </defs>
               <path 
                 d="M8 0 L88 0 L68 24 L28 24 Z" 
                 fill="url(#funnelGrad)"
-                stroke="hsl(35 80% 45%)"
+                stroke="hsl(48 96% 60%)"
                 strokeWidth="1"
               />
               {/* Magical green glow inside funnel */}
@@ -72,22 +78,22 @@ export const GoldMachineVisual = ({ machineLevel, isCollecting }: GoldMachineVis
           </div>
         </div>
 
-        {/* Main processing chamber */}
-        <div className="absolute top-[52px] left-1/2 -translate-x-1/2 w-40 h-24 bg-gradient-to-br from-zinc-600 via-zinc-700 to-zinc-800 rounded-xl border-2 border-zinc-500 shadow-2xl overflow-hidden">
+        {/* Main processing chamber - GOLD */}
+        <div className="absolute top-[52px] left-1/2 -translate-x-1/2 w-40 h-24 bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 rounded-xl border-2 border-yellow-400 shadow-2xl overflow-hidden animate-pulse-glow">
           {/* Glass viewing window */}
-          <div className="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-10 bg-gradient-to-b from-zinc-900/80 to-zinc-900/60 rounded-lg border border-zinc-400/30 overflow-hidden">
+          <div className="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-10 bg-gradient-to-b from-amber-900/80 to-amber-800/60 rounded-lg border border-yellow-300/50 overflow-hidden">
             {/* Swirling gold inside */}
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
               className="absolute inset-0"
             >
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-accent/60 rounded-full blur-sm" />
-              <div className="absolute top-1 left-2 w-2 h-2 bg-yellow-400/50 rounded-full blur-[1px]" />
-              <div className="absolute bottom-1 right-2 w-2 h-2 bg-amber-500/50 rounded-full blur-[1px]" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-yellow-300/80 rounded-full blur-sm" />
+              <div className="absolute top-1 left-2 w-2 h-2 bg-yellow-200/70 rounded-full blur-[1px]" />
+              <div className="absolute bottom-1 right-2 w-2 h-2 bg-amber-300/70 rounded-full blur-[1px]" />
             </motion.div>
             {/* Glass reflection */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
           </div>
           
           {/* Gears */}
@@ -105,13 +111,13 @@ export const GoldMachineVisual = ({ machineLevel, isCollecting }: GoldMachineVis
           </div>
           
           {/* Pressure gauge */}
-          <div className="absolute top-2 right-2 w-6 h-6 bg-zinc-800 rounded-full border border-zinc-500">
+          <div className="absolute top-2 right-2 w-6 h-6 bg-amber-700 rounded-full border border-yellow-400">
             <motion.div
               animate={{ rotate: [-30, 30, -30] }}
               transition={{ duration: 2, repeat: Infinity }}
               className="absolute top-1/2 left-1/2 w-0.5 h-2 bg-red-500 origin-bottom -translate-x-1/2 -translate-y-full"
             />
-            <div className="absolute inset-0 rounded-full border border-amber-500/30" />
+            <div className="absolute inset-0 rounded-full border border-yellow-300/50" />
           </div>
           
           {/* Status lights */}
@@ -119,17 +125,17 @@ export const GoldMachineVisual = ({ machineLevel, isCollecting }: GoldMachineVis
             <motion.div
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 1, repeat: Infinity }}
-              className="w-2 h-2 bg-green-500 rounded-full shadow-[0_0_6px_rgba(34,197,94,0.8)]"
+              className="w-2 h-2 bg-green-400 rounded-full shadow-[0_0_6px_rgba(74,222,128,0.8)]"
             />
-            <div className="w-2 h-2 bg-amber-500/30 rounded-full" />
-            <div className="w-2 h-2 bg-red-500/30 rounded-full" />
+            <div className="w-2 h-2 bg-amber-300/50 rounded-full" />
+            <div className="w-2 h-2 bg-red-400/30 rounded-full" />
           </div>
           
-          {/* Rivets */}
+          {/* Rivets - gold colored */}
           {[...Array(4)].map((_, i) => (
             <div
               key={i}
-              className="absolute w-1.5 h-1.5 bg-zinc-400 rounded-full shadow-inner"
+              className="absolute w-1.5 h-1.5 bg-yellow-300 rounded-full shadow-inner"
               style={{
                 top: i < 2 ? 14 : 'auto',
                 bottom: i >= 2 ? 4 : 'auto',
@@ -139,22 +145,29 @@ export const GoldMachineVisual = ({ machineLevel, isCollecting }: GoldMachineVis
             />
           ))}
           
-          {/* Output pipe */}
-          <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-6 h-8 bg-gradient-to-b from-zinc-600 to-zinc-800 border-x-2 border-zinc-500 rounded-b-sm">
+          {/* Output pipe - gold */}
+          <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-6 h-8 bg-gradient-to-b from-amber-500 to-amber-700 border-x-2 border-yellow-400 rounded-b-sm">
             {/* Pipe detail */}
-            <div className="absolute top-1 left-1/2 -translate-x-1/2 w-4 h-1 bg-zinc-500/50 rounded" />
+            <div className="absolute top-1 left-1/2 -translate-x-1/2 w-4 h-1 bg-yellow-300/50 rounded" />
           </div>
+          
+          {/* Shimmer effect */}
+          <motion.div
+            animate={{ x: [-60, 100] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            className="absolute inset-0 w-8 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"
+          />
         </div>
         
         {/* Steam vents on sides */}
         <SteamParticles count={3} className="top-16 -left-2" />
         <SteamParticles count={3} className="top-16 -right-2" />
         
-        {/* Copper pipes on sides */}
+        {/* Gold pipes on sides */}
         {tier >= 2 && (
           <>
-            <div className="absolute top-14 -left-1 w-2 h-16 bg-gradient-to-b from-amber-700 to-amber-800 rounded-full border border-amber-600" />
-            <div className="absolute top-14 -right-1 w-2 h-16 bg-gradient-to-b from-amber-700 to-amber-800 rounded-full border border-amber-600" />
+            <div className="absolute top-14 -left-1 w-2 h-16 bg-gradient-to-b from-yellow-500 to-amber-600 rounded-full border border-yellow-400" />
+            <div className="absolute top-14 -right-1 w-2 h-16 bg-gradient-to-b from-yellow-500 to-amber-600 rounded-full border border-yellow-400" />
           </>
         )}
         

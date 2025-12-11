@@ -72,7 +72,7 @@ const GoldMachine = () => {
           animate={{ opacity: 1, y: 0 }}
         >
           <h1 className="text-2xl font-display font-bold">Gold Machine</h1>
-          <p className="text-muted-foreground text-sm">Build wealth while you play on the Lucky page</p>
+          <p className="text-muted-foreground text-sm">Build a bigger gold machine to make more gold</p>
         </motion.div>
 
         {!hasMachine ? (

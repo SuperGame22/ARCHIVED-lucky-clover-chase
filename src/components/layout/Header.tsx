@@ -15,7 +15,7 @@ export const Header = ({ clovers = 47, gold = 2.34 }: HeaderProps) => {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <CloverIcon className="w-7 h-7 text-primary" />
-          <span className="font-display font-bold text-lg">Lucky</span>
+          <span className="font-display font-bold text-lg">Lucky Golf</span>
         </Link>
 
         {/* Currency Display */}

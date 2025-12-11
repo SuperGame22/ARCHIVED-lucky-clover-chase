@@ -21,7 +21,7 @@ const Rangefinder = () => {
   };
 
   return (
-    <AppLayout hideNav>
+    <AppLayout>
       <div className="relative min-h-screen flex flex-col bg-gradient-to-b from-background to-secondary/20">
         {/* Course Background Overlay */}
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=800')] bg-cover bg-center opacity-20" />
