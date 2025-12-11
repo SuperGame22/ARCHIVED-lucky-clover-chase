@@ -113,7 +113,7 @@ export default {
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "celtic-knot": `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2300A86B' stroke-opacity='0.08' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M50 50 C50 40, 40 30, 30 30 C20 30, 15 40, 15 45 C15 55, 25 55, 35 50 C40 48, 45 50, 50 50'/%3E%3Cpath d='M50 50 C50 40, 60 30, 70 30 C80 30, 85 40, 85 45 C85 55, 75 55, 65 50 C60 48, 55 50, 50 50'/%3E%3Cpath d='M50 50 C40 50, 30 55, 30 65 C30 75, 40 80, 45 80 C55 80, 55 70, 50 60 C48 55, 50 52, 50 50'/%3E%3Cpath d='M50 50 C60 50, 70 55, 70 65 C70 75, 60 80, 55 80 C45 80, 45 70, 50 60 C52 55, 50 52, 50 50'/%3E%3Cpath d='M46 75 Q44 90, 42 95'/%3E%3Cpath d='M54 75 Q56 90, 58 95'/%3E%3C/g%3E%3C/svg%3E")`,
+        "celtic-knot": `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2300A86B' stroke-opacity='0.08' stroke-width='1.5'%3E%3Cpath d='M30 18c0-4.5 3-8 6-8s6 3.5 6 8c0 2.5-1 4.5-2.8 5.8 1.3-.6 2.8-1 4.3-1 4.5 0 8 3 8 6s-3.5 6-8 6c-1.5 0-3-.4-4.3-1 1.8 1.3 2.8 3.3 2.8 5.8 0 4.5-3 8-6 8s-6-3.5-6-8c0-2.5 1-4.5 2.8-5.8-1.3.6-2.8 1-4.3 1-4.5 0-8-3-8-6s3.5-6 8-6c1.5 0 3 .4 4.3 1-1.8-1.3-2.8-3.3-2.8-5.8z'/%3E%3Cpath d='M28 42l2 10 2-10'/%3E%3C/g%3E%3C/svg%3E")`,
       },
     },
   },
