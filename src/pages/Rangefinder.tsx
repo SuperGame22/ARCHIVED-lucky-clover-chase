@@ -22,11 +22,11 @@ const Rangefinder = () => {
 
   return (
     <AppLayout hideNav>
-      <div className="relative min-h-screen bg-gradient-to-b from-background to-secondary/20">
+      <div className="relative min-h-screen flex flex-col bg-gradient-to-b from-background to-secondary/20">
         {/* Course Background Overlay */}
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=800')] bg-cover bg-center opacity-20" />
         
-        <div className="relative max-w-lg mx-auto px-4 py-6">
+        <div className="relative flex-1 max-w-lg mx-auto px-4 py-6 w-full">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
