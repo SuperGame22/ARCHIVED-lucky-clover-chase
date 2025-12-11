@@ -30,14 +30,14 @@ export const CloverBalance = ({
       <div className="relative flex items-start justify-between gap-4">
         {/* Left side - Clover balance */}
         <div className="flex-shrink-0">
-          <p className="text-sm text-muted-foreground mb-1">Your Clovers</p>
-          <div className="flex items-center gap-2">
-            <CloverIcon className="w-9 h-9 text-primary animate-float" />
-            <span className="text-4xl font-display font-bold text-gradient-green">{balance}</span>
+          <p className="text-base font-medium text-muted-foreground mb-1">Your Clovers</p>
+          <div className="flex items-center gap-3">
+            <CloverIcon className="w-11 h-11 text-primary animate-float" />
+            <span className="text-5xl font-display font-bold text-gradient-green">{balance}</span>
           </div>
-          <div className="flex items-center gap-1 mt-1.5 text-sm text-primary">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>+{todayEarned} today</span>
+          <div className="flex items-center gap-1.5 mt-2 text-base font-medium text-primary">
+            <Sparkles className="w-4 h-4" />
+            <span>+{todayEarned} this week</span>
           </div>
         </div>
         

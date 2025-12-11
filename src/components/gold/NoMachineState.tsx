@@ -36,21 +36,17 @@ export const NoMachineState = ({ onActivate }: NoMachineStateProps) => {
           className="mb-6"
         >
           <div className="relative w-32 h-32 mx-auto">
+            {/* Soft circular glow behind mascot */}
+            <div 
+              className="absolute inset-0 rounded-full"
+              style={{
+                background: "radial-gradient(circle, hsl(var(--primary) / 0.3) 0%, hsl(var(--primary) / 0.1) 40%, transparent 70%)",
+              }}
+            />
             <img 
               src={mascotImage} 
               alt="Lucky Leprechaun" 
-              className="w-full h-full object-contain drop-shadow-lg"
-            />
-            {/* Rainbow arc behind */}
-            <motion.div
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="absolute -inset-4 -z-10 rounded-full"
-              style={{
-                background: "conic-gradient(from 180deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3, transparent 60%)",
-                opacity: 0.3,
-                filter: "blur(8px)",
-              }}
+              className="relative w-full h-full object-contain drop-shadow-[0_0_20px_hsl(var(--primary)/0.4)]"
             />
           </div>
         </motion.div>
