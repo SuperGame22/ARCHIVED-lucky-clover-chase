@@ -64,20 +64,20 @@ const LuckySpin = () => {
           className="relative flex items-center justify-center py-8"
         >
           {/* Outer glow */}
-          <div className="absolute w-72 h-72 bg-gradient-to-r from-primary via-accent to-primary rounded-full blur-3xl opacity-30 animate-pulse" />
+          <div className="absolute w-[22rem] h-[22rem] bg-gradient-to-r from-primary via-accent to-primary rounded-full blur-3xl opacity-30 animate-pulse" />
 
           {/* Wheel */}
           <div className="relative">
             {/* Pointer */}
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
-              <div className="w-0 h-0 border-l-[12px] border-r-[12px] border-t-[20px] border-l-transparent border-r-transparent border-t-accent drop-shadow-lg" />
+            <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-20">
+              <div className="w-0 h-0 border-l-[15px] border-r-[15px] border-t-[25px] border-l-transparent border-r-transparent border-t-accent drop-shadow-lg" />
             </div>
 
             {/* Spinning wheel */}
             <motion.div
               animate={{ rotate: rotation }}
               transition={{ duration: 4, ease: [0.2, 0.8, 0.2, 1] }}
-              className="relative w-64 h-64"
+              className="relative w-80 h-80"
             >
               <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-2xl">
                 {prizes.map((prize, i) => {
@@ -116,7 +116,7 @@ const LuckySpin = () => {
                 return (
                   <div
                     key={i}
-                    className="absolute text-[8px] font-medium text-foreground"
+                    className="absolute text-[10px] font-medium text-foreground"
                     style={{
                       left: `${x}%`,
                       top: `${y}%`,
