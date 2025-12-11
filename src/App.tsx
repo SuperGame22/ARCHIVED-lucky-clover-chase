@@ -11,6 +11,7 @@ import Shop from "./pages/Shop";
 import Membership from "./pages/Membership";
 import Profile from "./pages/Profile";
 import Scorecard from "./pages/Scorecard";
+import Chat from "./pages/Chat";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/membership" element={<Membership />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/scorecard" element={<Scorecard />} />
+          <Route path="/chat" element={<Chat />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

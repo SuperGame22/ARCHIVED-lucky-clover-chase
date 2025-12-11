@@ -8,26 +8,26 @@ const actions = [
     icon: Trophy,
     label: "Scorecard",
     path: "/scorecard",
-    color: "bg-primary/10 text-primary hover:bg-primary/20",
+    color: "bg-primary/95 text-primary-foreground hover:bg-primary",
   },
   {
     icon: Target,
     label: "Rangefinder",
     path: "/rangefinder",
-    color: "bg-primary/10 text-primary hover:bg-primary/20",
+    color: "bg-primary/95 text-primary-foreground hover:bg-primary",
   },
   {
     icon: Gift,
     label: "Lucky Spin",
     path: "/spin",
-    color: "bg-primary/10 text-primary hover:bg-primary/20",
+    color: "bg-primary/95 text-primary-foreground hover:bg-primary",
     badge: "$7",
   },
   {
     icon: ShoppingBag,
     label: "Shop",
     path: "/shop",
-    color: "bg-primary/10 text-primary hover:bg-primary/20",
+    color: "bg-primary/95 text-primary-foreground hover:bg-primary",
   },
 ];
 

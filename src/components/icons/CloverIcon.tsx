@@ -11,15 +11,17 @@ export const CloverIcon = ({ className, animate = false }: CloverIconProps) => (
     fill="currentColor"
     className={cn(animate && "animate-float", className)}
   >
-    {/* Top-left leaf */}
-    <path d="M50 50 C40 50 30 45 25 35 C20 25 25 12 35 10 C42 8 48 12 50 20 C52 12 58 8 65 10 C75 12 80 25 75 35 C70 45 60 50 50 50" transform="rotate(-45 50 50)" />
+    {/* Top-left leaf - rounded heart shape */}
+    <path d="M50 50 C45 48 38 45 32 40 C26 35 24 28 26 22 C28 16 34 14 40 16 C44 17 47 20 50 25 C53 20 56 17 60 16 C66 14 72 16 74 22 C76 28 74 35 68 40 C62 45 55 48 50 50" transform="rotate(-45 50 50)" />
     {/* Top-right leaf */}
-    <path d="M50 50 C40 50 30 45 25 35 C20 25 25 12 35 10 C42 8 48 12 50 20 C52 12 58 8 65 10 C75 12 80 25 75 35 C70 45 60 50 50 50" transform="rotate(45 50 50)" />
+    <path d="M50 50 C45 48 38 45 32 40 C26 35 24 28 26 22 C28 16 34 14 40 16 C44 17 47 20 50 25 C53 20 56 17 60 16 C66 14 72 16 74 22 C76 28 74 35 68 40 C62 45 55 48 50 50" transform="rotate(45 50 50)" />
     {/* Bottom-right leaf */}
-    <path d="M50 50 C40 50 30 45 25 35 C20 25 25 12 35 10 C42 8 48 12 50 20 C52 12 58 8 65 10 C75 12 80 25 75 35 C70 45 60 50 50 50" transform="rotate(135 50 50)" />
+    <path d="M50 50 C45 48 38 45 32 40 C26 35 24 28 26 22 C28 16 34 14 40 16 C44 17 47 20 50 25 C53 20 56 17 60 16 C66 14 72 16 74 22 C76 28 74 35 68 40 C62 45 55 48 50 50" transform="rotate(135 50 50)" />
     {/* Bottom-left leaf */}
-    <path d="M50 50 C40 50 30 45 25 35 C20 25 25 12 35 10 C42 8 48 12 50 20 C52 12 58 8 65 10 C75 12 80 25 75 35 C70 45 60 50 50 50" transform="rotate(225 50 50)" />
-    {/* Stem - V shape */}
-    <path d="M46 58 L42 90 C42 92 44 94 46 94 L48 94 L50 70 L52 94 L54 94 C56 94 58 92 58 90 L54 58 Z" />
+    <path d="M50 50 C45 48 38 45 32 40 C26 35 24 28 26 22 C28 16 34 14 40 16 C44 17 47 20 50 25 C53 20 56 17 60 16 C66 14 72 16 74 22 C76 28 74 35 68 40 C62 45 55 48 50 50" transform="rotate(225 50 50)" />
+    {/* Center notch detail */}
+    <ellipse cx="50" cy="50" rx="3" ry="3" />
+    {/* Stem - double line V shape */}
+    <path d="M47 55 L44 85 C44 87 45 88 47 88 L48 88 L50 65 L52 88 L53 88 C55 88 56 87 56 85 L53 55 Z" />
   </svg>
 );
