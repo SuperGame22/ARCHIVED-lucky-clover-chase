@@ -151,6 +151,20 @@ export const GoldMachineVisual = ({ machineLevel, isCollecting }: GoldMachineVis
             <div className="absolute top-1 left-1/2 -translate-x-1/2 w-4 h-1 bg-yellow-300/50 rounded" />
           </div>
           
+          {/* Chute/Shoot from machine to pot */}
+          <div className="absolute -bottom-4 left-1/2 translate-x-2 w-4 h-24 origin-top rotate-12">
+            <div className="w-full h-full bg-gradient-to-b from-amber-500 via-yellow-500 to-amber-600 rounded-b-lg border-2 border-yellow-400 shadow-lg">
+              {/* Chute inner channel */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-full bg-amber-700/50 rounded" />
+              {/* Shimmer on chute */}
+              <motion.div
+                animate={{ y: [-10, 80] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 w-full h-4 bg-gradient-to-b from-transparent via-white/30 to-transparent"
+              />
+            </div>
+          </div>
+          
           {/* Shimmer effect */}
           <motion.div
             animate={{ x: [-60, 100] }}
