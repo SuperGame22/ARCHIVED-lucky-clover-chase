@@ -10,6 +10,6 @@ export const CloverIcon = ({ className, animate = false }: CloverIconProps) => (
   <img
     src={cloverGameIcon}
     alt="Clover"
-    className={cn(animate && "animate-float", className)}
+    className={cn("aspect-[0.9]", animate && "animate-float", className)}
   />
 );
