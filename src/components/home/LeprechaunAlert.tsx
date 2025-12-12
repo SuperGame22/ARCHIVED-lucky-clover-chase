@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { MapPin, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import { GoldPot } from "@/components/gold/GoldPot";
 
 export const LeprechaunAlert = () => {
   return (
@@ -20,30 +21,10 @@ export const LeprechaunAlert = () => {
         />
         
         <div className="relative flex items-center gap-4">
-          {/* Gold pot icon - inline SVG for consistent styling */}
-          <motion.div
-            animate={{ rotate: [-5, 5, -5], scale: [1, 1.05, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-10 h-10 flex items-center justify-center"
-          >
-            <svg viewBox="0 0 32 32" className="w-8 h-8">
-              {/* Pot body */}
-              <ellipse cx="16" cy="22" rx="12" ry="8" fill="url(#potGradient)" />
-              {/* Gold inside */}
-              <ellipse cx="16" cy="18" rx="10" ry="5" fill="#FFD700" />
-              {/* Gold coins on top */}
-              <circle cx="12" cy="16" r="3" fill="#FFC107" stroke="#B8860B" strokeWidth="0.5" />
-              <circle cx="16" cy="15" r="3" fill="#FFD700" stroke="#DAA520" strokeWidth="0.5" />
-              <circle cx="20" cy="16" r="3" fill="#FFC107" stroke="#B8860B" strokeWidth="0.5" />
-              <defs>
-                <linearGradient id="potGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#F59E0B" />
-                  <stop offset="50%" stopColor="#FBBF24" />
-                  <stop offset="100%" stopColor="#D97706" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </motion.div>
+          {/* Gold pot - same as gold page */}
+          <div className="w-16 h-14 flex items-center justify-center scale-50 -ml-2">
+            <GoldPot />
+          </div>
           
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">

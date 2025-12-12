@@ -283,30 +283,166 @@ const Course = () => {
                   <p className="font-semibold mb-2">{selectedCourse.name}</p>
                   <p className="text-sm text-muted-foreground mb-4">Tap a hole to start flyover</p>
                   
-                  {/* Bird's eye course map representation */}
-                  <div className="relative aspect-[4/3] bg-gradient-to-br from-primary/20 via-lucky-emerald/10 to-primary/20 rounded-xl overflow-hidden">
-                    {/* Simulated fairways */}
-                    <div className="absolute inset-4">
-                      {[...Array(18)].map((_, i) => {
-                        const row = Math.floor(i / 6);
-                        const col = i % 6;
-                        return (
-                          <motion.button
-                            key={i}
-                            onClick={() => handleHoleSelect(i + 1)}
-                            className="absolute w-12 h-12 bg-primary/80 hover:bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold text-sm shadow-lg hover:shadow-xl transition-all"
-                            style={{
-                              left: `${col * 16 + 4}%`,
-                              top: `${row * 30 + 8}%`,
-                            }}
-                            whileHover={{ scale: 1.15 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            {i + 1}
-                          </motion.button>
-                        );
-                      })}
-                    </div>
+                  {/* Bird's eye course map with fairway shapes */}
+                  <div className="relative aspect-square bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-900 rounded-xl overflow-hidden p-3">
+                    {/* Fairway-shaped holes arranged like a real course map */}
+                    <svg viewBox="0 0 300 300" className="w-full h-full">
+                      {/* Background rough/trees */}
+                      <rect x="0" y="0" width="300" height="300" fill="hsl(150, 40%, 15%)" />
+                      
+                      {/* Hole 1 - straight fairway */}
+                      <g onClick={() => handleHoleSelect(1)} className="cursor-pointer hover:opacity-80">
+                        <path d="M260 280 Q265 250 260 220 Q255 200 260 180 L275 180 Q280 200 275 220 Q280 250 275 280 Z" fill="hsl(120, 50%, 35%)" />
+                        <ellipse cx="267" cy="185" rx="5" ry="4" fill="hsl(120, 60%, 50%)" />
+                        <circle cx="267" cy="265" r="6" fill="hsl(120, 45%, 45%)" />
+                        <text x="267" y="250" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold">1</text>
+                      </g>
+                      
+                      {/* Hole 2 - dogleg right */}
+                      <g onClick={() => handleHoleSelect(2)} className="cursor-pointer hover:opacity-80">
+                        <path d="M220 280 Q225 260 220 240 Q210 220 230 200 Q250 185 270 170 L280 180 Q260 195 240 210 Q225 225 235 245 Q240 265 235 280 Z" fill="hsl(120, 50%, 35%)" />
+                        <ellipse cx="273" cy="173" rx="5" ry="4" fill="hsl(120, 60%, 50%)" />
+                        <circle cx="227" cy="265" r="6" fill="hsl(120, 45%, 45%)" />
+                        <text x="250" y="220" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold">2</text>
+                      </g>
+                      
+                      {/* Hole 3 - straight up */}
+                      <g onClick={() => handleHoleSelect(3)} className="cursor-pointer hover:opacity-80">
+                        <path d="M160 80 Q155 50 160 20 L175 20 Q180 50 175 80 Q180 110 175 140 L160 140 Q155 110 160 80 Z" fill="hsl(120, 50%, 35%)" />
+                        <ellipse cx="167" cy="25" rx="5" ry="4" fill="hsl(120, 60%, 50%)" />
+                        <circle cx="167" cy="125" r="6" fill="hsl(120, 45%, 45%)" />
+                        <text x="167" y="75" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold">3</text>
+                      </g>
+                      
+                      {/* Hole 4 - dogleg left with water */}
+                      <g onClick={() => handleHoleSelect(4)} className="cursor-pointer hover:opacity-80">
+                        <path d="M40 80 Q35 60 50 40 Q70 25 90 20 L95 35 Q75 40 60 55 Q50 70 55 90 Q60 110 55 130 L40 130 Q35 110 40 80 Z" fill="hsl(120, 50%, 35%)" />
+                        <ellipse cx="90" cy="27" rx="5" ry="4" fill="hsl(120, 60%, 50%)" />
+                        <ellipse cx="30" cy="55" rx="12" ry="8" fill="hsl(200, 70%, 40%)" />
+                        <circle cx="47" cy="115" r="6" fill="hsl(120, 45%, 45%)" />
+                        <text x="60" y="70" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold">4</text>
+                      </g>
+                      
+                      {/* Hole 5 - short par 3 */}
+                      <g onClick={() => handleHoleSelect(5)} className="cursor-pointer hover:opacity-80">
+                        <path d="M30 140 Q25 155 30 170 L50 170 Q55 155 50 140 Z" fill="hsl(120, 50%, 35%)" />
+                        <ellipse cx="40" cy="145" rx="6" ry="5" fill="hsl(120, 60%, 50%)" />
+                        <circle cx="40" cy="165" r="5" fill="hsl(120, 45%, 45%)" />
+                        <text x="40" y="158" textAnchor="middle" fill="white" fontSize="8" fontWeight="bold">5</text>
+                      </g>
+                      
+                      {/* Hole 6 - wide fairway */}
+                      <g onClick={() => handleHoleSelect(6)} className="cursor-pointer hover:opacity-80">
+                        <path d="M115 90 Q100 75 115 55 Q130 40 150 45 Q165 50 165 70 Q165 90 150 100 Q135 110 115 90 Z" fill="hsl(120, 50%, 35%)" />
+                        <ellipse cx="145" cy="55" rx="5" ry="4" fill="hsl(120, 60%, 50%)" />
+                        <circle cx="120" cy="80" r="6" fill="hsl(120, 45%, 45%)" />
+                        <text x="135" y="75" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold">6</text>
+                      </g>
+                      
+                      {/* Hole 7 - curved */}
+                      <g onClick={() => handleHoleSelect(7)} className="cursor-pointer hover:opacity-80">
+                        <path d="M200 55 Q210 40 230 35 Q250 30 260 50 Q265 70 255 85 L240 80 Q245 65 240 55 Q230 45 215 55 Q205 65 210 80 Z" fill="hsl(120, 50%, 35%)" />
+                        <ellipse cx="255" cy="45" rx="5" ry="4" fill="hsl(120, 60%, 50%)" />
+                        <circle cx="205" cy="70" r="6" fill="hsl(120, 45%, 45%)" />
+                        <text x="230" y="55" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold">7</text>
+                      </g>
+                      
+                      {/* Hole 8 - long par 5 */}
+                      <g onClick={() => handleHoleSelect(8)} className="cursor-pointer hover:opacity-80">
+                        <path d="M240 100 Q235 120 245 145 Q255 165 250 190 L265 195 Q270 170 260 145 Q250 120 255 100 Z" fill="hsl(120, 50%, 35%)" />
+                        <ellipse cx="247" cy="105" rx="5" ry="4" fill="hsl(120, 60%, 50%)" />
+                        <circle cx="257" cy="180" r="6" fill="hsl(120, 45%, 45%)" />
+                        <text x="252" y="145" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold">8</text>
+                      </g>
+                      
+                      {/* Hole 9 - back to clubhouse */}
+                      <g onClick={() => handleHoleSelect(9)} className="cursor-pointer hover:opacity-80">
+                        <path d="M200 200 Q190 220 195 245 Q200 270 190 280 L175 275 Q185 260 180 240 Q175 220 185 200 Z" fill="hsl(120, 50%, 35%)" />
+                        <ellipse cx="192" cy="205" rx="5" ry="4" fill="hsl(120, 60%, 50%)" />
+                        <circle cx="182" cy="265" r="6" fill="hsl(120, 45%, 45%)" />
+                        <text x="187" y="235" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold">9</text>
+                      </g>
+                      
+                      {/* Hole 10 */}
+                      <g onClick={() => handleHoleSelect(10)} className="cursor-pointer hover:opacity-80">
+                        <path d="M25 200 Q20 225 25 250 Q30 275 25 290 L40 290 Q45 275 40 250 Q45 225 40 200 Z" fill="hsl(120, 50%, 35%)" />
+                        <ellipse cx="32" cy="205" rx="5" ry="4" fill="hsl(120, 60%, 50%)" />
+                        <circle cx="32" cy="280" r="6" fill="hsl(120, 45%, 45%)" />
+                        <text x="32" y="245" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold">10</text>
+                      </g>
+                      
+                      {/* Hole 11 - dogleg */}
+                      <g onClick={() => handleHoleSelect(11)} className="cursor-pointer hover:opacity-80">
+                        <path d="M50 200 Q70 195 85 210 Q100 230 95 250 L80 250 Q85 235 75 220 Q60 210 50 215 Z" fill="hsl(120, 50%, 35%)" />
+                        <ellipse cx="55" cy="207" rx="5" ry="4" fill="hsl(120, 60%, 50%)" />
+                        <circle cx="87" cy="245" r="5" fill="hsl(120, 45%, 45%)" />
+                        <text x="72" y="225" textAnchor="middle" fill="white" fontSize="9" fontWeight="bold">11</text>
+                      </g>
+                      
+                      {/* Hole 12 - par 3 over water */}
+                      <g onClick={() => handleHoleSelect(12)} className="cursor-pointer hover:opacity-80">
+                        <ellipse cx="85" cy="175" rx="15" ry="10" fill="hsl(200, 70%, 40%)" />
+                        <path d="M65 190 L75 190 L75 200 L65 200 Z" fill="hsl(120, 50%, 35%)" />
+                        <path d="M95 155 L105 155 L105 165 L95 165 Z" fill="hsl(120, 50%, 35%)" />
+                        <ellipse cx="100" cy="158" rx="4" ry="3" fill="hsl(120, 60%, 50%)" />
+                        <circle cx="70" cy="197" r="4" fill="hsl(120, 45%, 45%)" />
+                        <text x="85" y="178" textAnchor="middle" fill="white" fontSize="8" fontWeight="bold">12</text>
+                      </g>
+                      
+                      {/* Hole 13 - center of course */}
+                      <g onClick={() => handleHoleSelect(13)} className="cursor-pointer hover:opacity-80">
+                        <path d="M115 180 Q130 170 145 180 Q155 195 145 210 Q130 220 115 210 Q105 195 115 180 Z" fill="hsl(120, 50%, 35%)" />
+                        <ellipse cx="140" cy="183" rx="5" ry="4" fill="hsl(120, 60%, 50%)" />
+                        <circle cx="120" cy="200" r="5" fill="hsl(120, 45%, 45%)" />
+                        <text x="130" y="198" textAnchor="middle" fill="white" fontSize="9" fontWeight="bold">13</text>
+                      </g>
+                      
+                      {/* Hole 14 */}
+                      <g onClick={() => handleHoleSelect(14)} className="cursor-pointer hover:opacity-80">
+                        <path d="M115 115 Q130 105 145 115 Q155 130 145 145 L130 145 Q140 130 130 120 Q120 115 115 125 Z" fill="hsl(120, 50%, 35%)" />
+                        <ellipse cx="140" cy="118" rx="5" ry="4" fill="hsl(120, 60%, 50%)" />
+                        <circle cx="122" cy="135" r="5" fill="hsl(120, 45%, 45%)" />
+                        <text x="132" y="132" textAnchor="middle" fill="white" fontSize="9" fontWeight="bold">14</text>
+                      </g>
+                      
+                      {/* Hole 15 - with bunkers */}
+                      <g onClick={() => handleHoleSelect(15)} className="cursor-pointer hover:opacity-80">
+                        <path d="M55 90 Q50 110 55 130 L70 130 Q75 110 70 90 Z" fill="hsl(120, 50%, 35%)" />
+                        <ellipse cx="62" cy="95" rx="5" ry="4" fill="hsl(120, 60%, 50%)" />
+                        <ellipse cx="78" cy="115" rx="5" ry="3" fill="hsl(45, 70%, 70%)" />
+                        <circle cx="62" cy="125" r="4" fill="hsl(120, 45%, 45%)" />
+                        <text x="62" y="112" textAnchor="middle" fill="white" fontSize="9" fontWeight="bold">15</text>
+                      </g>
+                      
+                      {/* Hole 16 */}
+                      <g onClick={() => handleHoleSelect(16)} className="cursor-pointer hover:opacity-80">
+                        <path d="M20 55 Q15 40 25 25 L40 30 Q30 45 35 60 Z" fill="hsl(120, 50%, 35%)" />
+                        <ellipse cx="32" cy="30" rx="4" ry="3" fill="hsl(120, 60%, 50%)" />
+                        <circle cx="27" cy="52" r="4" fill="hsl(120, 45%, 45%)" />
+                        <text x="30" y="43" textAnchor="middle" fill="white" fontSize="8" fontWeight="bold">16</text>
+                      </g>
+                      
+                      {/* Hole 17 - island green style */}
+                      <g onClick={() => handleHoleSelect(17)} className="cursor-pointer hover:opacity-80">
+                        <ellipse cx="165" cy="155" rx="20" ry="15" fill="hsl(200, 70%, 40%)" />
+                        <ellipse cx="165" cy="155" rx="10" ry="8" fill="hsl(120, 50%, 35%)" />
+                        <ellipse cx="165" cy="152" rx="4" ry="3" fill="hsl(120, 60%, 50%)" />
+                        <path d="M150 170 L160 175 L165 170 Z" fill="hsl(120, 50%, 35%)" />
+                        <text x="165" y="158" textAnchor="middle" fill="white" fontSize="8" fontWeight="bold">17</text>
+                      </g>
+                      
+                      {/* Hole 18 - finishing hole */}
+                      <g onClick={() => handleHoleSelect(18)} className="cursor-pointer hover:opacity-80">
+                        <path d="M130 250 Q125 230 135 210 Q145 195 155 200 Q165 210 160 230 Q155 250 165 270 L150 275 Q145 255 150 235 Q155 215 145 210 Q135 215 140 235 Q145 255 140 270 Z" fill="hsl(120, 50%, 35%)" />
+                        <ellipse cx="152" cy="202" rx="5" ry="4" fill="hsl(120, 60%, 50%)" />
+                        <circle cx="157" cy="265" r="6" fill="hsl(120, 45%, 45%)" />
+                        <text x="147" y="235" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold">18</text>
+                      </g>
+                      
+                      {/* Clubhouse */}
+                      <rect x="135" y="270" x2="155" y2="290" width="25" height="20" fill="hsl(30, 30%, 40%)" rx="2" />
+                      <text x="147" y="283" textAnchor="middle" fill="white" fontSize="6">Club</text>
+                    </svg>
                   </div>
                 </div>
 

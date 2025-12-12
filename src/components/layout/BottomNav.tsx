@@ -1,10 +1,28 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Plane, ShoppingBag, Gift, Coins } from "lucide-react";
+import { Home, ShoppingBag, Gift, Coins } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+// Custom Course icon with target and flag
+const CourseIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    {/* Outer circle */}
+    <circle cx="12" cy="12" r="10" />
+    {/* Inner circle */}
+    <circle cx="12" cy="12" r="6" />
+    {/* Crosshair lines */}
+    <line x1="12" y1="2" x2="12" y2="5" />
+    <line x1="12" y1="19" x2="12" y2="22" />
+    <line x1="2" y1="12" x2="5" y2="12" />
+    <line x1="19" y1="12" x2="22" y2="12" />
+    {/* Flag */}
+    <line x1="12" y1="8" x2="12" y2="16" />
+    <path d="M12 8 L16 10 L12 12" fill="currentColor" />
+  </svg>
+);
 
 const navItems = [
   { path: "/", icon: Home, label: "Home" },
-  { path: "/course", icon: Plane, label: "Course" },
+  { path: "/course", icon: CourseIcon, label: "Course" },
   { path: "/gold-machine", icon: Coins, label: "Gold" },
   { path: "/spin", icon: Gift, label: "Lucky" },
   { path: "/shop", icon: ShoppingBag, label: "Shop" },
