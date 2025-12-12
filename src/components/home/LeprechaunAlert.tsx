@@ -20,13 +20,13 @@ export const LeprechaunAlert = () => {
         />
         
         <div className="relative flex items-center gap-4">
-          {/* Leprechaun emoji placeholder */}
+          {/* Gold pot icon */}
           <motion.div
-            animate={{ rotate: [-5, 5, -5] }}
+            animate={{ rotate: [-5, 5, -5], scale: [1, 1.05, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
             className="text-4xl"
           >
-            🍀
+            🪙
           </motion.div>
           
           <div className="flex-1">

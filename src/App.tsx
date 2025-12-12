@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Rangefinder from "./pages/Rangefinder";
+import Course from "./pages/Course";
 import GoldMachine from "./pages/GoldMachine";
 import LuckySpin from "./pages/LuckySpin";
 import Shop from "./pages/Shop";
@@ -25,6 +26,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/rangefinder" element={<Rangefinder />} />
+          <Route path="/course" element={<Course />} />
           <Route path="/gold-machine" element={<GoldMachine />} />
           <Route path="/spin" element={<LuckySpin />} />
           <Route path="/shop" element={<Shop />} />

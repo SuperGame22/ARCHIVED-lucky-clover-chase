@@ -7,7 +7,7 @@ interface GoldMachineVisualProps {
 }
 
 export const GoldMachineVisual = ({ machineLevel, isCollecting }: GoldMachineVisualProps) => {
-  const flakeTypes: Array<"flake" | "dust" | "sparkle"> = ["flake", "dust", "sparkle", "flake", "dust"];
+  const flakeTypes: Array<"flake" | "dust" | "sparkle"> = ["flake", "dust", "sparkle", "flake", "dust", "flake", "sparkle"];
   
   return (
     <div className="relative mx-auto w-72 h-80 mb-6">
@@ -141,15 +141,6 @@ export const GoldMachineVisual = ({ machineLevel, isCollecting }: GoldMachineVis
               />
             ))}
 
-            {/* Output chute */}
-            <div className="absolute -bottom-6 left-1/2 translate-x-4 w-5 h-10 bg-gradient-to-b from-amber-500 to-amber-700 rounded-b-lg border-2 border-yellow-400 origin-top rotate-12">
-              <motion.div
-                animate={{ y: [-5, 15] }}
-                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 w-full h-3 bg-gradient-to-b from-transparent via-yellow-300/40 to-transparent"
-              />
-            </div>
-
             {/* Shimmer effect */}
             <motion.div
               animate={{ x: [-80, 120] }}
@@ -180,39 +171,75 @@ export const GoldMachineVisual = ({ machineLevel, isCollecting }: GoldMachineVis
         </motion.div>
       </motion.div>
 
-      {/* Falling gold flakes - slow and gentle */}
-      {flakeTypes.map((type, i) => (
-        <GoldFlake 
-          key={i} 
-          type={type} 
-          delay={i * 1.2} 
-          startX={(i % 3 - 1) * 6 + 12}
-        />
-      ))}
+      {/* Output Spout - positioned to point toward pot */}
+      <div className="absolute top-[175px] left-1/2 translate-x-[10px] z-20">
+        {/* Spout body - angled toward the pot */}
+        <div className="relative">
+          <div className="w-6 h-16 bg-gradient-to-b from-amber-500 to-amber-700 rounded-b-lg border-2 border-yellow-400 origin-top rotate-[15deg] shadow-lg">
+            {/* Spout opening */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-2 bg-amber-900/80 rounded-b" />
+            {/* Flow effect inside spout */}
+            <motion.div
+              animate={{ y: [-10, 20] }}
+              transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-x-1 h-4 bg-gradient-to-b from-transparent via-yellow-300/50 to-transparent rounded"
+            />
+          </div>
+          
+          {/* Spout attachment flange */}
+          <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-8 h-3 bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-600 rounded-full border border-yellow-400 shadow-md" />
+        </div>
+      </div>
 
-      {/* Gold pot at bottom */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
+      {/* Falling gold flakes from spout - positioned to fall from spout tip into pot */}
+      <div className="absolute top-[230px] left-1/2 translate-x-[18px] z-10">
+        {flakeTypes.map((type, i) => (
+          <GoldFlake 
+            key={i} 
+            type={type} 
+            delay={i * 0.8} 
+            startX={(i % 3 - 1) * 4}
+          />
+        ))}
+      </div>
+
+      {/* Gold pot at bottom - centered below spout */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-x-2">
         <motion.div
           animate={isCollecting ? { scale: [1, 1.1, 1] } : {}}
           transition={{ duration: 0.5, repeat: isCollecting ? Infinity : 0 }}
           className="relative"
         >
           {/* Pot body */}
-          <div className="w-20 h-12 bg-gradient-to-br from-amber-500 via-yellow-500 to-amber-600 rounded-b-full rounded-t-lg border-2 border-yellow-400 shadow-lg overflow-hidden">
-            {/* Gold coins inside */}
-            <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-yellow-400 to-yellow-300 rounded-b-full" />
-            <div className="absolute bottom-1 left-2 w-3 h-3 bg-yellow-300 rounded-full" />
-            <div className="absolute bottom-2 right-2 w-2.5 h-2.5 bg-yellow-200 rounded-full" />
-            <div className="absolute bottom-1 left-1/2 w-3 h-3 bg-amber-400 rounded-full" />
+          <div className="w-24 h-14 bg-gradient-to-br from-amber-500 via-yellow-500 to-amber-600 rounded-b-full rounded-t-lg border-2 border-yellow-400 shadow-lg overflow-hidden">
+            {/* Gold fill inside */}
+            <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-yellow-400 via-yellow-300 to-yellow-400/80 rounded-b-full">
+              {/* Glittering gold bits */}
+              <motion.div
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+                className="absolute bottom-1 left-3 w-2 h-2 bg-yellow-200 rounded-full"
+              />
+              <motion.div
+                animate={{ opacity: [0.3, 0.8, 0.3] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
+                className="absolute bottom-2 right-4 w-2.5 h-2.5 bg-amber-300 rounded-full"
+              />
+              <motion.div
+                animate={{ opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 1.2, repeat: Infinity, delay: 0.6 }}
+                className="absolute bottom-1 left-1/2 w-3 h-3 bg-yellow-300 rounded-full"
+              />
+            </div>
             {/* Shimmer */}
             <motion.div
-              animate={{ x: [-30, 30] }}
+              animate={{ x: [-30, 40] }}
               transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
               className="absolute inset-0 w-6 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"
             />
           </div>
           {/* Pot rim */}
-          <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-24 h-3 bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-600 rounded-full border border-yellow-400" />
+          <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-28 h-3 bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-600 rounded-full border border-yellow-400" />
         </motion.div>
       </div>
 

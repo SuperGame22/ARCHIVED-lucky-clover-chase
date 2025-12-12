@@ -1,10 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Target, ShoppingBag, Gift, Coins } from "lucide-react";
+import { Home, Plane, ShoppingBag, Gift, Coins } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { path: "/", icon: Home, label: "Home" },
-  { path: "/rangefinder", icon: Target, label: "Range" },
+  { path: "/course", icon: Plane, label: "Course" },
   { path: "/gold-machine", icon: Coins, label: "Gold" },
   { path: "/spin", icon: Gift, label: "Lucky" },
   { path: "/shop", icon: ShoppingBag, label: "Shop" },
