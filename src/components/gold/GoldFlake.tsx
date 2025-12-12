@@ -35,18 +35,18 @@ export const GoldFlake = ({ type, delay, startX }: GoldFlakeProps) => {
   return (
     <motion.div
       initial={{ 
-        y: 95, 
+        y: 0, 
         x: startX,
         opacity: 0, 
         scale: type === "dust" ? 0.3 : 0.5,
         rotate: 0 
       }}
       animate={{
-        y: [95, 140, 175],
-        x: [startX, startX + (Math.random() - 0.5) * 20, startX],
+        y: [0, 20, 45],
+        x: [startX, startX + (Math.random() - 0.5) * 8, startX],
         opacity: [0, 1, 0],
         scale: type === "dust" ? [0.3, 0.5, 0.3] : [0.5, 0.8, 0.6],
-        rotate: [0, 30, 0],
+        rotate: [0, 20, 0],
       }}
       transition={{
         duration,
@@ -54,7 +54,7 @@ export const GoldFlake = ({ type, delay, startX }: GoldFlakeProps) => {
         repeat: Infinity,
         ease: "easeIn",
       }}
-      className="absolute left-1/2 -translate-x-1/2"
+      className="absolute"
     >
       {getFlakeElement()}
     </motion.div>
