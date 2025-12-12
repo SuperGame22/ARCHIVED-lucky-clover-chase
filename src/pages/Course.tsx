@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, MapPin, Play, Pause, ChevronLeft, ChevronRight, Gauge, Eye } from "lucide-react";
+import { Search, MapPin, Play, Pause, ChevronLeft, ChevronRight, Gauge, Eye, Target, Flag, Crosshair, AlertTriangle } from "lucide-react";
+import { CloverIcon } from "@/components/icons/CloverIcon";
 
 interface Course {
   id: string;
@@ -27,6 +28,16 @@ const Course = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [showHoleMap, setShowHoleMap] = useState(false);
+  const [arMode, setArMode] = useState(false);
+  const [showClover, setShowClover] = useState(true);
+  
+  // Rangefinder demo distances
+  const distances = {
+    front: 142,
+    middle: 156,
+    back: 168,
+    hazard: 89,
+  };
 
   const filteredCourses = mockCourses.filter(
     (course) =>
@@ -100,8 +111,124 @@ const Course = () => {
           </motion.div>
 
           <AnimatePresence mode="wait">
+            {/* Default Screen - Rangefinder with Target */}
+            {!selectedCourse && !searchQuery && (
+              <motion.div
+                key="rangefinder"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="space-y-4"
+              >
+                {/* Main Distance Display */}
+                <motion.div
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="relative glass-card p-8 text-center glow-green"
+                >
+                  {/* Animated crosshair with flag */}
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-0 flex items-center justify-center opacity-10"
+                  >
+                    <Crosshair className="w-40 h-40 text-primary" />
+                  </motion.div>
+                  
+                  {/* Target with flag in center */}
+                  <div className="relative flex items-center justify-center mb-4">
+                    <div className="relative">
+                      <Target className="w-24 h-24 text-primary/30" />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <Flag className="w-8 h-8 text-primary" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="relative">
+                    <p className="text-sm text-muted-foreground mb-2 uppercase tracking-wider">Distance to Pin</p>
+                    <motion.div
+                      key={distances.middle}
+                      initial={{ scale: 1.1 }}
+                      animate={{ scale: 1 }}
+                      className="flex items-baseline justify-center gap-2"
+                    >
+                      <span className="text-7xl font-display font-bold text-gradient-green">
+                        {distances.middle}
+                      </span>
+                      <span className="text-2xl text-muted-foreground">yds</span>
+                    </motion.div>
+
+                    <div className="flex justify-center gap-8 mt-6">
+                      <div className="text-center">
+                        <p className="text-xs text-muted-foreground uppercase">Front</p>
+                        <p className="text-xl font-bold text-foreground">{distances.front}</p>
+                      </div>
+                      <div className="text-center">
+                        <Flag className="w-4 h-4 text-primary mx-auto mb-1" />
+                        <p className="text-xl font-bold text-primary">{distances.middle}</p>
+                      </div>
+                      <div className="text-center">
+                        <p className="text-xs text-muted-foreground uppercase">Back</p>
+                        <p className="text-xl font-bold text-foreground">{distances.back}</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Hazard Alert */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="flex items-center gap-3 bg-accent/10 border border-accent/20 rounded-xl p-4"
+                >
+                  <AlertTriangle className="w-5 h-5 text-accent" />
+                  <div>
+                    <p className="text-sm font-medium text-accent">Water Hazard</p>
+                    <p className="text-xs text-muted-foreground">{distances.hazard} yards to carry</p>
+                  </div>
+                </motion.div>
+
+                {/* Course Search Button */}
+                <Button
+                  variant="glass"
+                  className="w-full gap-2"
+                  onClick={() => setSearchQuery(" ")}
+                >
+                  <Search className="w-4 h-4" />
+                  Search Courses for Flyover
+                </Button>
+
+                {/* Club Recommendation */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="glass-card p-4"
+                >
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Suggested Club</p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                        <Target className="w-6 h-6 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-bold text-lg">7 Iron</p>
+                        <p className="text-sm text-muted-foreground">Avg: 150-160 yds</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm text-muted-foreground">Wind</p>
+                      <p className="font-medium">→ 8 mph</p>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+
             {/* Search Screen */}
-            {!selectedCourse && (
+            {(searchQuery || selectedCourse) && !selectedCourse && (
               <motion.div
                 key="search"
                 initial={{ opacity: 0 }}
