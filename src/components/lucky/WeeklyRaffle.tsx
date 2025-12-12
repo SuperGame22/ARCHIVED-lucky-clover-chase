@@ -8,7 +8,7 @@ interface WeeklyRaffleProps {
 
 export const WeeklyRaffle = ({ weeklyCloverCount }: WeeklyRaffleProps) => {
   const daysLeft = 4; // Mock days until raffle
-  const jackpot = "$500 Pro Shop Credit";
+  const jackpot = "$2500 Pro Shop Credit";
 
   return (
     <motion.div
