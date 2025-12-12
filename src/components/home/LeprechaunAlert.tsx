@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { MapPin, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
-import { CloverIcon } from "@/components/icons/CloverIcon";
 
 export const LeprechaunAlert = () => {
   return (
@@ -21,12 +20,13 @@ export const LeprechaunAlert = () => {
         />
         
         <div className="relative flex items-center gap-4">
-          {/* Clover icon */}
+          {/* Leprechaun emoji placeholder */}
           <motion.div
             animate={{ rotate: [-5, 5, -5] }}
             transition={{ duration: 2, repeat: Infinity }}
+            className="text-4xl"
           >
-            <CloverIcon className="w-10 h-10" />
+            🍀
           </motion.div>
           
           <div className="flex-1">
