@@ -114,7 +114,7 @@ const GoldMachine = () => {
                     </span>
                   </motion.div>
                   <p className="text-sm text-accent mt-2">
-                    {(potValue * 1000).toFixed(0)}mg of gold flakes
+                    Weight: {(potValue * 1000).toFixed(0)}mg of gold flakes
                   </p>
                 </div>
 
