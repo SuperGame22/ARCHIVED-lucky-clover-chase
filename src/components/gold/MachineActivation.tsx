@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { GoldCoinIcon } from "@/components/icons/GoldCoinIcon";
 import { Sparkles } from "lucide-react";
-import mascotImage from "@/assets/lucky-leprechaun-mascot.png";
+import mascotImage from "@/assets/leprechaun-mascot-transparent.png";
 
 interface MachineActivationProps {
   onComplete: () => void;
