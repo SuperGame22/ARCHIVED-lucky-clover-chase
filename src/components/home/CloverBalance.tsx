@@ -32,7 +32,7 @@ export const CloverBalance = ({
         <div className="flex-shrink-0">
           <p className="text-lg font-semibold text-muted-foreground mb-2">Your Clovers</p>
           <div className="flex items-center gap-4">
-            <CloverIcon className="w-14 h-14 text-primary animate-float" />
+            <CloverIcon className="w-12 h-14 text-primary animate-float" />
             <span className="text-6xl font-display font-bold text-gradient-green">{balance}</span>
           </div>
           <div className="flex items-center gap-2 mt-3 text-lg font-medium text-primary">
