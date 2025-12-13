@@ -22,9 +22,13 @@ export const LeprechaunAlert = () => {
         
         <div className="relative flex items-center gap-4">
           {/* Gold pot - same as gold page */}
-          <div className="w-16 h-14 flex items-center justify-center scale-50 -ml-2">
+          <motion.div 
+            className="w-14 h-12 flex items-center justify-center scale-[0.4] -ml-3"
+            animate={{ y: [0, -2, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          >
             <GoldPot />
-          </div>
+          </motion.div>
           
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">

@@ -8,15 +8,16 @@ const CourseIcon = ({ className }: { className?: string }) => (
     {/* Outer circle */}
     <circle cx="12" cy="12" r="10" />
     {/* Inner circle */}
-    <circle cx="12" cy="12" r="6" />
+    <circle cx="12" cy="12" r="5" />
     {/* Crosshair lines */}
     <line x1="12" y1="2" x2="12" y2="5" />
     <line x1="12" y1="19" x2="12" y2="22" />
     <line x1="2" y1="12" x2="5" y2="12" />
     <line x1="19" y1="12" x2="22" y2="12" />
-    {/* Flag */}
-    <line x1="12" y1="8" x2="12" y2="16" />
-    <path d="M12 8 L16 10 L12 12" fill="currentColor" />
+    {/* Flag pole */}
+    <line x1="12" y1="7" x2="12" y2="14" strokeWidth="2.5" />
+    {/* Flag - larger and more visible */}
+    <path d="M12 7 L17 9.5 L12 12" fill="currentColor" stroke="currentColor" strokeWidth="1.5" />
   </svg>
 );
 
@@ -33,7 +34,7 @@ export const BottomNav = () => {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card/90 backdrop-blur-xl border-t border-border safe-area-pb">
-      <div className="flex items-center justify-around h-16 max-w-lg mx-auto px-2">
+      <div className="flex items-center justify-around h-18 max-w-lg mx-auto px-2">
         {navItems.map(({ path, icon: Icon, label }) => {
           const isActive = location.pathname === path;
           return (
@@ -41,7 +42,7 @@ export const BottomNav = () => {
               key={path}
               to={path}
               className={cn(
-                "flex flex-col items-center justify-center gap-0.5 px-3 py-2 rounded-xl transition-all duration-300",
+                "flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-xl transition-all duration-300",
                 isActive
                   ? "text-[hsl(var(--lucky-gold-dark))] bg-primary/10"
                   : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
@@ -49,11 +50,11 @@ export const BottomNav = () => {
             >
               <Icon
                 className={cn(
-                  "w-5 h-5 transition-transform duration-300",
+                  "w-6 h-6 transition-transform duration-300",
                   isActive && "scale-110"
                 )}
               />
-              <span className="text-[10px] font-medium">{label}</span>
+              <span className="text-[11px] font-medium">{label}</span>
               {isActive && (
                 <div className="absolute -bottom-0 w-8 h-0.5 bg-[hsl(var(--lucky-gold-dark))] rounded-full" />
               )}

@@ -53,7 +53,7 @@ export const QuickActions = () => {
                 {action.badge}
               </span>
             )}
-            <action.icon className="w-6 h-6" />
+            <action.icon className="w-7 h-7" />
             <span className="text-xs font-medium">{action.label}</span>
           </Link>
         </motion.div>
