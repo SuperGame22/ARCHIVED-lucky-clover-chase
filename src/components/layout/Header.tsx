@@ -1,3 +1,4 @@
+import cloverSquare from "@/assets/clover-square.png";
 import { CloverIcon } from "@/components/icons/CloverIcon";
 import { GoldCoinIcon } from "@/components/icons/GoldCoinIcon";
 import { Bell, User } from "lucide-react";
@@ -14,7 +15,7 @@ export const Header = ({ clovers = 47, gold = 2.34 }: HeaderProps) => {
       <div className="flex items-center justify-between h-14 px-4 max-w-lg mx-auto">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <CloverIcon className="w-7 h-7 text-primary" />
+          <img src={cloverSquare} alt="Clover" className="w-7 h-7" />
           <span className="font-display font-bold text-lg">Lucky Golf</span>
         </Link>
 
