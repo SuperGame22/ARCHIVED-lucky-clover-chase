@@ -12,8 +12,8 @@ const actions = [
   },
   {
     icon: Target,
-    label: "AR Mode",
-    path: "/rangefinder?ar=true",
+    label: "Rangefinder",
+    path: "/rangefinder",
     color: "bg-primary/95 text-primary-foreground hover:bg-primary",
   },
   {
