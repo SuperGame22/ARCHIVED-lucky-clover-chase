@@ -1,6 +1,7 @@
 import cloverSquare from "@/assets/clover-square.png";
 import { CloverIcon } from "@/components/icons/CloverIcon";
 import { GoldCoinIcon } from "@/components/icons/GoldCoinIcon";
+import { WalletBadge } from "@/components/wallet/WalletBadge";
 import { Bell, User } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -20,7 +21,10 @@ export const Header = ({ clovers = 47, gold = 2.34 }: HeaderProps) => {
         </Link>
 
         {/* Currency Display */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          {/* Wallet Balance */}
+          <WalletBadge />
+
           {/* Clovers */}
           <div className="flex items-center gap-1.5 bg-primary/10 px-2.5 py-1 rounded-full">
             <CloverIcon className="w-4 h-4 text-primary" />
