@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Button } from "@/components/ui/button";
@@ -6,7 +7,8 @@ import { CloverIcon } from "@/components/icons/CloverIcon";
 import { Eye, MapPin, Target, Crosshair, Flag, AlertTriangle } from "lucide-react";
 
 const Rangefinder = () => {
-  const [arMode, setArMode] = useState(false);
+  const [searchParams] = useSearchParams();
+  const [arMode, setArMode] = useState(searchParams.get("ar") === "true");
   const [showClover, setShowClover] = useState(true);
 
   const distances = {

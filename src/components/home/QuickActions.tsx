@@ -12,8 +12,8 @@ const actions = [
   },
   {
     icon: Target,
-    label: "Rangefinder",
-    path: "/rangefinder",
+    label: "AR Mode",
+    path: "/rangefinder?ar=true",
     color: "bg-primary/95 text-primary-foreground hover:bg-primary",
   },
   {
@@ -53,7 +53,7 @@ export const QuickActions = () => {
                 {action.badge}
               </span>
             )}
-            <action.icon className="w-7 h-7" />
+            <action.icon className="w-8 h-8" />
             <span className="text-xs font-medium">{action.label}</span>
           </Link>
         </motion.div>

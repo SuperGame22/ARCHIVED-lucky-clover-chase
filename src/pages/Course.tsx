@@ -97,17 +97,15 @@ const Course = () => {
                   : "Search for a course"}
               </p>
             </div>
-            {selectedCourse && !selectedHole && (
-              <Button
-                variant="glass"
-                size="sm"
-                onClick={() => setShowHoleMap(!showHoleMap)}
-                className="gap-2"
-              >
-                <Eye className="w-4 h-4" />
-                {showHoleMap ? "List" : "Map"}
-              </Button>
-            )}
+            <Button
+              variant={arMode ? "gold" : "glass"}
+              size="sm"
+              onClick={() => setArMode(!arMode)}
+              className="gap-2"
+            >
+              <Eye className="w-5 h-5" />
+              {arMode ? "AR ON" : "AR Mode"}
+            </Button>
           </motion.div>
 
           <AnimatePresence mode="wait">
