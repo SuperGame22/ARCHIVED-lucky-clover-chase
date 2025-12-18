@@ -14,7 +14,142 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      competition_players: {
+        Row: {
+          competition_id: string
+          created_at: string
+          final_score: number | null
+          has_paid: boolean
+          id: string
+          user_id: string
+        }
+        Insert: {
+          competition_id: string
+          created_at?: string
+          final_score?: number | null
+          has_paid?: boolean
+          id?: string
+          user_id: string
+        }
+        Update: {
+          competition_id?: string
+          created_at?: string
+          final_score?: number | null
+          has_paid?: boolean
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "competition_players_competition_id_fkey"
+            columns: ["competition_id"]
+            isOneToOne: false
+            referencedRelation: "competitions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      competitions: {
+        Row: {
+          buy_in: number
+          course_name: string | null
+          created_at: string
+          id: string
+          pot_total: number
+          status: Database["public"]["Enums"]["competition_status"]
+          tee_time: string | null
+          updated_at: string
+          winner_id: string | null
+        }
+        Insert: {
+          buy_in: number
+          course_name?: string | null
+          created_at?: string
+          id?: string
+          pot_total?: number
+          status?: Database["public"]["Enums"]["competition_status"]
+          tee_time?: string | null
+          updated_at?: string
+          winner_id?: string | null
+        }
+        Update: {
+          buy_in?: number
+          course_name?: string | null
+          created_at?: string
+          id?: string
+          pot_total?: number
+          status?: Database["public"]["Enums"]["competition_status"]
+          tee_time?: string | null
+          updated_at?: string
+          winner_id?: string | null
+        }
+        Relationships: []
+      }
+      transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string | null
+          id: string
+          metadata: Json | null
+          type: Database["public"]["Enums"]["transaction_type"]
+          user_id: string
+          wallet_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          type: Database["public"]["Enums"]["transaction_type"]
+          user_id: string
+          wallet_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          type?: Database["public"]["Enums"]["transaction_type"]
+          user_id?: string
+          wallet_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_wallet_id_fkey"
+            columns: ["wallet_id"]
+            isOneToOne: false
+            referencedRelation: "wallets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      wallets: {
+        Row: {
+          balance: number
+          created_at: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          balance?: number
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          balance?: number
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +158,14 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      competition_status: "pending" | "active" | "completed" | "cancelled"
+      transaction_type:
+        | "deposit"
+        | "withdrawal"
+        | "buy_in"
+        | "winnings"
+        | "purchase"
+        | "refund"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +292,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      competition_status: ["pending", "active", "completed", "cancelled"],
+      transaction_type: [
+        "deposit",
+        "withdrawal",
+        "buy_in",
+        "winnings",
+        "purchase",
+        "refund",
+      ],
+    },
   },
 } as const

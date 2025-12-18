@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Users, Clock, MapPin, Send, Check, X } from "lucide-react";
+import { Users, Clock, MapPin, Send, Check, X, DollarSign, Trophy, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CloverIcon } from "@/components/icons/CloverIcon";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { useWallet } from "@/contexts/WalletContext";
 import { toast } from "sonner";
 
 interface Player {
@@ -20,6 +23,9 @@ interface TeeTimeInvite {
   host: Player;
   acceptedPlayers: Player[];
   maxPlayers: number;
+  isCompetition?: boolean;
+  buyIn?: number;
+  potTotal?: number;
 }
 
 const mockPlayers: Player[] = [
@@ -40,8 +46,13 @@ const mockInvites: TeeTimeInvite[] = [
       { id: "6", name: "Erin Eagle", luckyLevel: 3, avatar: "👱‍♀️" },
     ],
     maxPlayers: 4,
+    isCompetition: true,
+    buyIn: 20,
+    potTotal: 40,
   },
 ];
+
+const BUY_IN_OPTIONS = [5, 10, 20, 50];
 
 interface FindPlayersProps {
   userLuckyLevel: number;
@@ -50,8 +61,26 @@ interface FindPlayersProps {
 export const FindPlayers = ({ userLuckyLevel }: FindPlayersProps) => {
   const [showCreateInvite, setShowCreateInvite] = useState(false);
   const [invites, setInvites] = useState(mockInvites);
+  const [isCompetition, setIsCompetition] = useState(false);
+  const [selectedBuyIn, setSelectedBuyIn] = useState(20);
+  
+  const { balance, deductFunds } = useWallet();
 
-  const handleAcceptInvite = (inviteId: string) => {
+  const handleAcceptInvite = async (inviteId: string) => {
+    const invite = invites.find((inv) => inv.id === inviteId);
+    if (!invite) return;
+
+    // Check if competition and handle payment
+    if (invite.isCompetition && invite.buyIn) {
+      if (balance < invite.buyIn) {
+        toast.error(`Insufficient funds. Need $${invite.buyIn.toFixed(2)}`);
+        return;
+      }
+
+      const success = await deductFunds(invite.buyIn, "buy_in", `Competition buy-in: ${invite.courseName}`);
+      if (!success) return;
+    }
+
     setInvites((prev) =>
       prev.map((inv) => {
         if (inv.id === inviteId && inv.acceptedPlayers.length < inv.maxPlayers - 1) {
@@ -61,6 +90,7 @@ export const FindPlayers = ({ userLuckyLevel }: FindPlayersProps) => {
               ...inv.acceptedPlayers,
               { id: "me", name: "You", luckyLevel: userLuckyLevel, avatar: "🍀" },
             ],
+            potTotal: inv.isCompetition ? (inv.potTotal || 0) + (inv.buyIn || 0) : undefined,
           };
           
           if (updated.acceptedPlayers.length === inv.maxPlayers - 1) {
@@ -76,7 +106,18 @@ export const FindPlayers = ({ userLuckyLevel }: FindPlayersProps) => {
     );
   };
 
-  const handleCreateInvite = () => {
+  const handleCreateInvite = async () => {
+    // If competition, check balance
+    if (isCompetition) {
+      if (balance < selectedBuyIn) {
+        toast.error(`Insufficient funds. Need $${selectedBuyIn.toFixed(2)}`);
+        return;
+      }
+
+      const success = await deductFunds(selectedBuyIn, "buy_in", "Competition buy-in (host)");
+      if (!success) return;
+    }
+
     const newInvite: TeeTimeInvite = {
       id: `inv-${Date.now()}`,
       courseName: "Pebble Beach",
@@ -85,10 +126,17 @@ export const FindPlayers = ({ userLuckyLevel }: FindPlayersProps) => {
       host: { id: "me", name: "You", luckyLevel: userLuckyLevel, avatar: "🍀" },
       acceptedPlayers: [],
       maxPlayers: 4,
+      isCompetition,
+      buyIn: isCompetition ? selectedBuyIn : undefined,
+      potTotal: isCompetition ? selectedBuyIn : undefined,
     };
     setInvites((prev) => [newInvite, ...prev]);
     setShowCreateInvite(false);
-    toast.success("Tee time invite sent to players at your Lucky Level!");
+    toast.success(
+      isCompetition 
+        ? `Competition created! $${selectedBuyIn} pot started 🏆` 
+        : "Tee time invite sent to players at your Lucky Level!"
+    );
   };
 
   return (
@@ -176,9 +224,85 @@ export const FindPlayers = ({ userLuckyLevel }: FindPlayersProps) => {
               </div>
             </div>
 
-            <Button variant="lucky" className="w-full" onClick={handleCreateInvite}>
-              <Send className="w-4 h-4 mr-2" />
-              Send Invite to 12 Players
+            {/* Competition Toggle */}
+            <div className="bg-muted/50 rounded-xl p-4 mb-4 space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Trophy className="w-4 h-4 text-accent" />
+                  <Label htmlFor="competition-mode" className="font-medium">
+                    Competition Mode
+                  </Label>
+                </div>
+                <Switch
+                  id="competition-mode"
+                  checked={isCompetition}
+                  onCheckedChange={setIsCompetition}
+                />
+              </div>
+
+              <AnimatePresence>
+                {isCompetition && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="space-y-3"
+                  >
+                    <p className="text-xs text-muted-foreground">
+                      Winner takes all! Lowest score wins the pot.
+                    </p>
+                    
+                    <div className="space-y-2">
+                      <Label className="text-xs text-muted-foreground">Buy-in Amount</Label>
+                      <div className="grid grid-cols-4 gap-2">
+                        {BUY_IN_OPTIONS.map((amount) => (
+                          <Button
+                            key={amount}
+                            variant={selectedBuyIn === amount ? "lucky" : "outline"}
+                            size="sm"
+                            onClick={() => setSelectedBuyIn(amount)}
+                            className="text-sm"
+                          >
+                            ${amount}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between text-sm bg-accent/10 rounded-lg p-3">
+                      <span className="text-muted-foreground">Pot Total (4 players):</span>
+                      <span className="font-bold text-accent">${selectedBuyIn * 4}</span>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <Wallet className="w-3 h-3" />
+                      <span>Your balance: ${balance.toFixed(2)}</span>
+                      {balance < selectedBuyIn && (
+                        <span className="text-destructive">(Need ${(selectedBuyIn - balance).toFixed(2)} more)</span>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            <Button 
+              variant="lucky" 
+              className="w-full" 
+              onClick={handleCreateInvite}
+              disabled={isCompetition && balance < selectedBuyIn}
+            >
+              {isCompetition ? (
+                <>
+                  <Trophy className="w-4 h-4 mr-2" />
+                  Create ${selectedBuyIn} Competition
+                </>
+              ) : (
+                <>
+                  <Send className="w-4 h-4 mr-2" />
+                  Send Invite to 12 Players
+                </>
+              )}
             </Button>
           </motion.div>
         )}
@@ -194,6 +318,7 @@ export const FindPlayers = ({ userLuckyLevel }: FindPlayersProps) => {
             const spotsLeft = invite.maxPlayers - 1 - invite.acceptedPlayers.length;
             const isFull = spotsLeft === 0;
             const hasJoined = invite.acceptedPlayers.some((p) => p.id === "me");
+            const canAfford = !invite.isCompetition || balance >= (invite.buyIn || 0);
 
             return (
               <motion.div
@@ -205,7 +330,15 @@ export const FindPlayers = ({ userLuckyLevel }: FindPlayersProps) => {
               >
                 <div className="flex items-start justify-between mb-3">
                   <div>
-                    <p className="font-medium">{invite.courseName}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="font-medium">{invite.courseName}</p>
+                      {invite.isCompetition && (
+                        <span className="text-xs bg-accent/20 text-accent px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
+                          <Trophy className="w-3 h-3" />
+                          ${invite.potTotal} Pot
+                        </span>
+                      )}
+                    </div>
                     <p className="text-sm text-muted-foreground">
                       {invite.date} at {invite.time}
                     </p>
@@ -254,13 +387,24 @@ export const FindPlayers = ({ userLuckyLevel }: FindPlayersProps) => {
 
                 {!isFull && !hasJoined && invite.host.id !== "me" && (
                   <Button
-                    variant="outline"
+                    variant={invite.isCompetition ? "default" : "outline"}
                     size="sm"
-                    className="w-full"
+                    className={`w-full ${invite.isCompetition ? "bg-accent hover:bg-accent/90 text-accent-foreground" : ""}`}
                     onClick={() => handleAcceptInvite(invite.id)}
+                    disabled={!canAfford}
                   >
-                    <Check className="w-4 h-4 mr-2" />
-                    Join This Foursome
+                    {invite.isCompetition ? (
+                      <>
+                        <DollarSign className="w-4 h-4 mr-1" />
+                        Join for ${invite.buyIn}
+                        {!canAfford && " (Insufficient funds)"}
+                      </>
+                    ) : (
+                      <>
+                        <Check className="w-4 h-4 mr-2" />
+                        Join This Foursome
+                      </>
+                    )}
                   </Button>
                 )}
 
