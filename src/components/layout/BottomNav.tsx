@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Home, ShoppingBag, Gift, Coins } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// Custom Course icon with target and flag
+// Custom Course icon with "On" (n + flag) design
 const CourseIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
     {/* Outer circle */}
@@ -14,10 +14,12 @@ const CourseIcon = ({ className }: { className?: string }) => (
     <line x1="12" y1="19" x2="12" y2="22" />
     <line x1="2" y1="12" x2="5" y2="12" />
     <line x1="19" y1="12" x2="22" y2="12" />
+    {/* "n" letter before the flag */}
+    <text x="8.5" y="13" fontSize="6" fontWeight="bold" fill="currentColor" stroke="none">n</text>
     {/* Flag pole */}
-    <line x1="12" y1="7" x2="12" y2="14" strokeWidth="2.5" />
-    {/* Flag - larger and more visible */}
-    <path d="M12 7 L17 9.5 L12 12" fill="currentColor" stroke="currentColor" strokeWidth="1.5" />
+    <line x1="13" y1="7" x2="13" y2="14" strokeWidth="2" />
+    {/* Flag */}
+    <path d="M13 7 L17 9.5 L13 12" fill="currentColor" stroke="currentColor" strokeWidth="1" />
   </svg>
 );
 
@@ -50,7 +52,7 @@ export const BottomNav = () => {
             >
               <Icon
                 className={cn(
-                  "w-6 h-6 transition-transform duration-300",
+                  "w-7 h-7 transition-transform duration-300",
                   isActive && "scale-110"
                 )}
               />
