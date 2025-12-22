@@ -95,27 +95,16 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
         return false;
       }
 
-      // Update wallet balance
-      const newBalance = balance + amount;
-      const { error: updateError } = await supabase
-        .from("wallets")
-        .update({ balance: newBalance })
-        .eq("id", walletId);
+      // Use atomic database function to prevent race conditions
+      const { data, error } = await supabase.rpc('add_wallet_funds', {
+        p_wallet_id: walletId,
+        p_user_id: user.id,
+        p_amount: amount,
+        p_description: description,
+        p_transaction_type: 'deposit'
+      });
 
-      if (updateError) throw updateError;
-
-      // Record transaction
-      const { error: txnError } = await supabase
-        .from("transactions")
-        .insert({
-          user_id: user.id,
-          wallet_id: walletId,
-          type: "deposit",
-          amount,
-          description,
-        });
-
-      if (txnError) throw txnError;
+      if (error) throw error;
 
       await refreshWallet();
       toast.success(`Added $${amount.toFixed(2)} to your wallet`);
@@ -139,30 +128,24 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
         return false;
       }
 
-      if (balance < amount) {
-        toast.error("Insufficient funds");
+      // Use atomic database function with row locking to prevent race conditions
+      const { data, error } = await supabase.rpc('deduct_wallet_funds', {
+        p_wallet_id: walletId,
+        p_user_id: user.id,
+        p_amount: amount,
+        p_description: description || (type === "buy_in" ? "Competition buy-in" : "Purchase"),
+        p_transaction_type: type
+      });
+
+      if (error) {
+        if (error.message.includes("Insufficient funds")) {
+          toast.error("Insufficient funds");
+        } else {
+          toast.error("Transaction failed");
+        }
+        console.error("Error deducting funds:", error);
         return false;
       }
-
-      const newBalance = balance - amount;
-      const { error: updateError } = await supabase
-        .from("wallets")
-        .update({ balance: newBalance })
-        .eq("id", walletId);
-
-      if (updateError) throw updateError;
-
-      const { error: txnError } = await supabase
-        .from("transactions")
-        .insert({
-          user_id: user.id,
-          wallet_id: walletId,
-          type,
-          amount: -amount,
-          description: description || (type === "buy_in" ? "Competition buy-in" : "Purchase"),
-        });
-
-      if (txnError) throw txnError;
 
       await refreshWallet();
       return true;
@@ -178,25 +161,16 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user || !walletId) return false;
 
-      const newBalance = balance + amount;
-      const { error: updateError } = await supabase
-        .from("wallets")
-        .update({ balance: newBalance })
-        .eq("id", walletId);
+      // Use atomic database function to prevent race conditions
+      const { data, error } = await supabase.rpc('add_wallet_funds', {
+        p_wallet_id: walletId,
+        p_user_id: user.id,
+        p_amount: amount,
+        p_description: description,
+        p_transaction_type: 'winnings'
+      });
 
-      if (updateError) throw updateError;
-
-      const { error: txnError } = await supabase
-        .from("transactions")
-        .insert({
-          user_id: user.id,
-          wallet_id: walletId,
-          type: "winnings",
-          amount,
-          description,
-        });
-
-      if (txnError) throw txnError;
+      if (error) throw error;
 
       await refreshWallet();
       toast.success(`You won $${amount.toFixed(2)}! 🏆`);
