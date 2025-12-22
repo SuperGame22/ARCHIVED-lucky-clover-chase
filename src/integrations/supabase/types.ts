@@ -155,7 +155,26 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      add_wallet_funds: {
+        Args: {
+          p_amount: number
+          p_description: string
+          p_transaction_type: Database["public"]["Enums"]["transaction_type"]
+          p_user_id: string
+          p_wallet_id: string
+        }
+        Returns: Json
+      }
+      deduct_wallet_funds: {
+        Args: {
+          p_amount: number
+          p_description: string
+          p_transaction_type: Database["public"]["Enums"]["transaction_type"]
+          p_user_id: string
+          p_wallet_id: string
+        }
+        Returns: Json
+      }
     }
     Enums: {
       competition_status: "pending" | "active" | "completed" | "cancelled"
