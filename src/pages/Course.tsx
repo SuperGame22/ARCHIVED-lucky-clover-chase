@@ -539,48 +539,73 @@ const Course = () => {
                     </Button>
                   </div>
 
-                  {/* Speed Control - Gas Pedal Style */}
-                  <div className="space-y-2">
+                  {/* Golf Cart Pedal Controls */}
+                  <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Gauge className="w-4 h-4 text-muted-foreground" />
-                        <span className="text-sm text-muted-foreground">Speed</span>
-                      </div>
+                      <span className="text-sm text-muted-foreground">Speed Control</span>
                       <span className="text-sm font-semibold">{playbackSpeed.toFixed(2)}x</span>
                     </div>
                     
-                    <div className="flex items-center gap-2">
-                      <Button
-                        variant="glass"
-                        size="sm"
+                    {/* Golf Cart Pedals */}
+                    <div className="flex items-end justify-center gap-6">
+                      {/* Brake Pedal */}
+                      <motion.button
+                        className="relative flex flex-col items-center"
+                        whileTap={{ scale: 0.95 }}
                         onClick={() => handleSpeedChange(-0.25)}
                         disabled={playbackSpeed <= 0.25}
                       >
-                        -
-                      </Button>
-                      
-                      {/* Speed bar */}
-                      <div className="flex-1 h-8 bg-muted/50 rounded-full overflow-hidden relative">
-                        <motion.div
-                          className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary via-lucky-emerald to-accent rounded-full"
-                          animate={{ width: `${(playbackSpeed / 3) * 100}%` }}
-                          transition={{ type: "spring", stiffness: 300 }}
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="text-xs font-semibold text-foreground drop-shadow-sm">
-                            {playbackSpeed <= 0.5 ? "🐢" : playbackSpeed >= 2 ? "🏎️" : "🚗"}
-                          </span>
+                        <span className="text-xs text-muted-foreground mb-1">BRAKE</span>
+                        <div className={`relative w-14 h-20 rounded-t-lg rounded-b-md shadow-lg transition-all ${
+                          playbackSpeed <= 0.25 
+                            ? "bg-muted/50 cursor-not-allowed" 
+                            : "bg-gradient-to-b from-red-500 to-red-700 hover:from-red-400 hover:to-red-600 cursor-pointer"
+                        }`}>
+                          {/* Pedal texture lines */}
+                          <div className="absolute inset-x-2 top-3 space-y-1.5">
+                            {[...Array(5)].map((_, i) => (
+                              <div key={i} className="h-0.5 bg-black/20 rounded-full" />
+                            ))}
+                          </div>
+                          {/* Pedal stem */}
+                          <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-4 h-4 bg-muted-foreground/30 rounded-b-md" />
                         </div>
+                        <span className="mt-5 text-xs font-semibold">🐢 Slow</span>
+                      </motion.button>
+
+                      {/* Speed Display */}
+                      <div className="flex flex-col items-center mb-4">
+                        <Gauge className="w-8 h-8 text-accent mb-1" />
+                        <span className="text-2xl font-bold">{playbackSpeed.toFixed(1)}x</span>
+                        <span className="text-xs text-muted-foreground">
+                          {playbackSpeed <= 0.5 ? "Crawling" : playbackSpeed <= 1 ? "Cruising" : playbackSpeed <= 2 ? "Speeding" : "Flying!"}
+                        </span>
                       </div>
-                      
-                      <Button
-                        variant="glass"
-                        size="sm"
+
+                      {/* Gas Pedal */}
+                      <motion.button
+                        className="relative flex flex-col items-center"
+                        whileTap={{ scale: 0.95 }}
                         onClick={() => handleSpeedChange(0.25)}
                         disabled={playbackSpeed >= 3}
                       >
-                        +
-                      </Button>
+                        <span className="text-xs text-muted-foreground mb-1">GAS</span>
+                        <div className={`relative w-14 h-24 rounded-t-lg rounded-b-md shadow-lg transition-all ${
+                          playbackSpeed >= 3 
+                            ? "bg-muted/50 cursor-not-allowed" 
+                            : "bg-gradient-to-b from-primary to-lucky-emerald hover:from-lucky-green-light hover:to-primary cursor-pointer"
+                        }`}>
+                          {/* Pedal texture lines */}
+                          <div className="absolute inset-x-2 top-3 space-y-1.5">
+                            {[...Array(6)].map((_, i) => (
+                              <div key={i} className="h-0.5 bg-black/20 rounded-full" />
+                            ))}
+                          </div>
+                          {/* Pedal stem */}
+                          <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-4 h-4 bg-muted-foreground/30 rounded-b-md" />
+                        </div>
+                        <span className="mt-5 text-xs font-semibold">🏎️ Fast</span>
+                      </motion.button>
                     </div>
                   </div>
                 </div>

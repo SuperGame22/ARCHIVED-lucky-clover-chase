@@ -5,9 +5,12 @@ import { Button } from "@/components/ui/button";
 import { GoldMachineVisual } from "@/components/gold/GoldMachineVisual";
 import { NoMachineState } from "@/components/gold/NoMachineState";
 import { MachineActivation } from "@/components/gold/MachineActivation";
-import { Zap, Wrench, ArrowUp, Sparkles, Clock, TrendingUp } from "lucide-react";
+import { Zap, Wrench, ArrowUp, Sparkles, Clock, TrendingUp, Banknote } from "lucide-react";
+import { useWallet } from "@/contexts/WalletContext";
+import { toast } from "sonner";
 
 const GoldMachine = () => {
+  const { addFunds } = useWallet();
   const [hasMachine, setHasMachine] = useState(false);
   const [showActivation, setShowActivation] = useState(false);
   const [potValue, setPotValue] = useState(4.72);
@@ -15,6 +18,7 @@ const GoldMachine = () => {
   const [machineHealth, setMachineHealth] = useState(78);
   const [machineLevel, setMachineLevel] = useState(3);
   const [collecting, setCollecting] = useState(false);
+  const [cashingOut, setCashingOut] = useState(false);
 
   // Simulate gold generation
   useEffect(() => {
@@ -40,6 +44,19 @@ const GoldMachine = () => {
       setPotValue(0);
       setCollecting(false);
     }, 1500);
+  };
+
+  const cashOutGold = async () => {
+    if (potValue < 0.01) return;
+    setCashingOut(true);
+    const cashAmount = potValue;
+    
+    const success = await addFunds(cashAmount, "Gold Machine cashout");
+    
+    if (success) {
+      setPotValue(0);
+    }
+    setCashingOut(false);
   };
 
   const upgradeMachine = () => {
@@ -162,7 +179,7 @@ const GoldMachine = () => {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-3 gap-3">
                   <Button
                     variant="gold"
                     size="lg"
@@ -185,13 +202,34 @@ const GoldMachine = () => {
                     )}
                   </Button>
                   <Button
+                    variant="default"
+                    size="lg"
+                    onClick={cashOutGold}
+                    disabled={potValue < 0.01 || cashingOut}
+                    className="relative overflow-hidden bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500"
+                  >
+                    {cashingOut ? (
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      >
+                        <Banknote className="w-5 h-5" />
+                      </motion.div>
+                    ) : (
+                      <>
+                        <Banknote className="w-5 h-5" />
+                        Cash Out
+                      </>
+                    )}
+                  </Button>
+                  <Button
                     variant="glass"
                     size="lg"
                     onClick={maintainMachine}
                     disabled={potValue < 1 || machineHealth === 100}
                   >
                     <Wrench className="w-5 h-5" />
-                    Maintain ($1)
+                    Maintain
                   </Button>
                 </div>
               </div>
