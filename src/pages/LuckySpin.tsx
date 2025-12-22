@@ -4,36 +4,48 @@ import { AppLayout } from "@/components/layout/AppLayout";
 import { Button } from "@/components/ui/button";
 import { CloverIcon } from "@/components/icons/CloverIcon";
 import { WeeklyRaffle } from "@/components/lucky/WeeklyRaffle";
-import { Gift, Clock, MapPin, Ticket, Star, Sparkles } from "lucide-react";
+import { Gift, Clock, MapPin, Ticket, Star, Sparkles, RotateCcw, Shirt } from "lucide-react";
 
+// Doubled the prizes with new items
 const prizes = [
   { label: "Tee Time", color: "from-primary to-lucky-emerald", icon: Clock, rare: true },
   { label: "50% Off", color: "from-accent to-amber-600", icon: Ticket },
   { label: "+5 Clovers", color: "from-green-500 to-emerald-600", icon: CloverIcon },
-  { label: "Free Hat", color: "from-purple-500 to-pink-500", icon: Gift },
+  { label: "Polo Shirt", color: "from-blue-600 to-indigo-600", icon: Shirt, rare: true },
   { label: "25% Off", color: "from-blue-500 to-cyan-500", icon: Ticket },
   { label: "+10 Clovers", color: "from-primary to-lucky-green-light", icon: CloverIcon },
-  { label: "Golf Balls", color: "from-orange-500 to-red-500", icon: Gift },
+  { label: "Putter", color: "from-slate-500 to-zinc-600", icon: Gift, rare: true },
   { label: "+1 Clover", color: "from-gray-500 to-gray-600", icon: CloverIcon },
+  { label: "Free Hat", color: "from-purple-500 to-pink-500", icon: Gift },
+  { label: "Wedge", color: "from-orange-500 to-amber-600", icon: Gift, rare: true },
+  { label: "Golf Balls", color: "from-orange-500 to-red-500", icon: Gift },
+  { label: "+3 Clovers", color: "from-emerald-500 to-teal-600", icon: CloverIcon },
+  { label: "Driver", color: "from-violet-600 to-purple-700", icon: Gift, rare: true },
+  { label: "15% Off", color: "from-teal-500 to-cyan-600", icon: Ticket },
+  { label: "Glove", color: "from-rose-500 to-pink-600", icon: Gift },
+  { label: "+2 Clovers", color: "from-lime-500 to-green-600", icon: CloverIcon },
 ];
 
 const LuckySpin = () => {
   const [spinning, setSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [result, setResult] = useState<typeof prizes[0] | null>(null);
-  const [spinsRemaining, setSpinsRemaining] = useState(1);
-  const weeklyCloverCount = 12; // Mock weekly clover count
+  const [spinsRemaining, setSpinsRemaining] = useState(3);
+  const [canRespin, setCanRespin] = useState(false);
+  const weeklyCloverCount = 12;
 
   const spin = () => {
     if (spinning || spinsRemaining <= 0) return;
 
     setSpinning(true);
     setResult(null);
+    setCanRespin(false);
 
     // Random result calculation
     const prizeIndex = Math.floor(Math.random() * prizes.length);
     const segmentAngle = 360 / prizes.length;
-    const targetRotation = 360 * 5 + (prizeIndex * segmentAngle) + segmentAngle / 2;
+    // Adjust so the prize lands at the top pointer position
+    const targetRotation = 360 * 5 + (360 - (prizeIndex * segmentAngle) - segmentAngle / 2);
 
     setRotation((prev) => prev + targetRotation);
 
@@ -41,7 +53,18 @@ const LuckySpin = () => {
       setSpinning(false);
       setResult(prizes[prizeIndex]);
       setSpinsRemaining((prev) => prev - 1);
+      // Allow respin for non-rare prizes if spins remain
+      if (!prizes[prizeIndex].rare && spinsRemaining > 1) {
+        setCanRespin(true);
+      }
     }, 4000);
+  };
+
+  const respin = () => {
+    if (!canRespin || spinsRemaining <= 0) return;
+    setCanRespin(false);
+    setResult(null);
+    spin();
   };
 
   return (
@@ -57,27 +80,27 @@ const LuckySpin = () => {
           <p className="text-muted-foreground">Spin for discounted tee times & prizes!</p>
         </motion.div>
 
-        {/* Spin Wheel */}
+        {/* Spin Wheel - Made larger */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="relative flex items-center justify-center py-8"
+          className="relative flex items-center justify-center py-6"
         >
           {/* Outer glow */}
-          <div className="absolute w-[22rem] h-[22rem] bg-gradient-to-r from-primary via-accent to-primary rounded-full blur-3xl opacity-30 animate-pulse" />
+          <div className="absolute w-[26rem] h-[26rem] bg-gradient-to-r from-primary via-accent to-primary rounded-full blur-3xl opacity-30 animate-pulse" />
 
           {/* Wheel */}
           <div className="relative">
             {/* Pointer */}
-            <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-20">
-              <div className="w-0 h-0 border-l-[15px] border-r-[15px] border-t-[25px] border-l-transparent border-r-transparent border-t-accent drop-shadow-lg" />
+            <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-20">
+              <div className="w-0 h-0 border-l-[18px] border-r-[18px] border-t-[30px] border-l-transparent border-r-transparent border-t-accent drop-shadow-lg" />
             </div>
 
-            {/* Spinning wheel */}
+            {/* Spinning wheel - now 96 (24rem / 384px) */}
             <motion.div
               animate={{ rotate: rotation }}
               transition={{ duration: 4, ease: [0.2, 0.8, 0.2, 1] }}
-              className="relative w-80 h-80"
+              className="relative w-96 h-96"
             >
               <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-2xl">
                 {prizes.map((prize, i) => {
@@ -95,28 +118,34 @@ const LuckySpin = () => {
                     <path
                       key={i}
                       d={`M 50 50 L ${x1} ${y1} A 50 50 0 ${largeArcFlag} 1 ${x2} ${y2} Z`}
-                      className={`fill-current ${i % 2 === 0 ? "text-card" : "text-muted"}`}
+                      className={`fill-current ${
+                        prize.rare 
+                          ? "text-accent/80" 
+                          : i % 2 === 0 
+                            ? "text-card" 
+                            : "text-muted"
+                      }`}
                       stroke="hsl(var(--border))"
-                      strokeWidth="0.5"
+                      strokeWidth="0.3"
                     />
                   );
                 })}
                 {/* Center circle */}
-                <circle cx="50" cy="50" r="12" className="fill-primary" />
-                <circle cx="50" cy="50" r="8" className="fill-background" />
+                <circle cx="50" cy="50" r="10" className="fill-primary" />
+                <circle cx="50" cy="50" r="6" className="fill-background" />
               </svg>
 
               {/* Prize labels */}
               {prizes.map((prize, i) => {
                 const angle = (360 / prizes.length) * i + 360 / prizes.length / 2 - 90;
                 const radians = angle * (Math.PI / 180);
-                const x = 50 + 32 * Math.cos(radians);
-                const y = 50 + 32 * Math.sin(radians);
+                const x = 50 + 35 * Math.cos(radians);
+                const y = 50 + 35 * Math.sin(radians);
 
                 return (
                   <div
                     key={i}
-                    className="absolute text-[10px] font-medium text-foreground"
+                    className={`absolute text-[8px] font-bold ${prize.rare ? "text-accent-foreground" : "text-foreground"}`}
                     style={{
                       left: `${x}%`,
                       top: `${y}%`,
@@ -158,6 +187,26 @@ const LuckySpin = () => {
                   <span className="text-sm font-medium">RARE PRIZE!</span>
                 </div>
               )}
+              
+              {/* Respin option */}
+              {canRespin && spinsRemaining > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 pt-4 border-t border-border"
+                >
+                  <p className="text-sm text-muted-foreground mb-3">Not happy? Use a spin to try again!</p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={respin}
+                    className="gap-2"
+                  >
+                    <RotateCcw className="w-4 h-4" />
+                    Re-spin ({spinsRemaining} left)
+                  </Button>
+                </motion.div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
@@ -191,7 +240,7 @@ const LuckySpin = () => {
           </Button>
           <p className="text-center text-sm text-muted-foreground mt-2">
             {spinsRemaining > 0
-              ? `${spinsRemaining} free spin available!`
+              ? `${spinsRemaining} spin${spinsRemaining > 1 ? 's' : ''} available!`
               : "Purchase more spins to continue"}
           </p>
         </motion.div>
@@ -209,9 +258,10 @@ const LuckySpin = () => {
           <h3 className="font-display font-semibold text-lg mb-4">Recent Winners</h3>
           <div className="space-y-3">
             {[
-              { name: "Mike T.", prize: "Tee Time at Pebble", time: "2 min ago" },
-              { name: "Sarah L.", prize: "+10 Clovers", time: "5 min ago" },
-              { name: "John D.", prize: "50% Off Gear", time: "12 min ago" },
+              { name: "Mike T.", prize: "Driver", time: "1 min ago" },
+              { name: "Sarah L.", prize: "Polo Shirt", time: "3 min ago" },
+              { name: "John D.", prize: "50% Off Gear", time: "8 min ago" },
+              { name: "Emma R.", prize: "Putter", time: "15 min ago" },
             ].map((winner, i) => (
               <div
                 key={i}
