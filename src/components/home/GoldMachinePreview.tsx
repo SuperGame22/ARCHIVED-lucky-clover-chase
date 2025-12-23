@@ -3,6 +3,7 @@ import { GoldCoinIcon } from "@/components/icons/GoldCoinIcon";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Zap } from "lucide-react";
+import { GoldPot } from "@/components/gold/GoldPot";
 
 interface GoldMachinePreviewProps {
   potValue: number;
@@ -31,28 +32,20 @@ export const GoldMachinePreview = ({ potValue, generationRate, health }: GoldMac
         </div>
 
         <div className="flex items-center gap-4">
-          {/* Animated pot */}
-          <div className="relative">
+          {/* Gold Pot - scaled down to fit the square area */}
+          <div className="relative w-20 h-20 flex items-center justify-center">
             <motion.div
+              className="scale-[0.55] origin-center"
               animate={{ 
-                rotateZ: [0, -2, 2, 0],
+                rotateZ: [0, -1, 1, 0],
               }}
               transition={{ 
                 duration: 3,
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              className="w-20 h-20 bg-gradient-to-br from-lucky-gold to-amber-600 rounded-2xl flex items-center justify-center shadow-lg animate-pulse-glow"
             >
-              <GoldCoinIcon className="w-10 h-10 text-accent-foreground" animate />
-            </motion.div>
-            {/* Floating coins */}
-            <motion.div
-              animate={{ y: [-5, 5, -5] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="absolute -top-2 -right-2"
-            >
-              <GoldCoinIcon className="w-5 h-5 text-accent" />
+              <GoldPot />
             </motion.div>
           </div>
 

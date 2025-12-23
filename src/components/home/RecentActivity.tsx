@@ -6,7 +6,7 @@ import { ShoppingBag, Target, Trophy } from "lucide-react";
 const activities = [
   {
     type: "clover",
-    title: "Found AR Clover",
+    title: "Found Clover",
     subtitle: "Hole 7 at Pebble Beach",
     amount: "+1",
     time: "2h ago",
