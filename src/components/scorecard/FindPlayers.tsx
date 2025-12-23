@@ -1,56 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Users, Clock, MapPin, Send, Check, X, DollarSign, Trophy, Wallet } from "lucide-react";
+import { Users, Clock, MapPin, Send, Check, X, DollarSign, Trophy, Wallet, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CloverIcon } from "@/components/icons/CloverIcon";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { useWallet } from "@/contexts/WalletContext";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
-interface Player {
+interface CompetitionPlayer {
   id: string;
-  name: string;
-  luckyLevel: number;
-  avatar: string;
+  user_id: string;
+  has_paid: boolean;
 }
 
-interface TeeTimeInvite {
+interface Competition {
   id: string;
-  courseName: string;
-  date: string;
-  time: string;
-  host: Player;
-  acceptedPlayers: Player[];
-  maxPlayers: number;
-  isCompetition?: boolean;
-  buyIn?: number;
-  potTotal?: number;
+  course_name: string | null;
+  buy_in: number;
+  pot_total: number;
+  status: string;
+  tee_time: string | null;
+  created_at: string;
+  creator_id: string | null;
+  competition_players: CompetitionPlayer[];
 }
-
-const mockPlayers: Player[] = [
-  { id: "1", name: "Paddy O'Birdie", luckyLevel: 3, avatar: "🧔" },
-  { id: "2", name: "Sean Fairway", luckyLevel: 3, avatar: "👨" },
-  { id: "3", name: "Molly Mulligan", luckyLevel: 4, avatar: "👩" },
-  { id: "4", name: "Finn McPutter", luckyLevel: 3, avatar: "🧑" },
-];
-
-const mockInvites: TeeTimeInvite[] = [
-  {
-    id: "inv1",
-    courseName: "Pebble Beach",
-    date: "Tomorrow",
-    time: "8:30 AM",
-    host: { id: "5", name: "Liam Links", luckyLevel: 3, avatar: "👴" },
-    acceptedPlayers: [
-      { id: "6", name: "Erin Eagle", luckyLevel: 3, avatar: "👱‍♀️" },
-    ],
-    maxPlayers: 4,
-    isCompetition: true,
-    buyIn: 20,
-    potTotal: 40,
-  },
-];
 
 const BUY_IN_OPTIONS = [5, 10, 20, 50];
 
@@ -60,83 +35,188 @@ interface FindPlayersProps {
 
 export const FindPlayers = ({ userLuckyLevel }: FindPlayersProps) => {
   const [showCreateInvite, setShowCreateInvite] = useState(false);
-  const [invites, setInvites] = useState(mockInvites);
+  const [competitions, setCompetitions] = useState<Competition[]>([]);
   const [isCompetition, setIsCompetition] = useState(false);
   const [selectedBuyIn, setSelectedBuyIn] = useState(20);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isJoining, setIsJoining] = useState<string | null>(null);
+  const [isCreating, setIsCreating] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   
-  const { balance, deductFunds } = useWallet();
+  const { balance, refreshWallet } = useWallet();
 
-  const handleAcceptInvite = async (inviteId: string) => {
-    const invite = invites.find((inv) => inv.id === inviteId);
-    if (!invite) return;
+  // Fetch competitions from database
+  const fetchCompetitions = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("competitions")
+        .select(`
+          *,
+          competition_players (
+            id,
+            user_id,
+            has_paid
+          )
+        `)
+        .eq("status", "pending")
+        .order("created_at", { ascending: false });
 
-    // Check if competition and handle payment
-    if (invite.isCompetition && invite.buyIn) {
-      if (balance < invite.buyIn) {
-        toast.error(`Insufficient funds. Need $${invite.buyIn.toFixed(2)}`);
-        return;
-      }
-
-      const success = await deductFunds(invite.buyIn, "buy_in", `Competition buy-in: ${invite.courseName}`);
-      if (!success) return;
+      if (error) throw error;
+      setCompetitions(data || []);
+    } catch (error) {
+      console.error("Error fetching competitions:", error);
+    } finally {
+      setIsLoading(false);
     }
-
-    setInvites((prev) =>
-      prev.map((inv) => {
-        if (inv.id === inviteId && inv.acceptedPlayers.length < inv.maxPlayers - 1) {
-          const updated = {
-            ...inv,
-            acceptedPlayers: [
-              ...inv.acceptedPlayers,
-              { id: "me", name: "You", luckyLevel: userLuckyLevel, avatar: "🍀" },
-            ],
-            potTotal: inv.isCompetition ? (inv.potTotal || 0) + (inv.buyIn || 0) : undefined,
-          };
-          
-          if (updated.acceptedPlayers.length === inv.maxPlayers - 1) {
-            toast.success("Foursome complete! Tee time confirmed! ⛳");
-          } else {
-            toast.success("You're in! Waiting for more players...");
-          }
-          
-          return updated;
-        }
-        return inv;
-      })
-    );
   };
 
-  const handleCreateInvite = async () => {
-    // If competition, check balance
-    if (isCompetition) {
-      if (balance < selectedBuyIn) {
-        toast.error(`Insufficient funds. Need $${selectedBuyIn.toFixed(2)}`);
+  // Get current user
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setCurrentUserId(user?.id || null);
+    };
+    getUser();
+  }, []);
+
+  // Fetch competitions on mount
+  useEffect(() => {
+    fetchCompetitions();
+
+    // Subscribe to realtime updates
+    const channel = supabase
+      .channel("competitions-changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "competitions",
+        },
+        () => fetchCompetitions()
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "competition_players",
+        },
+        () => fetchCompetitions()
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const handleJoinCompetition = async (competitionId: string) => {
+    if (!currentUserId) {
+      toast.error("Please sign in to join competitions");
+      return;
+    }
+
+    setIsJoining(competitionId);
+
+    try {
+      const { data, error } = await supabase.rpc("join_competition", {
+        p_competition_id: competitionId,
+        p_user_id: currentUserId,
+      });
+
+      if (error) {
+        if (error.message.includes("Insufficient funds")) {
+          toast.error("Insufficient funds");
+        } else if (error.message.includes("already joined")) {
+          toast.error("You have already joined this competition");
+        } else {
+          toast.error(error.message || "Failed to join competition");
+        }
         return;
       }
 
-      const success = await deductFunds(selectedBuyIn, "buy_in", "Competition buy-in (host)");
-      if (!success) return;
+      await refreshWallet();
+      await fetchCompetitions();
+      toast.success("You're in! Competition joined successfully 🏆");
+    } catch (error) {
+      console.error("Error joining competition:", error);
+      toast.error("Failed to join competition");
+    } finally {
+      setIsJoining(null);
+    }
+  };
+
+  const handleCreateCompetition = async () => {
+    if (!currentUserId) {
+      toast.error("Please sign in to create competitions");
+      return;
     }
 
-    const newInvite: TeeTimeInvite = {
-      id: `inv-${Date.now()}`,
-      courseName: "Pebble Beach",
-      date: "Saturday",
-      time: "9:00 AM",
-      host: { id: "me", name: "You", luckyLevel: userLuckyLevel, avatar: "🍀" },
-      acceptedPlayers: [],
-      maxPlayers: 4,
-      isCompetition,
-      buyIn: isCompetition ? selectedBuyIn : undefined,
-      potTotal: isCompetition ? selectedBuyIn : undefined,
-    };
-    setInvites((prev) => [newInvite, ...prev]);
-    setShowCreateInvite(false);
-    toast.success(
-      isCompetition 
-        ? `Competition created! $${selectedBuyIn} pot started 🏆` 
-        : "Tee time invite sent to players at your Lucky Level!"
-    );
+    if (!isCompetition) {
+      toast.info("Non-competition tee times coming soon!");
+      setShowCreateInvite(false);
+      return;
+    }
+
+    if (balance < selectedBuyIn) {
+      toast.error(`Insufficient funds. Need $${selectedBuyIn.toFixed(2)}`);
+      return;
+    }
+
+    setIsCreating(true);
+
+    try {
+      const teeTime = new Date();
+      teeTime.setDate(teeTime.getDate() + 1); // Tomorrow
+      teeTime.setHours(9, 0, 0, 0);
+
+      const { data, error } = await supabase.rpc("create_competition", {
+        p_user_id: currentUserId,
+        p_buy_in: selectedBuyIn,
+        p_course_name: "Pebble Beach",
+        p_tee_time: teeTime.toISOString(),
+      });
+
+      if (error) {
+        if (error.message.includes("Insufficient funds")) {
+          toast.error("Insufficient funds");
+        } else {
+          toast.error(error.message || "Failed to create competition");
+        }
+        return;
+      }
+
+      await refreshWallet();
+      await fetchCompetitions();
+      setShowCreateInvite(false);
+      toast.success(`Competition created! $${selectedBuyIn} pot started 🏆`);
+    } catch (error) {
+      console.error("Error creating competition:", error);
+      toast.error("Failed to create competition");
+    } finally {
+      setIsCreating(false);
+    }
+  };
+
+  const formatDate = (dateString: string | null) => {
+    if (!dateString) return "TBD";
+    const date = new Date(dateString);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    if (date.toDateString() === today.toDateString()) return "Today";
+    if (date.toDateString() === tomorrow.toDateString()) return "Tomorrow";
+    return date.toLocaleDateString("en-US", { weekday: "long" });
+  };
+
+  const formatTime = (dateString: string | null) => {
+    if (!dateString) return "TBD";
+    return new Date(dateString).toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+    });
   };
 
   return (
@@ -164,13 +244,12 @@ export const FindPlayers = ({ userLuckyLevel }: FindPlayersProps) => {
         <div className="flex items-center gap-2 mb-4">
           <p className="text-sm text-muted-foreground">Players nearby:</p>
           <div className="flex -space-x-2">
-            {mockPlayers.slice(0, 4).map((player) => (
+            {["🧔", "👨", "👩", "🧑"].map((avatar, idx) => (
               <div
-                key={player.id}
+                key={idx}
                 className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-lg border-2 border-background"
-                title={player.name}
               >
-                {player.avatar}
+                {avatar}
               </div>
             ))}
           </div>
@@ -214,12 +293,12 @@ export const FindPlayers = ({ userLuckyLevel }: FindPlayersProps) => {
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Clock className="w-4 h-4 text-muted-foreground" />
-                <span>Saturday, 9:00 AM</span>
+                <span>Tomorrow, 9:00 AM</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <CloverIcon className="w-4 h-4 text-primary" />
                 <span>
-                  Inviting players at <strong>Lucky Level 3</strong>
+                  Inviting players at <strong>Lucky Level {userLuckyLevel}</strong>
                 </span>
               </div>
             </div>
@@ -289,10 +368,15 @@ export const FindPlayers = ({ userLuckyLevel }: FindPlayersProps) => {
             <Button 
               variant="lucky" 
               className="w-full" 
-              onClick={handleCreateInvite}
-              disabled={isCompetition && balance < selectedBuyIn}
+              onClick={handleCreateCompetition}
+              disabled={(isCompetition && balance < selectedBuyIn) || isCreating}
             >
-              {isCompetition ? (
+              {isCreating ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Creating...
+                </>
+              ) : isCompetition ? (
                 <>
                   <Trophy className="w-4 h-4 mr-2" />
                   Create ${selectedBuyIn} Competition
@@ -308,21 +392,32 @@ export const FindPlayers = ({ userLuckyLevel }: FindPlayersProps) => {
         )}
       </AnimatePresence>
 
-      {/* Active Invites */}
-      {invites.length > 0 && (
+      {/* Loading State */}
+      {isLoading && (
+        <div className="glass-card p-8 flex items-center justify-center">
+          <Loader2 className="w-6 h-6 animate-spin text-primary" />
+        </div>
+      )}
+
+      {/* Active Competitions */}
+      {!isLoading && competitions.length > 0 && (
         <div className="space-y-3">
           <h4 className="text-sm font-medium text-muted-foreground px-1">
-            Open Tee Times
+            Open Competitions
           </h4>
-          {invites.map((invite) => {
-            const spotsLeft = invite.maxPlayers - 1 - invite.acceptedPlayers.length;
+          {competitions.map((competition) => {
+            const playerCount = competition.competition_players?.length || 0;
+            const maxPlayers = 4;
+            const spotsLeft = maxPlayers - playerCount;
             const isFull = spotsLeft === 0;
-            const hasJoined = invite.acceptedPlayers.some((p) => p.id === "me");
-            const canAfford = !invite.isCompetition || balance >= (invite.buyIn || 0);
+            const hasJoined = competition.competition_players?.some(
+              (p) => p.user_id === currentUserId
+            );
+            const canAfford = balance >= competition.buy_in;
 
             return (
               <motion.div
-                key={invite.id}
+                key={competition.id}
                 layout
                 className={`glass-card p-4 ${
                   isFull ? "border-2 border-primary/50 bg-primary/5" : ""
@@ -331,16 +426,17 @@ export const FindPlayers = ({ userLuckyLevel }: FindPlayersProps) => {
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <div className="flex items-center gap-2">
-                      <p className="font-medium">{invite.courseName}</p>
-                      {invite.isCompetition && (
-                        <span className="text-xs bg-accent/20 text-accent px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-                          <Trophy className="w-3 h-3" />
-                          ${invite.potTotal} Pot
-                        </span>
-                      )}
+                      <p className="font-medium">
+                        {competition.course_name || "Golf Course"}
+                      </p>
+                      <span className="text-xs bg-accent/20 text-accent px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
+                        <Trophy className="w-3 h-3" />
+                        ${competition.pot_total} Pot
+                      </span>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      {invite.date} at {invite.time}
+                      {formatDate(competition.tee_time)} at{" "}
+                      {formatTime(competition.tee_time)}
                     </p>
                   </div>
                   {isFull ? (
@@ -356,19 +452,16 @@ export const FindPlayers = ({ userLuckyLevel }: FindPlayersProps) => {
 
                 <div className="flex items-center gap-2 mb-3">
                   <div className="flex -space-x-2">
-                    <div
-                      className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-lg border-2 border-background"
-                      title={invite.host.name}
-                    >
-                      {invite.host.avatar}
-                    </div>
-                    {invite.acceptedPlayers.map((player) => (
+                    {competition.competition_players?.map((player, idx) => (
                       <div
                         key={player.id}
-                        className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-lg border-2 border-background"
-                        title={player.name}
+                        className={`w-8 h-8 rounded-full flex items-center justify-center text-lg border-2 border-background ${
+                          player.user_id === currentUserId
+                            ? "bg-primary/20"
+                            : "bg-muted"
+                        }`}
                       >
-                        {player.avatar}
+                        {player.user_id === currentUserId ? "🍀" : ["🧔", "👨", "👩", "🧑"][idx % 4]}
                       </div>
                     ))}
                     {Array.from({ length: spotsLeft }).map((_, i) => (
@@ -381,28 +474,28 @@ export const FindPlayers = ({ userLuckyLevel }: FindPlayersProps) => {
                     ))}
                   </div>
                   <span className="text-xs text-muted-foreground">
-                    Hosted by {invite.host.name}
+                    ${competition.buy_in} buy-in
                   </span>
                 </div>
 
-                {!isFull && !hasJoined && invite.host.id !== "me" && (
+                {!isFull && !hasJoined && (
                   <Button
-                    variant={invite.isCompetition ? "default" : "outline"}
+                    variant="default"
                     size="sm"
-                    className={`w-full ${invite.isCompetition ? "bg-accent hover:bg-accent/90 text-accent-foreground" : ""}`}
-                    onClick={() => handleAcceptInvite(invite.id)}
-                    disabled={!canAfford}
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
+                    onClick={() => handleJoinCompetition(competition.id)}
+                    disabled={!canAfford || isJoining === competition.id}
                   >
-                    {invite.isCompetition ? (
+                    {isJoining === competition.id ? (
                       <>
-                        <DollarSign className="w-4 h-4 mr-1" />
-                        Join for ${invite.buyIn}
-                        {!canAfford && " (Insufficient funds)"}
+                        <Loader2 className="w-4 h-4 mr-1 animate-spin" />
+                        Joining...
                       </>
                     ) : (
                       <>
-                        <Check className="w-4 h-4 mr-2" />
-                        Join This Foursome
+                        <DollarSign className="w-4 h-4 mr-1" />
+                        Join for ${competition.buy_in}
+                        {!canAfford && " (Insufficient funds)"}
                       </>
                     )}
                   </Button>
@@ -416,6 +509,16 @@ export const FindPlayers = ({ userLuckyLevel }: FindPlayersProps) => {
               </motion.div>
             );
           })}
+        </div>
+      )}
+
+      {/* Empty State */}
+      {!isLoading && competitions.length === 0 && (
+        <div className="glass-card p-6 text-center">
+          <Trophy className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
+          <p className="text-sm text-muted-foreground">
+            No open competitions yet. Create one to get started!
+          </p>
         </div>
       )}
     </motion.div>
