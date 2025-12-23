@@ -21,13 +21,15 @@ export const LeprechaunAlert = () => {
         />
         
         <div className="relative flex items-center gap-4">
-          {/* Leprechaun mascot - compact version */}
+          {/* Leprechaun mascot - with golden glow */}
           <motion.div 
-            className="w-12 h-12 flex items-center justify-center -ml-1"
+            className="relative w-14 h-14 flex items-center justify-center -ml-1"
             animate={{ y: [0, -2, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
-            <img src={leprechaunMascot} alt="Leprechaun" className="w-12 h-12 object-contain" />
+            {/* Golden glow behind leprechaun */}
+            <div className="absolute inset-0 bg-accent/40 rounded-full blur-lg scale-110" />
+            <img src={leprechaunMascot} alt="Leprechaun" className="relative w-14 h-14 object-contain" />
           </motion.div>
           
           <div className="flex-1">

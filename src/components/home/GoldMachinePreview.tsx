@@ -35,7 +35,7 @@ export const GoldMachinePreview = ({ potValue, generationRate, health }: GoldMac
           {/* Gold Pot - scaled down to fit the square area */}
           <div className="relative w-20 h-20 flex items-center justify-center">
             <motion.div
-              className="scale-[0.55] origin-center"
+              className="scale-[0.28] origin-center"
               animate={{ 
                 rotateZ: [0, -1, 1, 0],
               }}
