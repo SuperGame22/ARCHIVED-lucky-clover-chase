@@ -54,6 +54,7 @@ export type Database = {
           buy_in: number
           course_name: string | null
           created_at: string
+          creator_id: string | null
           id: string
           pot_total: number
           status: Database["public"]["Enums"]["competition_status"]
@@ -65,6 +66,7 @@ export type Database = {
           buy_in: number
           course_name?: string | null
           created_at?: string
+          creator_id?: string | null
           id?: string
           pot_total?: number
           status?: Database["public"]["Enums"]["competition_status"]
@@ -76,6 +78,7 @@ export type Database = {
           buy_in?: number
           course_name?: string | null
           created_at?: string
+          creator_id?: string | null
           id?: string
           pot_total?: number
           status?: Database["public"]["Enums"]["competition_status"]
@@ -165,6 +168,15 @@ export type Database = {
         }
         Returns: Json
       }
+      create_competition: {
+        Args: {
+          p_buy_in: number
+          p_course_name?: string
+          p_tee_time?: string
+          p_user_id: string
+        }
+        Returns: Json
+      }
       deduct_wallet_funds: {
         Args: {
           p_amount: number
@@ -173,6 +185,10 @@ export type Database = {
           p_user_id: string
           p_wallet_id: string
         }
+        Returns: Json
+      }
+      join_competition: {
+        Args: { p_competition_id: string; p_user_id: string }
         Returns: Json
       }
     }
