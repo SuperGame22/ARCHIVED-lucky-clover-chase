@@ -31,11 +31,11 @@ export const GoldMachinePreview = ({ potValue, generationRate, health }: GoldMac
           </div>
         </div>
 
-        <div className="flex items-start gap-2">
-          {/* Gold Pot - scaled down to 3/4 size */}
-          <div className="relative w-16 h-16 flex items-center justify-center flex-shrink-0">
+        <div className="flex items-start gap-3">
+          {/* Gold Pot - scaled down to 2/3 size */}
+          <div className="relative w-12 h-12 flex items-center justify-center flex-shrink-0">
             <motion.div
-              className="scale-[0.21] origin-center"
+              className="scale-[0.14] origin-center"
               animate={{ 
                 rotateZ: [0, -1, 1, 0],
               }}
@@ -49,7 +49,7 @@ export const GoldMachinePreview = ({ potValue, generationRate, health }: GoldMac
             </motion.div>
           </div>
 
-          <div className="flex-1 ml-2">
+          <div className="flex-1 ml-3">
             <p className="text-sm text-muted-foreground">Pot Value</p>
             <p className="text-3xl font-bold text-gradient-gold">${potValue.toFixed(2)}</p>
             
