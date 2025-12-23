@@ -31,29 +31,12 @@ export const GoldMachinePreview = ({ potValue, generationRate, health }: GoldMac
           </div>
         </div>
 
-        <div className="flex items-start gap-3">
-          {/* Gold Pot - scaled down to 2/3 size */}
-          <div className="relative w-12 h-12 flex items-center justify-center flex-shrink-0">
-            <motion.div
-              className="scale-[0.12] origin-center"
-              animate={{ 
-                rotateZ: [0, -1, 1, 0],
-              }}
-              transition={{ 
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              <GoldPot />
-            </motion.div>
-          </div>
-
-          <div className="flex-1 ml-3">
+        <div className="flex items-start justify-between">
+          <div className="flex-1">
             <p className="text-sm text-muted-foreground">Pot Value</p>
             <p className="text-3xl font-bold text-gradient-gold">${potValue.toFixed(2)}</p>
             
-            {/* Health bar - aligned under Pot Value */}
+            {/* Health bar */}
             <div className="mt-2">
               <div className="flex justify-between text-xs mb-1">
                 <span className="text-muted-foreground">Health</span>
@@ -69,6 +52,23 @@ export const GoldMachinePreview = ({ potValue, generationRate, health }: GoldMac
                 />
               </div>
             </div>
+          </div>
+
+          {/* Gold Pot - positioned on the right */}
+          <div className="relative w-16 h-16 flex items-center justify-center flex-shrink-0">
+            <motion.div
+              className="scale-[0.14] origin-center"
+              animate={{ 
+                rotateZ: [0, -1, 1, 0],
+              }}
+              transition={{ 
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <GoldPot />
+            </motion.div>
           </div>
         </div>
 
