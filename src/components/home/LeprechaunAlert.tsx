@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { MapPin, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
-import { GoldPot } from "@/components/gold/GoldPot";
+import leprechaunMascot from "@/assets/leprechaun-mascot-transparent.png";
 
 export const LeprechaunAlert = () => {
   return (
@@ -21,13 +21,13 @@ export const LeprechaunAlert = () => {
         />
         
         <div className="relative flex items-center gap-4">
-          {/* Gold pot - compact version */}
+          {/* Leprechaun mascot - compact version */}
           <motion.div 
-            className="w-8 h-8 flex items-center justify-center scale-[0.18] -ml-5"
-            animate={{ y: [0, -1, 0] }}
+            className="w-12 h-12 flex items-center justify-center -ml-1"
+            animate={{ y: [0, -2, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
-            <GoldPot />
+            <img src={leprechaunMascot} alt="Leprechaun" className="w-12 h-12 object-contain" />
           </motion.div>
           
           <div className="flex-1">
