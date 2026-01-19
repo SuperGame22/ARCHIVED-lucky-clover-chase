@@ -8,11 +8,7 @@ interface SpendCloverProps {
   earnedPulse: number;
 }
 
-export const SpendClover = ({ 
-  className = "", 
-  litLeaves,
-  earnedPulse
-}: SpendCloverProps) => {
+export const SpendClover = ({ className = "", litLeaves, earnedPulse }: SpendCloverProps) => {
   const [showEarnedEffect, setShowEarnedEffect] = useState(false);
   const [lastPulse, setLastPulse] = useState(earnedPulse);
 
@@ -31,34 +27,35 @@ export const SpendClover = ({
   // Heart path: point at bottom when rotation=0
   // To face CENTER: top-left needs point toward bottom-right (45°), etc.
   const leaves = [
-    { id: 1, cx: 30, cy: 30, rotation: 45 },    // Top-left: point to center (down-right)
-    { id: 2, cx: 70, cy: 30, rotation: -45 },   // Top-right: point to center (down-left)
-    { id: 3, cx: 30, cy: 70, rotation: 135 },   // Bottom-left: point to center (up-right)
-    { id: 4, cx: 70, cy: 70, rotation: -135 },  // Bottom-right: point to center (up-left)
+    { id: 1, cx: 30, cy: 30, rotation: 45 }, // Top-left: point to center (down-right)
+    { id: 2, cx: 70, cy: 30, rotation: -45 }, // Top-right: point to center (down-left)
+    { id: 3, cx: 30, cy: 70, rotation: 90 }, // Bottom-left: point to center (up-right)
+    { id: 4, cx: 70, cy: 70, rotation: -90 }, // Bottom-right: point to center (up-left)
   ];
 
   return (
-    <div className={`relative ${className}`} style={{ aspectRatio: '1' }}>
+    <div className={`relative ${className}`} style={{ aspectRatio: "1" }}>
       {/* Heart overlays - behind clover */}
-      <svg 
+      <svg
         className="absolute inset-0 w-full h-full"
         viewBox="0 0 100 100"
-        style={{ 
+        style={{
           transform: "scale(1.15) translate(1%, 1%)",
-          overflow: "visible"
+          overflow: "visible",
         }}
       >
         {leaves.map((leaf) => (
-          <g 
-            key={leaf.id}
-            transform={`translate(${leaf.cx}, ${leaf.cy}) rotate(${leaf.rotation}) scale(1.5)`}
-          >
+          <g key={leaf.id} transform={`translate(${leaf.cx}, ${leaf.cy}) rotate(${leaf.rotation}) scale(1.5)`}>
             <path
               d={heartPath}
               fill={litLeaves >= leaf.id ? "hsl(142 71% 45% / 0.65)" : "transparent"}
-              style={litLeaves >= leaf.id ? {
-                filter: "drop-shadow(0 0 8px hsl(142 71% 45%))"
-              } : undefined}
+              style={
+                litLeaves >= leaf.id
+                  ? {
+                      filter: "drop-shadow(0 0 8px hsl(142 71% 45%))",
+                    }
+                  : undefined
+              }
               className="transition-all duration-150"
             />
           </g>
@@ -66,9 +63,9 @@ export const SpendClover = ({
       </svg>
 
       {/* Clover logo on top - scaled larger to cover the hearts */}
-      <img 
-        src={cloverOutline} 
-        alt="Clover" 
+      <img
+        src={cloverOutline}
+        alt="Clover"
         className="absolute inset-0 w-full h-full object-contain"
         style={{ transform: "scale(1.45)" }}
       />
