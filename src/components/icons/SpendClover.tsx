@@ -25,17 +25,16 @@ export const SpendClover = ({
     }
   }, [earnedPulse, lastPulse]);
 
-  // Heart path: lobes at top, point at bottom (natural heart orientation)
+  // Heart path: lobes at top, point at bottom
   const heartPath = "M0,-8 C-4,-12 -10,-8 -10,-2 C-10,5 0,10 0,10 C0,10 10,5 10,-2 C10,-8 4,-12 0,-8 Z";
 
-  // The clover-outline.png is a 4-LEAF clover with stem at bottom-right
-  // Leaves are at: top-left, top-right, bottom-left, bottom-right (where stem connects)
-  // Each heart needs its point facing the CENTER
+  // 4-leaf clover: each heart's POINTY TIP faces the CENTER
+  // Rotation makes the bottom point toward center
   const leaves = [
-    { id: 1, cx: 30, cy: 30, rotation: 135 },   // Top-left leaf
-    { id: 2, cx: 70, cy: 30, rotation: -135 },  // Top-right leaf  
-    { id: 3, cx: 30, cy: 70, rotation: 45 },    // Bottom-left leaf
-    { id: 4, cx: 70, cy: 70, rotation: -45 },   // Bottom-right leaf (has stem)
+    { id: 1, cx: 30, cy: 30, rotation: 45 },    // Top-left: point down-right to center
+    { id: 2, cx: 70, cy: 30, rotation: 135 },   // Top-right: point down-left to center
+    { id: 3, cx: 30, cy: 70, rotation: -45 },   // Bottom-left: point up-right to center
+    { id: 4, cx: 70, cy: 70, rotation: -135 },  // Bottom-right: point up-left to center
   ];
 
   return (
@@ -45,14 +44,14 @@ export const SpendClover = ({
         className="absolute inset-0 w-full h-full"
         viewBox="0 0 100 100"
         style={{ 
-          transform: "scale(1.3) translate(-1%, 3%)",
+          transform: "scale(1.15) translate(1%, 1%)",
           overflow: "visible"
         }}
       >
         {leaves.map((leaf) => (
           <g 
             key={leaf.id}
-            transform={`translate(${leaf.cx}, ${leaf.cy}) rotate(${leaf.rotation}) scale(1.8)`}
+            transform={`translate(${leaf.cx}, ${leaf.cy}) rotate(${leaf.rotation}) scale(1.5)`}
           >
             <path
               d={heartPath}
@@ -66,12 +65,12 @@ export const SpendClover = ({
         ))}
       </svg>
 
-      {/* Clover logo on top */}
+      {/* Clover logo on top - scaled larger to cover the hearts */}
       <img 
         src={cloverOutline} 
         alt="Clover" 
         className="absolute inset-0 w-full h-full object-contain"
-        style={{ transform: "scale(1.3)" }}
+        style={{ transform: "scale(1.45)" }}
       />
 
       {/* Glow effect when earning */}
