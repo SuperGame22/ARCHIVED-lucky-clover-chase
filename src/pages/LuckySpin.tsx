@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { CloverIcon } from "@/components/icons/CloverIcon";
 import { SpendClover } from "@/components/icons/SpendClover";
 import { WeeklyRaffle } from "@/components/lucky/WeeklyRaffle";
+import { useClover } from "@/contexts/CloverContext";
 import { Gift, Clock, MapPin, Ticket, Star, Sparkles, RotateCcw, Shirt } from "lucide-react";
 
 // Doubled the prizes with new items
@@ -33,9 +34,10 @@ const LuckySpin = () => {
   const [result, setResult] = useState<typeof prizes[0] | null>(null);
   const [spinsRemaining, setSpinsRemaining] = useState(3);
   const [canRespin, setCanRespin] = useState(false);
-  const [spendAmount, setSpendAmount] = useState(0);
-  const [earnedClovers, setEarnedClovers] = useState(0);
   const weeklyCloverCount = 12;
+  
+  // Use shared clover context
+  const { cloverBalance, triggerSpend, addClovers, litLeaves, setLitLeaves } = useClover();
 
   const spin = () => {
     if (spinning || spinsRemaining <= 0) return;
@@ -44,8 +46,8 @@ const LuckySpin = () => {
     setResult(null);
     setCanRespin(false);
     
-    // Trigger the $7 spend animation
-    setSpendAmount(7);
+    // Trigger the $7 spend animation through context
+    triggerSpend(7);
 
     // Random result calculation
     const prizeIndex = Math.floor(Math.random() * prizes.length);
@@ -59,8 +61,6 @@ const LuckySpin = () => {
       setSpinning(false);
       setResult(prizes[prizeIndex]);
       setSpinsRemaining((prev) => prev - 1);
-      // Reset spend amount for next spin
-      setSpendAmount(0);
       // Allow respin for non-rare prizes if spins remain
       if (!prizes[prizeIndex].rare && spinsRemaining > 1) {
         setCanRespin(true);
@@ -69,7 +69,7 @@ const LuckySpin = () => {
   };
 
   const handleCloverEarned = () => {
-    setEarnedClovers(prev => prev + 1);
+    addClovers(1);
   };
 
   const respin = () => {
@@ -82,7 +82,7 @@ const LuckySpin = () => {
   return (
     <AppLayout>
       <div className="max-w-lg mx-auto px-4 py-6 space-y-6">
-        {/* Header with SpendClover */}
+        {/* Header with SpendClover showing global balance */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -91,11 +91,13 @@ const LuckySpin = () => {
           <div className="flex items-center justify-center gap-3 mb-2">
             <SpendClover 
               className="w-12 h-12" 
-              totalClovers={earnedClovers}
-              spendAmount={spendAmount}
+              totalClovers={cloverBalance}
               onCloverEarned={handleCloverEarned}
+              onLitLeavesChange={setLitLeaves}
+              externalLitLeaves={litLeaves}
             />
             <h1 className="text-3xl font-display font-bold">Lucky Tees</h1>
+            <span className="text-2xl font-bold text-primary">{cloverBalance}</span>
           </div>
           <p className="text-muted-foreground">Spin for discounted tee times & prizes!</p>
         </motion.div>
