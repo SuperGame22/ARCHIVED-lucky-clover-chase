@@ -43,7 +43,7 @@ export const CloverBalance = ({
           <p className="text-lg font-semibold text-muted-foreground mb-2">Your Clovers</p>
           <div className="flex items-center gap-4">
             <SpendClover 
-              className="w-14 h-14" 
+              className="w-[76px] h-[76px]" 
               totalClovers={displayBalance}
               spendAmount={recentSpend}
               onCloverEarned={handleCloverEarned}
