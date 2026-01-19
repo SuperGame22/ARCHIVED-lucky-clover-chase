@@ -61,15 +61,18 @@ export const SpendClover = ({
         }
 
         setLitLeaves(current => {
-          const next = (current + 1) % 5;
-          // If we complete a full rotation (back to 0 after 4)
-          if (next === 0) {
+          // Increment leaf (1-4), then reset to 0 after 4
+          const next = current + 1;
+          // If we complete a full rotation (all 4 leaves lit, going back to 0)
+          if (next > 4) {
             setEarnedClovers(prev => prev + 1);
             onCloverEarned?.();
+            onLitLeavesChange?.(0);
+            return 0;
           }
           // Notify parent of lit leaves change
-          onLitLeavesChange?.(next === 5 ? 0 : next);
-          return next === 5 ? 0 : next;
+          onLitLeavesChange?.(next);
+          return next;
         });
 
         return prev - 1;
@@ -95,54 +98,46 @@ export const SpendClover = ({
           className="w-full h-full object-contain"
         />
         
-        {/* Leaf overlays rotated 45° to align with actual clover leaves */}
+        {/* Leaf overlays rotated 45° to align with actual clover leaves - heart shapes */}
         <svg 
           className="absolute inset-0 w-full h-full" 
           viewBox="0 0 100 100"
           style={{ transform: "scale(0.85) rotate(45deg)" }}
         >
-          {/* Top-right leaf (was top) */}
-          <ellipse
-            cx="50"
-            cy="25"
-            rx="15"
-            ry="18"
+          {/* Top-right leaf - heart shape pointing outward */}
+          <path
+            d="M50 35 C50 28, 42 20, 35 20 C28 20, 22 28, 22 35 C22 45, 35 55, 50 65 C65 55, 78 45, 78 35 C78 28, 72 20, 65 20 C58 20, 50 28, 50 35"
+            transform="translate(0, -25) scale(0.5) rotate(180, 50, 50)"
             className={`transition-all duration-150 ${
               litLeaves >= 1 
                 ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
                 : "fill-transparent"
             }`}
           />
-          {/* Bottom-right leaf (was right) */}
-          <ellipse
-            cx="75"
-            cy="50"
-            rx="18"
-            ry="15"
+          {/* Bottom-right leaf - heart shape */}
+          <path
+            d="M50 35 C50 28, 42 20, 35 20 C28 20, 22 28, 22 35 C22 45, 35 55, 50 65 C65 55, 78 45, 78 35 C78 28, 72 20, 65 20 C58 20, 50 28, 50 35"
+            transform="translate(25, 0) scale(0.5) rotate(-90, 50, 50)"
             className={`transition-all duration-150 ${
               litLeaves >= 2 
                 ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
                 : "fill-transparent"
             }`}
           />
-          {/* Bottom-left leaf (was bottom) */}
-          <ellipse
-            cx="50"
-            cy="75"
-            rx="15"
-            ry="18"
+          {/* Bottom-left leaf - heart shape */}
+          <path
+            d="M50 35 C50 28, 42 20, 35 20 C28 20, 22 28, 22 35 C22 45, 35 55, 50 65 C65 55, 78 45, 78 35 C78 28, 72 20, 65 20 C58 20, 50 28, 50 35"
+            transform="translate(0, 25) scale(0.5) rotate(0, 50, 50)"
             className={`transition-all duration-150 ${
               litLeaves >= 3 
                 ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
                 : "fill-transparent"
             }`}
           />
-          {/* Top-left leaf (was left) */}
-          <ellipse
-            cx="25"
-            cy="50"
-            rx="18"
-            ry="15"
+          {/* Top-left leaf - heart shape */}
+          <path
+            d="M50 35 C50 28, 42 20, 35 20 C28 20, 22 28, 22 35 C22 45, 35 55, 50 65 C65 55, 78 45, 78 35 C78 28, 72 20, 65 20 C58 20, 50 28, 50 35"
+            transform="translate(-25, 0) scale(0.5) rotate(90, 50, 50)"
             className={`transition-all duration-150 ${
               litLeaves >= 4 
                 ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
