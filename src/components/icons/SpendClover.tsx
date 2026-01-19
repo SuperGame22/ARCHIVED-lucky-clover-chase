@@ -9,31 +9,35 @@ interface SpendCloverProps {
   spendAmount?: number;
   /** Callback when a full clover is earned (every $4) */
   onCloverEarned?: () => void;
+  /** Callback to sync lit leaves state */
+  onLitLeavesChange?: (count: number) => void;
+  /** External lit leaves state for syncing across instances */
+  externalLitLeaves?: number;
 }
-
-// Leaf positions for the 4-leaf clover (top, right, bottom, left)
-// These represent the clip-path or overlay positions for each leaf
-const leafPositions = [
-  { id: 0, name: "top", rotation: 0 },
-  { id: 1, name: "right", rotation: 90 },
-  { id: 2, name: "bottom", rotation: 180 },
-  { id: 3, name: "left", rotation: 270 },
-];
 
 export const SpendClover = ({ 
   className = "", 
   totalClovers,
   spendAmount = 0,
-  onCloverEarned 
+  onCloverEarned,
+  onLitLeavesChange,
+  externalLitLeaves
 }: SpendCloverProps) => {
   // Track which leaves are currently lit (0-4)
-  const [litLeaves, setLitLeaves] = useState(0);
+  const [litLeaves, setLitLeaves] = useState(externalLitLeaves ?? 0);
   // Track pending dollars to animate
   const [pendingDollars, setPendingDollars] = useState(0);
   // Track if animation is running
   const [isAnimating, setIsAnimating] = useState(false);
   // Track earned clovers during current animation
   const [earnedClovers, setEarnedClovers] = useState(0);
+
+  // Sync with external lit leaves
+  useEffect(() => {
+    if (externalLitLeaves !== undefined) {
+      setLitLeaves(externalLitLeaves);
+    }
+  }, [externalLitLeaves]);
 
   // Handle new spend amount
   useEffect(() => {
@@ -63,6 +67,8 @@ export const SpendClover = ({
             setEarnedClovers(prev => prev + 1);
             onCloverEarned?.();
           }
+          // Notify parent of lit leaves change
+          onLitLeavesChange?.(next === 5 ? 0 : next);
           return next === 5 ? 0 : next;
         });
 
@@ -71,7 +77,7 @@ export const SpendClover = ({
     }, 83); // ~1/3 second for 4 leaves = 83ms per leaf
 
     return () => clearInterval(interval);
-  }, [pendingDollars, isAnimating, onCloverEarned]);
+  }, [pendingDollars, isAnimating, onCloverEarned, onLitLeavesChange]);
 
   useEffect(() => {
     if (pendingDollars > 0 && !isAnimating) {
@@ -89,13 +95,13 @@ export const SpendClover = ({
           className="w-full h-full object-contain"
         />
         
-        {/* Leaf overlays for lighting effect */}
+        {/* Leaf overlays rotated 45° to align with actual clover leaves */}
         <svg 
           className="absolute inset-0 w-full h-full" 
           viewBox="0 0 100 100"
-          style={{ transform: "scale(0.85)" }}
+          style={{ transform: "scale(0.85) rotate(45deg)" }}
         >
-          {/* Top leaf */}
+          {/* Top-right leaf (was top) */}
           <ellipse
             cx="50"
             cy="25"
@@ -107,7 +113,7 @@ export const SpendClover = ({
                 : "fill-transparent"
             }`}
           />
-          {/* Right leaf */}
+          {/* Bottom-right leaf (was right) */}
           <ellipse
             cx="75"
             cy="50"
@@ -119,7 +125,7 @@ export const SpendClover = ({
                 : "fill-transparent"
             }`}
           />
-          {/* Bottom leaf */}
+          {/* Bottom-left leaf (was bottom) */}
           <ellipse
             cx="50"
             cy="75"
@@ -131,7 +137,7 @@ export const SpendClover = ({
                 : "fill-transparent"
             }`}
           />
-          {/* Left leaf */}
+          {/* Top-left leaf (was left) */}
           <ellipse
             cx="25"
             cy="50"

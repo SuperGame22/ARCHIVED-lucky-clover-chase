@@ -2,30 +2,26 @@ import { SpendClover } from "@/components/icons/SpendClover";
 import { motion } from "framer-motion";
 import { Sparkles, Trophy, Calendar, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useClover } from "@/contexts/CloverContext";
 
 interface CloverBalanceProps {
-  balance: number;
+  balance?: number;
   todayEarned: number;
   jackpotAmount?: number;
   teeTimesCount?: number;
   unreadMessages?: number;
-  /** Recent spend amount to trigger leaf animation */
-  recentSpend?: number;
 }
 
 export const CloverBalance = ({ 
-  balance, 
   todayEarned, 
   jackpotAmount = 2500,
   teeTimesCount = 3,
   unreadMessages = 2,
-  recentSpend = 0
 }: CloverBalanceProps) => {
-  const [displayBalance, setDisplayBalance] = useState(balance);
+  const { cloverBalance, spendAmount, litLeaves, addClovers, setLitLeaves } = useClover();
 
   const handleCloverEarned = () => {
-    setDisplayBalance(prev => prev + 1);
+    addClovers(1);
   };
 
   return (
@@ -44,11 +40,13 @@ export const CloverBalance = ({
           <div className="flex items-center gap-4">
             <SpendClover 
               className="w-[76px] h-[76px]" 
-              totalClovers={displayBalance}
-              spendAmount={recentSpend}
+              totalClovers={cloverBalance}
+              spendAmount={spendAmount}
               onCloverEarned={handleCloverEarned}
+              onLitLeavesChange={setLitLeaves}
+              externalLitLeaves={litLeaves}
             />
-            <span className="text-6xl font-display font-bold text-gradient-green">{displayBalance}</span>
+            <span className="text-6xl font-display font-bold text-gradient-green">{cloverBalance}</span>
           </div>
           <div className="flex items-center gap-2 mt-3 text-lg font-medium text-primary">
             <Sparkles className="w-5 h-5" />
