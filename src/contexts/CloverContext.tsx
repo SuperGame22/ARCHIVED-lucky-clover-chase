@@ -51,12 +51,11 @@ export const CloverProvider = ({ children, initialBalance = 47 }: CloverProvider
           // Each dollar lights the next leaf (1 -> 2 -> 3 -> 4)
           const nextLeaf = currentLeaves + 1;
           
-          if (nextLeaf >= 4) {
-            // Completed a full cycle - earn a clover
+          if (nextLeaf > 4) {
+            // Completed a full cycle (was at 4) - earn a clover, reset to 1
             setCloverBalance(bal => bal + 1);
             setEarnedPulse(p => p + 1);
-            // Reset to 0 after earning
-            return 0;
+            return 1; // Start new cycle at 1
           }
           
           return nextLeaf;

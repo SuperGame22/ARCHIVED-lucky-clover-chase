@@ -13,7 +13,6 @@ export const SpendClover = ({
   litLeaves,
   earnedPulse
 }: SpendCloverProps) => {
-  // Track earned pulse locally to trigger animation
   const [showEarnedEffect, setShowEarnedEffect] = useState(false);
   const [lastPulse, setLastPulse] = useState(earnedPulse);
 
@@ -21,85 +20,74 @@ export const SpendClover = ({
     if (earnedPulse > lastPulse) {
       setShowEarnedEffect(true);
       setLastPulse(earnedPulse);
-      // Reset after animation
       const timer = setTimeout(() => setShowEarnedEffect(false), 600);
       return () => clearTimeout(timer);
     }
   }, [earnedPulse, lastPulse]);
 
+  // Heart path: lobes at top, point at bottom (natural heart orientation)
+  const heartPath = "M0,-8 C-4,-12 -10,-8 -10,-2 C-10,5 0,10 0,10 C0,10 10,5 10,-2 C10,-8 4,-12 0,-8 Z";
+
+  // The clover-outline.png is a 4-LEAF clover with stem at bottom-right
+  // Leaves are at: top-left, top-right, bottom-left, bottom-right (where stem connects)
+  // Each heart needs its point facing the CENTER
+  const leaves = [
+    { id: 1, cx: 30, cy: 30, rotation: 135 },   // Top-left leaf
+    { id: 2, cx: 70, cy: 30, rotation: -135 },  // Top-right leaf  
+    { id: 3, cx: 30, cy: 70, rotation: 45 },    // Bottom-left leaf
+    { id: 4, cx: 70, cy: 70, rotation: -45 },   // Bottom-right leaf (has stem)
+  ];
+
   return (
-    <div className={`relative ${className}`}>
-      {/* Leaf overlays positioned behind the clover - hearts with points facing center */}
+    <div className={`relative ${className}`} style={{ aspectRatio: '1' }}>
+      {/* Heart overlays - behind clover */}
       <svg 
-        className="absolute inset-0 w-full h-full" 
+        className="absolute inset-0 w-full h-full"
         viewBox="0 0 100 100"
-        style={{ transform: "scale(1.1) rotate(45deg) translateY(12%) translateX(-2%)" }}
+        style={{ 
+          transform: "scale(1.3) translate(-1%, 3%)",
+          overflow: "visible"
+        }}
       >
-        {/* Top leaf - heart with point facing down (toward center) */}
-        <path
-          d="M50 70 C50 70, 30 50, 30 40 C30 30, 40 25, 50 35 C60 25, 70 30, 70 40 C70 50, 50 70, 50 70"
-          transform="translate(0, -22) scale(0.5)"
-          className={`transition-all duration-150 ${
-            litLeaves >= 1 
-              ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
-              : "fill-transparent"
-          }`}
-        />
-        {/* Right leaf - heart with point facing left (toward center) */}
-        <path
-          d="M50 70 C50 70, 30 50, 30 40 C30 30, 40 25, 50 35 C60 25, 70 30, 70 40 C70 50, 50 70, 50 70"
-          transform="translate(22, 0) scale(0.5) rotate(-90, 50, 50)"
-          className={`transition-all duration-150 ${
-            litLeaves >= 2 
-              ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
-              : "fill-transparent"
-          }`}
-        />
-        {/* Bottom leaf - heart with point facing up (toward center) */}
-        <path
-          d="M50 70 C50 70, 30 50, 30 40 C30 30, 40 25, 50 35 C60 25, 70 30, 70 40 C70 50, 50 70, 50 70"
-          transform="translate(0, 22) scale(0.5) rotate(180, 50, 50)"
-          className={`transition-all duration-150 ${
-            litLeaves >= 3 
-              ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
-              : "fill-transparent"
-          }`}
-        />
-        {/* Left leaf - heart with point facing right (toward center) */}
-        <path
-          d="M50 70 C50 70, 30 50, 30 40 C30 30, 40 25, 50 35 C60 25, 70 30, 70 40 C70 50, 50 70, 50 70"
-          transform="translate(-22, 0) scale(0.5) rotate(90, 50, 50)"
-          className={`transition-all duration-150 ${
-            litLeaves >= 4 
-              ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
-              : "fill-transparent"
-          }`}
-        />
+        {leaves.map((leaf) => (
+          <g 
+            key={leaf.id}
+            transform={`translate(${leaf.cx}, ${leaf.cy}) rotate(${leaf.rotation}) scale(1.8)`}
+          >
+            <path
+              d={heartPath}
+              fill={litLeaves >= leaf.id ? "hsl(142 71% 45% / 0.65)" : "transparent"}
+              style={litLeaves >= leaf.id ? {
+                filter: "drop-shadow(0 0 8px hsl(142 71% 45%))"
+              } : undefined}
+              className="transition-all duration-150"
+            />
+          </g>
+        ))}
       </svg>
 
-      {/* Base clover outline - 30% larger */}
-      <div className="relative">
-        <img 
-          src={cloverOutline} 
-          alt="Clover" 
-          className="w-[130%] h-[130%] object-contain -m-[15%]"
-        />
+      {/* Clover logo on top */}
+      <img 
+        src={cloverOutline} 
+        alt="Clover" 
+        className="absolute inset-0 w-full h-full object-contain"
+        style={{ transform: "scale(1.3)" }}
+      />
 
-        {/* Glow effect when earning */}
-        <AnimatePresence>
-          {showEarnedEffect && (
-            <motion.div
-              initial={{ scale: 1, opacity: 0.8 }}
-              animate={{ scale: 1.5, opacity: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="absolute inset-0 bg-primary/30 rounded-full blur-xl"
-            />
-          )}
-        </AnimatePresence>
-      </div>
+      {/* Glow effect when earning */}
+      <AnimatePresence>
+        {showEarnedEffect && (
+          <motion.div
+            initial={{ scale: 1, opacity: 0.8 }}
+            animate={{ scale: 1.5, opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="absolute inset-0 bg-primary/30 rounded-full blur-xl"
+          />
+        )}
+      </AnimatePresence>
 
-      {/* Floating +1 indicator when clover earned */}
+      {/* Floating +1 indicator */}
       <AnimatePresence>
         {showEarnedEffect && (
           <motion.div
