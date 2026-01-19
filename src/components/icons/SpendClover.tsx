@@ -28,14 +28,13 @@ export const SpendClover = ({
   // Heart path: lobes at top, point at bottom
   const heartPath = "M0,-8 C-4,-12 -10,-8 -10,-2 C-10,5 0,10 0,10 C0,10 10,5 10,-2 C10,-8 4,-12 0,-8 Z";
 
-  // 4-leaf clover: each heart's POINTY TIP faces the CENTER
-  // Rotation makes the bottom point toward center
-  // Flip 180° so pointy tip faces CENTER (lobes face outward)
+  // Heart path: point at bottom when rotation=0
+  // To face CENTER: top-left needs point toward bottom-right (45°), etc.
   const leaves = [
-    { id: 1, cx: 30, cy: 30, rotation: 225 },   // Top-left: point down-right to center
-    { id: 2, cx: 70, cy: 30, rotation: 315 },   // Top-right: point down-left to center
-    { id: 3, cx: 30, cy: 70, rotation: 135 },   // Bottom-left: point up-right to center
-    { id: 4, cx: 70, cy: 70, rotation: 45 },    // Bottom-right: point up-left to center
+    { id: 1, cx: 30, cy: 30, rotation: 45 },    // Top-left: point to center (down-right)
+    { id: 2, cx: 70, cy: 30, rotation: -45 },   // Top-right: point to center (down-left)
+    { id: 3, cx: 30, cy: 70, rotation: 135 },   // Bottom-left: point to center (up-right)
+    { id: 4, cx: 70, cy: 70, rotation: -135 },  // Bottom-right: point to center (up-left)
   ];
 
   return (
