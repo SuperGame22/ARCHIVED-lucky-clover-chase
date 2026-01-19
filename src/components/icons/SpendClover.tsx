@@ -90,46 +90,46 @@ export const SpendClover = ({
 
   return (
     <div className={`relative ${className}`}>
-      {/* Leaf overlays positioned behind the clover */}
+      {/* Leaf overlays positioned behind the clover - hearts with points facing center */}
       <svg 
         className="absolute inset-0 w-full h-full" 
         viewBox="0 0 100 100"
-        style={{ transform: "scale(1.1) rotate(45deg) translateY(3%)" }}
+        style={{ transform: "scale(1.1) rotate(45deg) translateY(8%) translateX(-5%)" }}
       >
-        {/* Top-right leaf - heart shape with round parts outward */}
+        {/* Top leaf - heart with point facing down (center) */}
         <path
-          d="M50 65 C50 72, 42 80, 35 80 C28 80, 22 72, 22 65 C22 55, 35 45, 50 35 C65 45, 78 55, 78 65 C78 72, 72 80, 65 80 C58 80, 50 72, 50 65"
-          transform="translate(0, -25) scale(0.5)"
+          d="M50 70 C50 70, 30 50, 30 40 C30 30, 40 25, 50 35 C60 25, 70 30, 70 40 C70 50, 50 70, 50 70"
+          transform="translate(0, -22) scale(0.5)"
           className={`transition-all duration-150 ${
             litLeaves >= 1 
               ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
               : "fill-transparent"
           }`}
         />
-        {/* Bottom-right leaf - heart shape */}
+        {/* Right leaf - heart with point facing left (center) */}
         <path
-          d="M50 65 C50 72, 42 80, 35 80 C28 80, 22 72, 22 65 C22 55, 35 45, 50 35 C65 45, 78 55, 78 65 C78 72, 72 80, 65 80 C58 80, 50 72, 50 65"
-          transform="translate(25, 0) scale(0.5) rotate(-90, 50, 50)"
+          d="M50 70 C50 70, 30 50, 30 40 C30 30, 40 25, 50 35 C60 25, 70 30, 70 40 C70 50, 50 70, 50 70"
+          transform="translate(22, 0) scale(0.5) rotate(-90, 50, 50)"
           className={`transition-all duration-150 ${
             litLeaves >= 2 
               ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
               : "fill-transparent"
           }`}
         />
-        {/* Bottom-left leaf - heart shape */}
+        {/* Bottom leaf - heart with point facing up (center) */}
         <path
-          d="M50 65 C50 72, 42 80, 35 80 C28 80, 22 72, 22 65 C22 55, 35 45, 50 35 C65 45, 78 55, 78 65 C78 72, 72 80, 65 80 C58 80, 50 72, 50 65"
-          transform="translate(0, 25) scale(0.5) rotate(180, 50, 50)"
+          d="M50 70 C50 70, 30 50, 30 40 C30 30, 40 25, 50 35 C60 25, 70 30, 70 40 C70 50, 50 70, 50 70"
+          transform="translate(0, 22) scale(0.5) rotate(180, 50, 50)"
           className={`transition-all duration-150 ${
             litLeaves >= 3 
               ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
               : "fill-transparent"
           }`}
         />
-        {/* Top-left leaf - heart shape */}
+        {/* Left leaf - heart with point facing right (center) */}
         <path
-          d="M50 65 C50 72, 42 80, 35 80 C28 80, 22 72, 22 65 C22 55, 35 45, 50 35 C65 45, 78 55, 78 65 C78 72, 72 80, 65 80 C58 80, 50 72, 50 65"
-          transform="translate(-25, 0) scale(0.5) rotate(90, 50, 50)"
+          d="M50 70 C50 70, 30 50, 30 40 C30 30, 40 25, 50 35 C60 25, 70 30, 70 40 C70 50, 50 70, 50 70"
+          transform="translate(-22, 0) scale(0.5) rotate(90, 50, 50)"
           className={`transition-all duration-150 ${
             litLeaves >= 4 
               ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
