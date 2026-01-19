@@ -37,7 +37,7 @@ const LuckySpin = () => {
   const weeklyCloverCount = 12;
   
   // Use shared clover context
-  const { cloverBalance, triggerSpend, addClovers, litLeaves, setLitLeaves } = useClover();
+  const { cloverBalance, litLeaves, earnedPulse, triggerSpend } = useClover();
 
   const spin = () => {
     if (spinning || spinsRemaining <= 0) return;
@@ -68,10 +68,6 @@ const LuckySpin = () => {
     }, 4000);
   };
 
-  const handleCloverEarned = () => {
-    addClovers(1);
-  };
-
   const respin = () => {
     if (!canRespin || spinsRemaining <= 0) return;
     setCanRespin(false);
@@ -91,10 +87,8 @@ const LuckySpin = () => {
           <div className="flex items-center justify-center gap-3 mb-2">
             <SpendClover 
               className="w-12 h-12" 
-              totalClovers={cloverBalance}
-              onCloverEarned={handleCloverEarned}
-              onLitLeavesChange={setLitLeaves}
-              externalLitLeaves={litLeaves}
+              litLeaves={litLeaves}
+              earnedPulse={earnedPulse}
             />
             <h1 className="text-3xl font-display font-bold">Lucky Tees</h1>
             <span className="text-2xl font-bold text-primary">{cloverBalance}</span>

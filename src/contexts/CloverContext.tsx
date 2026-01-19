@@ -1,12 +1,10 @@
-import { createContext, useContext, useState, ReactNode, useCallback } from "react";
+import { createContext, useContext, useState, ReactNode, useCallback, useEffect, useRef } from "react";
 
 interface CloverContextType {
   cloverBalance: number;
   litLeaves: number;
-  spendAmount: number;
+  earnedPulse: number;
   triggerSpend: (amount: number) => void;
-  addClovers: (count: number) => void;
-  setLitLeaves: (count: number) => void;
 }
 
 const CloverContext = createContext<CloverContextType | undefined>(undefined);
@@ -27,30 +25,60 @@ interface CloverProviderProps {
 export const CloverProvider = ({ children, initialBalance = 47 }: CloverProviderProps) => {
   const [cloverBalance, setCloverBalance] = useState(initialBalance);
   const [litLeaves, setLitLeaves] = useState(0);
-  const [spendAmount, setSpendAmount] = useState(0);
+  const [pendingDollars, setPendingDollars] = useState(0);
+  const [earnedPulse, setEarnedPulse] = useState(0);
+  const isAnimatingRef = useRef(false);
 
   const triggerSpend = useCallback((amount: number) => {
-    // Set the spend amount - SpendClover will pick this up
-    setSpendAmount(prev => prev + amount);
+    setPendingDollars(prev => prev + amount);
   }, []);
 
-  const addClovers = useCallback((count: number) => {
-    setCloverBalance(prev => prev + count);
-  }, []);
+  // Animation effect - processes pending dollars one at a time
+  useEffect(() => {
+    if (pendingDollars <= 0 || isAnimatingRef.current) return;
 
-  const handleSetLitLeaves = useCallback((count: number) => {
-    setLitLeaves(count);
-  }, []);
+    isAnimatingRef.current = true;
+
+    const interval = setInterval(() => {
+      setPendingDollars(prev => {
+        if (prev <= 0) {
+          clearInterval(interval);
+          isAnimatingRef.current = false;
+          return 0;
+        }
+
+        setLitLeaves(currentLeaves => {
+          // Each dollar lights the next leaf (1 -> 2 -> 3 -> 4)
+          const nextLeaf = currentLeaves + 1;
+          
+          if (nextLeaf >= 4) {
+            // Completed a full cycle - earn a clover
+            setCloverBalance(bal => bal + 1);
+            setEarnedPulse(p => p + 1);
+            // Reset to 0 after earning
+            return 0;
+          }
+          
+          return nextLeaf;
+        });
+
+        return prev - 1;
+      });
+    }, 120); // Slightly slower for better visibility
+
+    return () => {
+      clearInterval(interval);
+      isAnimatingRef.current = false;
+    };
+  }, [pendingDollars]);
 
   return (
     <CloverContext.Provider
       value={{
         cloverBalance,
         litLeaves,
-        spendAmount,
+        earnedPulse,
         triggerSpend,
-        addClovers,
-        setLitLeaves: handleSetLitLeaves,
       }}
     >
       {children}

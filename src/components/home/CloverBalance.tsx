@@ -18,11 +18,7 @@ export const CloverBalance = ({
   teeTimesCount = 3,
   unreadMessages = 2,
 }: CloverBalanceProps) => {
-  const { cloverBalance, spendAmount, litLeaves, addClovers, setLitLeaves } = useClover();
-
-  const handleCloverEarned = () => {
-    addClovers(1);
-  };
+  const { cloverBalance, litLeaves, earnedPulse } = useClover();
 
   return (
     <motion.div
@@ -40,11 +36,8 @@ export const CloverBalance = ({
           <div className="flex items-center gap-4">
             <SpendClover 
               className="w-[76px] h-[76px]" 
-              totalClovers={cloverBalance}
-              spendAmount={spendAmount}
-              onCloverEarned={handleCloverEarned}
-              onLitLeavesChange={setLitLeaves}
-              externalLitLeaves={litLeaves}
+              litLeaves={litLeaves}
+              earnedPulse={earnedPulse}
             />
             <span className="text-6xl font-display font-bold text-gradient-green">{cloverBalance}</span>
           </div>
