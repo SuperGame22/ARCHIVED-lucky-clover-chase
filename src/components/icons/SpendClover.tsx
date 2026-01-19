@@ -90,61 +90,61 @@ export const SpendClover = ({
 
   return (
     <div className={`relative ${className}`}>
-      {/* Base clover outline */}
+      {/* Leaf overlays positioned behind the clover */}
+      <svg 
+        className="absolute inset-0 w-full h-full" 
+        viewBox="0 0 100 100"
+        style={{ transform: "scale(1.1) rotate(45deg) translateY(3%)" }}
+      >
+        {/* Top-right leaf - heart shape with round parts outward */}
+        <path
+          d="M50 65 C50 72, 42 80, 35 80 C28 80, 22 72, 22 65 C22 55, 35 45, 50 35 C65 45, 78 55, 78 65 C78 72, 72 80, 65 80 C58 80, 50 72, 50 65"
+          transform="translate(0, -25) scale(0.5)"
+          className={`transition-all duration-150 ${
+            litLeaves >= 1 
+              ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
+              : "fill-transparent"
+          }`}
+        />
+        {/* Bottom-right leaf - heart shape */}
+        <path
+          d="M50 65 C50 72, 42 80, 35 80 C28 80, 22 72, 22 65 C22 55, 35 45, 50 35 C65 45, 78 55, 78 65 C78 72, 72 80, 65 80 C58 80, 50 72, 50 65"
+          transform="translate(25, 0) scale(0.5) rotate(-90, 50, 50)"
+          className={`transition-all duration-150 ${
+            litLeaves >= 2 
+              ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
+              : "fill-transparent"
+          }`}
+        />
+        {/* Bottom-left leaf - heart shape */}
+        <path
+          d="M50 65 C50 72, 42 80, 35 80 C28 80, 22 72, 22 65 C22 55, 35 45, 50 35 C65 45, 78 55, 78 65 C78 72, 72 80, 65 80 C58 80, 50 72, 50 65"
+          transform="translate(0, 25) scale(0.5) rotate(180, 50, 50)"
+          className={`transition-all duration-150 ${
+            litLeaves >= 3 
+              ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
+              : "fill-transparent"
+          }`}
+        />
+        {/* Top-left leaf - heart shape */}
+        <path
+          d="M50 65 C50 72, 42 80, 35 80 C28 80, 22 72, 22 65 C22 55, 35 45, 50 35 C65 45, 78 55, 78 65 C78 72, 72 80, 65 80 C58 80, 50 72, 50 65"
+          transform="translate(-25, 0) scale(0.5) rotate(90, 50, 50)"
+          className={`transition-all duration-150 ${
+            litLeaves >= 4 
+              ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
+              : "fill-transparent"
+          }`}
+        />
+      </svg>
+
+      {/* Base clover outline - 30% larger */}
       <div className="relative">
         <img 
           src={cloverOutline} 
           alt="Clover" 
-          className="w-full h-full object-contain"
+          className="w-[130%] h-[130%] object-contain -m-[15%]"
         />
-        
-        {/* Leaf overlays rotated 45° to align with actual clover leaves - heart shapes */}
-        <svg 
-          className="absolute inset-0 w-full h-full" 
-          viewBox="0 0 100 100"
-          style={{ transform: "scale(0.85) rotate(45deg)" }}
-        >
-          {/* Top-right leaf - heart shape pointing outward */}
-          <path
-            d="M50 35 C50 28, 42 20, 35 20 C28 20, 22 28, 22 35 C22 45, 35 55, 50 65 C65 55, 78 45, 78 35 C78 28, 72 20, 65 20 C58 20, 50 28, 50 35"
-            transform="translate(0, -25) scale(0.5) rotate(180, 50, 50)"
-            className={`transition-all duration-150 ${
-              litLeaves >= 1 
-                ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
-                : "fill-transparent"
-            }`}
-          />
-          {/* Bottom-right leaf - heart shape */}
-          <path
-            d="M50 35 C50 28, 42 20, 35 20 C28 20, 22 28, 22 35 C22 45, 35 55, 50 65 C65 55, 78 45, 78 35 C78 28, 72 20, 65 20 C58 20, 50 28, 50 35"
-            transform="translate(25, 0) scale(0.5) rotate(-90, 50, 50)"
-            className={`transition-all duration-150 ${
-              litLeaves >= 2 
-                ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
-                : "fill-transparent"
-            }`}
-          />
-          {/* Bottom-left leaf - heart shape */}
-          <path
-            d="M50 35 C50 28, 42 20, 35 20 C28 20, 22 28, 22 35 C22 45, 35 55, 50 65 C65 55, 78 45, 78 35 C78 28, 72 20, 65 20 C58 20, 50 28, 50 35"
-            transform="translate(0, 25) scale(0.5) rotate(0, 50, 50)"
-            className={`transition-all duration-150 ${
-              litLeaves >= 3 
-                ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
-                : "fill-transparent"
-            }`}
-          />
-          {/* Top-left leaf - heart shape */}
-          <path
-            d="M50 35 C50 28, 42 20, 35 20 C28 20, 22 28, 22 35 C22 45, 35 55, 50 65 C65 55, 78 45, 78 35 C78 28, 72 20, 65 20 C58 20, 50 28, 50 35"
-            transform="translate(-25, 0) scale(0.5) rotate(90, 50, 50)"
-            className={`transition-all duration-150 ${
-              litLeaves >= 4 
-                ? "fill-primary/60 drop-shadow-[0_0_8px_hsl(var(--primary))]" 
-                : "fill-transparent"
-            }`}
-          />
-        </svg>
 
         {/* Glow effect when earning */}
         <AnimatePresence>
