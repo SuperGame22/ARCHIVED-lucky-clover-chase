@@ -22,7 +22,14 @@ export const SpendClover = ({ className = "", litLeaves, earnedPulse }: SpendClo
   }, [earnedPulse, lastPulse]);
 
   // Heart path: lobes at top, point at bottom
-  const heartPath = "M0,-8 C-4,-12 -10,-8 -10,-2 C-10,5 0,10 0,10 C0,10 10,5 10,-2 C10,-8 4,-12 0,-8 Z";
+  const heartPath = `
+M 0 -10
+C -6 -14  -14 -8  -14 -1
+C -14 8   -2 12   0 14
+C 2 12    14 8    14 -1
+C 14 -8   6 -14   0 -10
+Z
+`;
 
   // Heart path: point at bottom when rotation=0
   // To face CENTER: top-left needs point toward bottom-right (45°), etc.
@@ -45,7 +52,7 @@ export const SpendClover = ({ className = "", litLeaves, earnedPulse }: SpendClo
         }}
       >
         {leaves.map((leaf) => (
-          <g key={leaf.id} transform={`translate(${leaf.cx}, ${leaf.cy}) rotate(${leaf.rotation}) scale(1.5)`}>
+          <g key={leaf.id} transform={`translate(${leaf.cx}, ${leaf.cy}) rotate(${leaf.rotation}) scale(1.15, 0.95)`}>
             <path
               d={heartPath}
               fill={litLeaves >= leaf.id ? "hsl(142 71% 45% / 0.65)" : "transparent"}
