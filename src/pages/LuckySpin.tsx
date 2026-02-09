@@ -39,15 +39,15 @@ const LuckySpin = () => {
   // Use shared clover context
   const { cloverBalance, litLeaves, earnedPulse, triggerSpend } = useClover();
 
-  const spin = () => {
+  const spin = async () => {
     if (spinning || spinsRemaining <= 0) return;
 
     setSpinning(true);
     setResult(null);
     setCanRespin(false);
     
-    // Trigger the $7 spend animation through context
-    triggerSpend(7);
+    // Trigger the $7 spend animation and persist clovers
+    await triggerSpend(7);
 
     // Random result calculation
     const prizeIndex = Math.floor(Math.random() * prizes.length);

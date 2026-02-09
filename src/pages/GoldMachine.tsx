@@ -7,9 +7,11 @@ import { NoMachineState } from "@/components/gold/NoMachineState";
 import { MachineActivation } from "@/components/gold/MachineActivation";
 import { Zap, Wrench, ArrowUp, Sparkles, Clock, TrendingUp, Banknote } from "lucide-react";
 import { useWallet } from "@/contexts/WalletContext";
+import { useClover } from "@/contexts/CloverContext";
 import { toast } from "sonner";
 
 const GoldMachine = () => {
+  const { triggerSpend } = useClover();
   const { addFunds } = useWallet();
   const [hasMachine, setHasMachine] = useState(false);
   const [showActivation, setShowActivation] = useState(false);
@@ -54,7 +56,10 @@ const GoldMachine = () => {
     const success = await addFunds(cashAmount, "Gold Machine cashout");
     
     if (success) {
+      // Award clovers for the gold cashout (1mg = $0.01)
+      await triggerSpend(cashAmount);
       setPotValue(0);
+      toast.success(`Cashed out $${cashAmount.toFixed(2)} and earned clovers!`);
     }
     setCashingOut(false);
   };

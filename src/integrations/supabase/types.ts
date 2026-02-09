@@ -88,6 +88,36 @@ export type Database = {
         }
         Relationships: []
       }
+      promotions: {
+        Row: {
+          created_at: string
+          ends_at: string
+          id: string
+          is_active: boolean
+          multiplier: number
+          name: string
+          starts_at: string
+        }
+        Insert: {
+          created_at?: string
+          ends_at: string
+          id?: string
+          is_active?: boolean
+          multiplier?: number
+          name: string
+          starts_at: string
+        }
+        Update: {
+          created_at?: string
+          ends_at?: string
+          id?: string
+          is_active?: boolean
+          multiplier?: number
+          name?: string
+          starts_at?: string
+        }
+        Relationships: []
+      }
       transactions: {
         Row: {
           amount: number
@@ -132,6 +162,7 @@ export type Database = {
       wallets: {
         Row: {
           balance: number
+          clover_balance: number
           created_at: string
           id: string
           updated_at: string
@@ -139,6 +170,7 @@ export type Database = {
         }
         Insert: {
           balance?: number
+          clover_balance?: number
           created_at?: string
           id?: string
           updated_at?: string
@@ -146,6 +178,7 @@ export type Database = {
         }
         Update: {
           balance?: number
+          clover_balance?: number
           created_at?: string
           id?: string
           updated_at?: string
@@ -166,6 +199,10 @@ export type Database = {
           p_user_id: string
           p_wallet_id: string
         }
+        Returns: Json
+      }
+      award_clovers: {
+        Args: { p_amount: number; p_user_id: string }
         Returns: Json
       }
       create_competition: {
@@ -201,6 +238,7 @@ export type Database = {
         | "winnings"
         | "purchase"
         | "refund"
+        | "clover_earned"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -336,6 +374,7 @@ export const Constants = {
         "winnings",
         "purchase",
         "refund",
+        "clover_earned",
       ],
     },
   },
