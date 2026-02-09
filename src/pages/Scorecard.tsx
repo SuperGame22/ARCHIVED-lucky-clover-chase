@@ -6,7 +6,10 @@ import { HoleScoreEntry } from "@/components/scorecard/HoleScoreEntry";
 import { HoleGrid } from "@/components/scorecard/HoleGrid";
 import { LuckyLevelBadge } from "@/components/scorecard/LuckyLevelBadge";
 import { FindPlayers } from "@/components/scorecard/FindPlayers";
+import { MatchPlayersModal } from "@/components/scorecard/MatchPlayersModal";
 import { motion } from "framer-motion";
+import { Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const holes = Array.from({ length: 9 }, (_, i) => ({
   number: i + 1,
@@ -18,6 +21,7 @@ const Scorecard = () => {
   const [scores, setScores] = useState<Record<number, number>>({});
   const [putts, setPutts] = useState<Record<number, number>>({});
   const [activeHole, setActiveHole] = useState(1);
+  const [showMatchPlayers, setShowMatchPlayers] = useState(false);
 
   const updateScore = (hole: number, delta: number) => {
     setScores((prev) => ({
@@ -125,6 +129,30 @@ const Scorecard = () => {
             </p>
           </div>
         </motion.div>
+
+        {/* Match With Golfers Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <Button
+            variant="outline"
+            className="w-full border-2 border-primary/50 hover:border-primary hover:bg-primary/5"
+            onClick={() => setShowMatchPlayers(true)}
+          >
+            <Users className="w-5 h-5 mr-2" />
+            Match With Nearby Golfers
+          </Button>
+        </motion.div>
+
+        {/* Match Players Modal */}
+        {showMatchPlayers && (
+          <MatchPlayersModal
+            userLuckyLevel={luckyLevel}
+            onClose={() => setShowMatchPlayers(false)}
+          />
+        )}
 
         <FindPlayers userLuckyLevel={luckyLevel} />
       </div>
