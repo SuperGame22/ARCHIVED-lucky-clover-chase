@@ -94,6 +94,13 @@ export const CloverProvider = ({ children }: CloverProviderProps) => {
       const result = data as { success: boolean; clovers_awarded?: number; new_balance?: number; error?: string };
       
       if (result.success && result.new_balance !== undefined) {
+        // Show clover earned toast
+        if (result.clovers_awarded && result.clovers_awarded > 0) {
+          toast.success(`+${result.clovers_awarded} Clover${result.clovers_awarded > 1 ? "s" : ""}! 🍀`, {
+            duration: 2000,
+          });
+        }
+        
         // Update local balance to match database after animation completes
         setTimeout(() => {
           setCloverBalance(result.new_balance!);
