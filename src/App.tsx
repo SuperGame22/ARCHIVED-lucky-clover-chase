@@ -24,7 +24,7 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <WalletProvider>
-      <CloverProvider initialBalance={47}>
+      <CloverProvider>
         <TooltipProvider>
           <Toaster />
           <Sonner />
