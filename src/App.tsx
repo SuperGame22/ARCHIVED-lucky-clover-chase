@@ -6,6 +6,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { WalletProvider } from "@/contexts/WalletContext";
 import { CloverProvider } from "@/contexts/CloverContext";
 import Index from "./pages/Index";
+import Practice from "./pages/Practice";
+import Play from "./pages/Play";
+import Career from "./pages/Career";
+import Earn from "./pages/Earn";
 import Rangefinder from "./pages/Rangefinder";
 import Course from "./pages/Course";
 import GoldMachine from "./pages/GoldMachine";
@@ -30,15 +34,30 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <Routes>
+              {/* Home */}
               <Route path="/" element={<Index />} />
+
+              {/* Practice domain */}
+              <Route path="/practice" element={<Practice />} />
               <Route path="/rangefinder" element={<Rangefinder />} />
+
+              {/* Play domain */}
+              <Route path="/play" element={<Play />} />
               <Route path="/course" element={<Course />} />
+              <Route path="/scorecard" element={<Scorecard />} />
+
+              {/* Career domain */}
+              <Route path="/career" element={<Career />} />
+
+              {/* Earn domain */}
+              <Route path="/earn" element={<Earn />} />
               <Route path="/gold-machine" element={<GoldMachine />} />
               <Route path="/spin" element={<LuckySpin />} />
               <Route path="/shop" element={<Shop />} />
+
+              {/* Shared */}
               <Route path="/membership" element={<Membership />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/scorecard" element={<Scorecard />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/wallet" element={<Wallet />} />
               <Route path="/auth" element={<Auth />} />

@@ -1,19 +1,19 @@
 import { motion } from "framer-motion";
-import { Target, Gift, ShoppingBag, Trophy } from "lucide-react";
+import { Play, Crosshair, Gift, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 const actions = [
   {
-    icon: Trophy,
-    label: "Scorecard",
-    path: "/scorecard",
+    icon: Play,
+    label: "Start Round",
+    path: "/play",
     color: "bg-primary/80 text-primary-foreground hover:bg-primary/90",
   },
   {
-    icon: Target,
-    label: "Rangefinder",
-    path: "/rangefinder",
+    icon: Crosshair,
+    label: "Practice",
+    path: "/practice",
     color: "bg-primary/80 text-primary-foreground hover:bg-primary/90",
   },
   {
@@ -24,9 +24,9 @@ const actions = [
     badge: "$7",
   },
   {
-    icon: ShoppingBag,
-    label: "Shop",
-    path: "/shop",
+    icon: BarChart3,
+    label: "View Stats",
+    path: "/career",
     color: "bg-primary/80 text-primary-foreground hover:bg-primary/90",
   },
 ];
