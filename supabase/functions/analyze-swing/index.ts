@@ -12,28 +12,21 @@ serve(async (req) => {
 
   try {
     const authHeader = req.headers.get("Authorization");
-    if (!authHeader?.startsWith("Bearer ")) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
+    let userId: string | null = null;
 
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_ANON_KEY")!,
-      { global: { headers: { Authorization: authHeader } } }
+      authHeader ? { global: { headers: { Authorization: authHeader } } } : undefined
     );
 
-    const token = authHeader.replace("Bearer ", "");
-    const { data: claimsData, error: claimsError } = await supabase.auth.getClaims(token);
-    if (claimsError || !claimsData?.claims) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+    if (authHeader?.startsWith("Bearer ")) {
+      const token = authHeader.replace("Bearer ", "");
+      try {
+        const { data: claimsData } = await supabase.auth.getClaims(token);
+        userId = claimsData?.claims?.sub ?? null;
+      } catch { /* anonymous usage */ }
     }
-    const userId = claimsData.claims.sub;
 
     const { videoUrl } = await req.json();
 
@@ -145,26 +138,30 @@ Always be encouraging but honest. Use golf terminology naturally. Include lucky/
 
     const analysis = JSON.parse(toolCall.function.arguments);
 
-    // Save to database
-    const { data: saved, error: saveError } = await supabase
-      .from("swing_analyses")
-      .insert({
-        user_id: userId,
-        video_url: videoUrl || null,
-        overall_score: analysis.overall_score,
-        strengths: analysis.strengths,
-        improvements: analysis.improvements,
-        drills: analysis.drills,
-        motivational_message: analysis.motivational_message,
-      })
-      .select()
-      .single();
+    // Save to database only if user is authenticated
+    let savedId: string | null = null;
+    if (userId) {
+      const { data: saved, error: saveError } = await supabase
+        .from("swing_analyses")
+        .insert({
+          user_id: userId,
+          video_url: videoUrl || null,
+          overall_score: analysis.overall_score,
+          strengths: analysis.strengths,
+          improvements: analysis.improvements,
+          drills: analysis.drills,
+          motivational_message: analysis.motivational_message,
+        })
+        .select()
+        .single();
 
-    if (saveError) {
-      console.error("Save error:", saveError);
+      if (saveError) {
+        console.error("Save error:", saveError);
+      }
+      savedId = saved?.id ?? null;
     }
 
-    return new Response(JSON.stringify({ ...analysis, id: saved?.id }), {
+    return new Response(JSON.stringify({ ...analysis, id: savedId }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {
