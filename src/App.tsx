@@ -7,6 +7,7 @@ import { WalletProvider } from "@/contexts/WalletContext";
 import { CloverProvider } from "@/contexts/CloverContext";
 import Index from "./pages/Index";
 import Practice from "./pages/Practice";
+import LuckyCoach from "./pages/LuckyCoach";
 import Play from "./pages/Play";
 import Career from "./pages/Career";
 import Earn from "./pages/Earn";
@@ -39,6 +40,7 @@ const App = () => (
 
               {/* Practice domain */}
               <Route path="/practice" element={<Practice />} />
+              <Route path="/practice/coach" element={<LuckyCoach />} />
               <Route path="/rangefinder" element={<Rangefinder />} />
 
               {/* Play domain */}

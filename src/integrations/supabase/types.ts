@@ -118,6 +118,48 @@ export type Database = {
         }
         Relationships: []
       }
+      swing_analyses: {
+        Row: {
+          chat_history: Json | null
+          created_at: string
+          drills: Json | null
+          id: string
+          improvements: Json | null
+          motivational_message: string | null
+          overall_score: number | null
+          strengths: Json | null
+          updated_at: string
+          user_id: string
+          video_url: string | null
+        }
+        Insert: {
+          chat_history?: Json | null
+          created_at?: string
+          drills?: Json | null
+          id?: string
+          improvements?: Json | null
+          motivational_message?: string | null
+          overall_score?: number | null
+          strengths?: Json | null
+          updated_at?: string
+          user_id: string
+          video_url?: string | null
+        }
+        Update: {
+          chat_history?: Json | null
+          created_at?: string
+          drills?: Json | null
+          id?: string
+          improvements?: Json | null
+          motivational_message?: string | null
+          overall_score?: number | null
+          strengths?: Json | null
+          updated_at?: string
+          user_id?: string
+          video_url?: string | null
+        }
+        Relationships: []
+      }
       transactions: {
         Row: {
           amount: number
