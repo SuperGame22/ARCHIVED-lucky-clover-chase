@@ -61,12 +61,13 @@ const LuckyCoach = () => {
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    const validTypes = ["video/mp4", "video/webm", "video/quicktime", "video/x-m4v"];
     if (!file.type.startsWith("video/")) {
-      toast({ title: "Invalid file", description: "Please upload a video file.", variant: "destructive" });
+      toast({ title: "Unsupported format", description: "Please upload MP4, WebM, or MOV video files.", variant: "destructive" });
       return;
     }
-    if (file.size > 20 * 1024 * 1024) {
-      toast({ title: "File too large", description: "Max 20MB allowed.", variant: "destructive" });
+    if (file.size > 100 * 1024 * 1024) {
+      toast({ title: "File too large", description: "Max 100MB. Try trimming to just your swing (5-15 seconds).", variant: "destructive" });
       return;
     }
     setVideoFile(file);
@@ -93,18 +94,14 @@ const LuckyCoach = () => {
   }, []);
 
   const analyzeSwing = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
-      toast({ title: "Sign in required", description: "Please sign in to analyze your swing.", variant: "destructive" });
-      return;
-    }
-
     setIsAnalyzing(true);
     try {
+      const { data: { session } } = await supabase.auth.getSession();
       let videoUrl: string | null = null;
 
       if (videoFile) {
-        const filePath = `${session.user.id}/${Date.now()}-${videoFile.name}`;
+        const userId = session?.user?.id || "anonymous";
+        const filePath = `${userId}/${Date.now()}-${videoFile.name}`;
         const { error: uploadError } = await supabase.storage
           .from("swing-videos")
           .upload(filePath, videoFile);
@@ -123,7 +120,7 @@ const LuckyCoach = () => {
       if (error) throw error;
       setAnalysis(data as SwingAnalysis);
       setChatMessages([]);
-      loadHistory();
+      if (session) loadHistory();
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Analysis failed";
       toast({ title: "Analysis error", description: msg, variant: "destructive" });
@@ -134,8 +131,6 @@ const LuckyCoach = () => {
 
   const sendChatMessage = async () => {
     if (!chatInput.trim() || isChatLoading) return;
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) return;
 
     const userMsg: ChatMessage = { role: "user", content: chatInput.trim() };
     const allMessages = [...chatMessages, userMsg];
@@ -145,12 +140,17 @@ const LuckyCoach = () => {
 
     let assistantSoFar = "";
     try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (session?.access_token) {
+        headers["Authorization"] = `Bearer ${session.access_token}`;
+      } else {
+        headers["apikey"] = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+      }
+
       const resp = await fetch(CHAT_URL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session.access_token}`,
-        },
+        headers,
         body: JSON.stringify({
           messages: allMessages,
           analysisContext: analysis,
@@ -320,7 +320,7 @@ const LuckyCoach = () => {
                   </div>
                   <div className="text-center">
                     <p className="font-semibold text-foreground">Upload Your Swing</p>
-                    <p className="text-sm text-muted-foreground mt-1">Tap to select a video (max 20MB)</p>
+                    <p className="text-sm text-muted-foreground mt-1">MP4, WebM, or MOV · max 100MB</p>
                   </div>
                 </button>
               )}
@@ -360,10 +360,17 @@ const LuckyCoach = () => {
               initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}
               className="glass-card p-8 flex flex-col items-center gap-4"
             >
-              <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 3, ease: "linear" }}>
-                <CloverIcon className="w-12 h-12" />
+              <motion.div
+                animate={{ y: [0, -16, 0] }}
+                transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+                className="text-4xl"
+              >
+                ⛳
               </motion.div>
-              <p className="text-sm text-muted-foreground font-medium">Lucky Coach is reviewing your swing...</p>
+              <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 3, ease: "linear" }}>
+                <CloverIcon className="w-10 h-10" />
+              </motion.div>
+              <p className="text-sm text-muted-foreground font-medium">Analyzing your swing... 🍀</p>
               <div className="w-full max-w-xs">
                 <Progress value={undefined} className="h-2 animate-pulse" />
               </div>
