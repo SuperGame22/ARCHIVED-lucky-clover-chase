@@ -49,7 +49,7 @@ const Career = () => {
           className="glass-card p-5"
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-muted-foreground">Progress to Gold</span>
+            <span className="text-sm text-muted-foreground">Progress to become eligible for Gold</span>
             <span className="text-sm font-medium text-accent">62%</span>
           </div>
           <div className="h-3 bg-muted rounded-full overflow-hidden">
@@ -61,7 +61,7 @@ const Career = () => {
             />
           </div>
           <p className="text-xs text-muted-foreground mt-2">
-            Play 8 more rounds to unlock Gold tier perks
+            Gain 38 more clovers to unlock Gold tier eligibility
           </p>
         </motion.div>
 

@@ -10,7 +10,7 @@ import { Gift, Clock, MapPin, Ticket, Star, Sparkles, RotateCcw, Shirt } from "l
 
 // Doubled the prizes with new items
 const prizes = [
-  { label: "Tee Time", color: "from-primary to-lucky-emerald", icon: Clock, rare: true },
+  { label: "Free Tees", color: "from-primary to-lucky-emerald", icon: Clock, rare: true },
   { label: "50% Off", color: "from-accent to-amber-600", icon: Ticket },
   { label: "+5 Clovers", color: "from-green-500 to-emerald-600", icon: CloverIcon },
   { label: "Polo Shirt", color: "from-blue-600 to-indigo-600", icon: Shirt, rare: true },
@@ -25,7 +25,7 @@ const prizes = [
   { label: "Driver", color: "from-violet-600 to-purple-700", icon: Gift, rare: true },
   { label: "15% Off", color: "from-teal-500 to-cyan-600", icon: Ticket },
   { label: "Glove", color: "from-rose-500 to-pink-600", icon: Gift },
-  { label: "+2 Clovers", color: "from-lime-500 to-green-600", icon: CloverIcon },
+  { label: "Sand", color: "from-red-400 to-amber-600", icon: CloverIcon, sand: true },
 ];
 
 const LuckySpin = () => {
@@ -53,7 +53,7 @@ const LuckySpin = () => {
     const prizeIndex = Math.floor(Math.random() * prizes.length);
     const segmentAngle = 360 / prizes.length;
     // Adjust so the prize lands at the top pointer position
-    const targetRotation = 360 * 5 + (360 - (prizeIndex * segmentAngle) - segmentAngle / 2);
+    const targetRotation = 360 * 12 + (360 - (prizeIndex * segmentAngle) - segmentAngle / 2);
 
     setRotation((prev) => prev + targetRotation);
 
@@ -65,7 +65,7 @@ const LuckySpin = () => {
       if (!prizes[prizeIndex].rare && spinsRemaining > 1) {
         setCanRespin(true);
       }
-    }, 4000);
+    }, 8000);
   };
 
   const respin = () => {
@@ -115,7 +115,7 @@ const LuckySpin = () => {
             {/* Spinning wheel - now 96 (24rem / 384px) */}
             <motion.div
               animate={{ rotate: rotation }}
-              transition={{ duration: 4, ease: [0.2, 0.8, 0.2, 1] }}
+              transition={{ duration: 8, ease: [0.15, 0.6, 0.1, 1] }}
               className="relative w-96 h-96"
             >
               <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-2xl">
@@ -134,9 +134,11 @@ const LuckySpin = () => {
                     <path
                       key={i}
                       d={`M 50 50 L ${x1} ${y1} A 50 50 0 ${largeArcFlag} 1 ${x2} ${y2} Z`}
-                      className={`fill-current ${
+              className={`fill-current ${
                         prize.rare 
-                          ? "text-accent/80" 
+                          ? "text-accent/80"
+                          : (prize as any).sand
+                            ? "text-red-300/60"
                           : i % 2 === 0 
                             ? "text-card" 
                             : "text-muted"
