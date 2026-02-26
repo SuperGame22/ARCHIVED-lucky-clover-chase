@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Play, Crosshair, Gift, BarChart3 } from "lucide-react";
+import { Play, ShoppingBag, Gift } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
@@ -11,9 +11,9 @@ const actions = [
     color: "bg-primary/80 text-primary-foreground hover:bg-primary/90",
   },
   {
-    icon: Crosshair,
-    label: "Practice",
-    path: "/practice",
+    icon: ShoppingBag,
+    label: "Buy Gear",
+    path: "/shop",
     color: "bg-primary/80 text-primary-foreground hover:bg-primary/90",
   },
   {
@@ -23,17 +23,11 @@ const actions = [
     color: "bg-primary/80 text-primary-foreground hover:bg-primary/90",
     badge: "$7",
   },
-  {
-    icon: BarChart3,
-    label: "View Stats",
-    path: "/career",
-    color: "bg-primary/80 text-primary-foreground hover:bg-primary/90",
-  },
 ];
 
 export const QuickActions = () => {
   return (
-    <div className="grid grid-cols-4 gap-3">
+    <div className="grid grid-cols-3 gap-3">
       {actions.map((action, index) => (
         <motion.div
           key={action.path}

@@ -1,28 +1,11 @@
 import { motion } from "framer-motion";
 import { AppLayout } from "@/components/layout/AppLayout";
-import { Brain, Target, BarChart3, Lock, ChevronRight, Zap, TrendingUp } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Brain, Target, Lock, ChevronRight, Zap } from "lucide-react";
+import { Link } from "react-router-dom";
 import { CloverIcon } from "@/components/icons/CloverIcon";
 import { GoldCoinIcon } from "@/components/icons/GoldCoinIcon";
 
 const practiceModules = [
-  {
-    title: "Lucky Coach",
-    description: "AI swing analysis & tips",
-    icon: Brain,
-    tier: "clover",
-    path: "/practice/coach",
-    available: true,
-  },
-  {
-    title: "Gold Coach",
-    description: "Advanced pattern modeling",
-    icon: Zap,
-    tier: "gold",
-    path: "/practice/coach",
-    available: false,
-  },
   {
     title: "Rangefinder Simulator",
     description: "Distance control drills",
@@ -39,22 +22,6 @@ const practiceModules = [
     path: "/practice/putting",
     available: true,
   },
-  {
-    title: "Progress Charts",
-    description: "Track your improvement",
-    icon: BarChart3,
-    tier: "free",
-    path: "/practice/progress",
-    available: true,
-  },
-  {
-    title: "Enhanced Stats Deep Dive",
-    description: "Advanced swing pattern modeling",
-    icon: TrendingUp,
-    tier: "gold",
-    path: "/practice/stats-deep-dive",
-    available: false,
-  },
 ];
 
 const Practice = () => {
@@ -67,6 +34,45 @@ const Practice = () => {
         >
           <h1 className="text-2xl font-display font-bold">Practice</h1>
           <p className="text-muted-foreground text-sm">Sharpen your skills off the course</p>
+        </motion.div>
+
+        {/* AI Coach Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <Link to="/practice/coach" className="block">
+            <div className="glass-card p-1 flex items-stretch gap-1 overflow-hidden">
+              {/* Lucky Coach - Active Side */}
+              <div className="flex-1 bg-primary/15 border border-primary/30 rounded-xl p-4 flex items-center gap-3 transition-colors hover:bg-primary/20">
+                <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+                  <Brain className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <p className="font-semibold">Lucky Coach</p>
+                    <CloverIcon className="w-3.5 h-3.5 text-primary" />
+                  </div>
+                  <p className="text-sm text-muted-foreground">AI swing analysis & tips</p>
+                </div>
+              </div>
+              {/* Gold Coach - Locked Side */}
+              <div className="flex-1 bg-muted/30 rounded-xl p-4 flex items-center gap-3 opacity-60">
+                <div className="w-12 h-12 rounded-xl bg-accent/15 flex items-center justify-center">
+                  <Zap className="w-6 h-6 text-accent" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <p className="font-semibold">Gold Coach</p>
+                    <GoldCoinIcon className="w-3.5 h-3.5 text-accent" />
+                    <Lock className="w-3 h-3 text-muted-foreground" />
+                  </div>
+                  <p className="text-sm text-muted-foreground">Advanced pattern modeling</p>
+                  <span className="inline-block mt-1 text-[10px] font-semibold bg-accent/20 text-accent px-2 py-0.5 rounded-full">Upgrade</span>
+                </div>
+              </div>
+            </div>
+          </Link>
         </motion.div>
 
         {/* Session Tracker */}
@@ -147,30 +153,6 @@ const Practice = () => {
             </motion.div>
           ))}
         </div>
-
-        {/* Skill Match Results */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="glass-card p-5"
-        >
-          <h3 className="font-display font-semibold text-lg mb-3">Skill Match Results</h3>
-          <div className="grid grid-cols-3 gap-3 text-center">
-            <div className="bg-muted/50 rounded-xl p-3">
-              <p className="text-2xl font-bold text-primary">72%</p>
-              <p className="text-xs text-muted-foreground">Accuracy</p>
-            </div>
-            <div className="bg-muted/50 rounded-xl p-3">
-              <p className="text-2xl font-bold text-accent">85%</p>
-              <p className="text-xs text-muted-foreground">Consistency</p>
-            </div>
-            <div className="bg-muted/50 rounded-xl p-3">
-              <p className="text-2xl font-bold text-primary">68%</p>
-              <p className="text-xs text-muted-foreground">Short Game</p>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </AppLayout>
   );

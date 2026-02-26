@@ -2,9 +2,10 @@ import { motion } from "framer-motion";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { 
   Trophy, Target, Crown, TrendingUp, Award, 
-  BarChart3, ChevronRight, Star 
+  BarChart3, ChevronRight, Star, Lock
 } from "lucide-react";
 import { GoldCoinIcon } from "@/components/icons/GoldCoinIcon";
+import { Link } from "react-router-dom";
 
 const stats = [
   { label: "Rounds", value: "42", icon: Target },
@@ -178,6 +179,46 @@ const Career = () => {
             ))}
           </div>
         </motion.div>
+
+        {/* Progress & Analytics */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="space-y-3"
+        >
+          <h3 className="font-display font-semibold text-lg px-1">Analytics</h3>
+          <Link to="/practice/progress" className="block">
+            <div className="glass-card p-4 flex items-center justify-between transition-colors hover:bg-primary/5">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center">
+                  <BarChart3 className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <p className="font-semibold">Progress Charts</p>
+                  <p className="text-sm text-muted-foreground">Track your improvement</p>
+                </div>
+              </div>
+              <ChevronRight className="w-5 h-5 text-muted-foreground" />
+            </div>
+          </Link>
+          <div className="glass-card p-4 flex items-center justify-between opacity-60">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-accent/15 flex items-center justify-center">
+                <TrendingUp className="w-6 h-6 text-accent" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <p className="font-semibold">Enhanced Stats Deep Dive</p>
+                  <GoldCoinIcon className="w-3.5 h-3.5 text-accent" />
+                </div>
+                <p className="text-sm text-muted-foreground">Advanced swing pattern modeling</p>
+              </div>
+            </div>
+            <Lock className="w-5 h-5 text-muted-foreground" />
+          </div>
+        </motion.div>
+
       </div>
     </AppLayout>
   );
