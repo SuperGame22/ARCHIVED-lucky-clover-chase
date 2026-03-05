@@ -88,6 +88,177 @@ export type Database = {
         }
         Relationships: []
       }
+      foursome_posts: {
+        Row: {
+          course_name: string
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean | null
+          spots_needed: number
+          tee_time: string
+          user_id: string
+        }
+        Insert: {
+          course_name: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          spots_needed?: number
+          tee_time: string
+          user_id: string
+        }
+        Update: {
+          course_name?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          spots_needed?: number
+          tee_time?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      golfer_profiles: {
+        Row: {
+          bio: string | null
+          business_topics: string[] | null
+          city: string | null
+          competitive_preference: string | null
+          created_at: string
+          deal_breakers: string[] | null
+          display_name: string | null
+          encouragement_style: string | null
+          formats_enjoyed: string[] | null
+          gender_preference: string | null
+          group_size_preference: string | null
+          handicap_index: number | null
+          hobbies: string[] | null
+          home_course: string | null
+          humor_style: string | null
+          id: string
+          industry: string | null
+          introvert_extrovert: string | null
+          lifestyle_flexibility: string | null
+          networking_openness: string | null
+          pace_preference: string | null
+          preferred_days: string[] | null
+          preferred_handicap_max: number | null
+          preferred_handicap_min: number | null
+          preferred_tee_times: string[] | null
+          search_radius_miles: number | null
+          show_handicap: boolean | null
+          show_location: boolean | null
+          show_photo: boolean | null
+          talkative_level: number | null
+          topics_to_avoid: string[] | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          bio?: string | null
+          business_topics?: string[] | null
+          city?: string | null
+          competitive_preference?: string | null
+          created_at?: string
+          deal_breakers?: string[] | null
+          display_name?: string | null
+          encouragement_style?: string | null
+          formats_enjoyed?: string[] | null
+          gender_preference?: string | null
+          group_size_preference?: string | null
+          handicap_index?: number | null
+          hobbies?: string[] | null
+          home_course?: string | null
+          humor_style?: string | null
+          id?: string
+          industry?: string | null
+          introvert_extrovert?: string | null
+          lifestyle_flexibility?: string | null
+          networking_openness?: string | null
+          pace_preference?: string | null
+          preferred_days?: string[] | null
+          preferred_handicap_max?: number | null
+          preferred_handicap_min?: number | null
+          preferred_tee_times?: string[] | null
+          search_radius_miles?: number | null
+          show_handicap?: boolean | null
+          show_location?: boolean | null
+          show_photo?: boolean | null
+          talkative_level?: number | null
+          topics_to_avoid?: string[] | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          bio?: string | null
+          business_topics?: string[] | null
+          city?: string | null
+          competitive_preference?: string | null
+          created_at?: string
+          deal_breakers?: string[] | null
+          display_name?: string | null
+          encouragement_style?: string | null
+          formats_enjoyed?: string[] | null
+          gender_preference?: string | null
+          group_size_preference?: string | null
+          handicap_index?: number | null
+          hobbies?: string[] | null
+          home_course?: string | null
+          humor_style?: string | null
+          id?: string
+          industry?: string | null
+          introvert_extrovert?: string | null
+          lifestyle_flexibility?: string | null
+          networking_openness?: string | null
+          pace_preference?: string | null
+          preferred_days?: string[] | null
+          preferred_handicap_max?: number | null
+          preferred_handicap_min?: number | null
+          preferred_tee_times?: string[] | null
+          search_radius_miles?: number | null
+          show_handicap?: boolean | null
+          show_location?: boolean | null
+          show_photo?: boolean | null
+          talkative_level?: number | null
+          topics_to_avoid?: string[] | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      match_requests: {
+        Row: {
+          created_at: string
+          from_user_id: string
+          id: string
+          message: string | null
+          status: string
+          to_user_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          from_user_id: string
+          id?: string
+          message?: string | null
+          status?: string
+          to_user_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          from_user_id?: string
+          id?: string
+          message?: string | null
+          status?: string
+          to_user_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       promotions: {
         Row: {
           created_at: string

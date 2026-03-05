@@ -22,6 +22,7 @@ import Scorecard from "./pages/Scorecard";
 import Chat from "./pages/Chat";
 import Wallet from "./pages/Wallet";
 import Auth from "./pages/Auth";
+import FoursomeFinder from "./pages/FoursomeFinder";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -47,6 +48,7 @@ const App = () => (
               <Route path="/play" element={<Play />} />
               <Route path="/course" element={<Course />} />
               <Route path="/scorecard" element={<Scorecard />} />
+              <Route path="/foursome-finder" element={<FoursomeFinder />} />
 
               {/* Career domain */}
               <Route path="/career" element={<Career />} />
