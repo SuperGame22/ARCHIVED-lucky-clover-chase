@@ -42,7 +42,7 @@ const playFeatures = [
     title: "Foursome Finder",
     description: "Find players near you",
     icon: Users,
-    path: "/play/foursome",
+    path: "/foursome-finder",
     tier: "free",
   },
 ];
