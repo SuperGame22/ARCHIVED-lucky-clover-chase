@@ -1,161 +1,125 @@
-import { motion } from "framer-motion";
-import { AppLayout } from "@/components/layout/AppLayout";
-import { Brain, Target, Lock, ChevronRight, Zap } from "lucide-react";
-import { Link } from "react-router-dom";
-import { CloverIcon } from "@/components/icons/CloverIcon";
-import { GoldCoinIcon } from "@/components/icons/GoldCoinIcon";
-
-const practiceModules = [
-  {
-    title: "Rangefinder Simulator",
-    description: "Distance control drills",
-    icon: Target,
-    tier: "free",
-    path: "/practice/rangefinder-sim",
-    available: true,
-  },
-  {
-    title: "Putting Grid",
-    description: "Precision putting drills",
-    icon: Target,
-    tier: "free",
-    path: "/practice/putting",
-    available: true,
-  },
-];
-
-const Practice = () => {
-  return (
-    <AppLayout>
-      <div className="max-w-lg mx-auto px-4 py-6 space-y-6">
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <h1 className="text-2xl font-display font-bold">Practice</h1>
-          <p className="text-muted-foreground text-sm">Sharpen your skills off the course</p>
-        </motion.div>
-
-        {/* AI Coach Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <Link to="/practice/coach" className="block">
-            <div className="glass-card p-1 flex items-stretch gap-1 overflow-hidden">
-              {/* Lucky Coach - Active Side */}
-              <div className="flex-1 bg-primary/15 border border-primary/30 rounded-xl p-4 flex items-center gap-3 transition-colors hover:bg-primary/20">
-                <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
-                  <Brain className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-1.5">
-                    <p className="font-semibold">Lucky Coach</p>
-                    <CloverIcon className="w-3.5 h-3.5 text-primary" />
-                  </div>
-                  <p className="text-sm text-muted-foreground">AI swing analysis & tips</p>
-                </div>
-              </div>
-              {/* Gold Coach - Locked Side */}
-              <div className="flex-1 bg-muted/30 rounded-xl p-4 flex items-center gap-3 opacity-60">
-                <div className="w-12 h-12 rounded-xl bg-accent/15 flex items-center justify-center">
-                  <Zap className="w-6 h-6 text-accent" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-1.5">
-                    <p className="font-semibold">Gold Coach</p>
-                    <GoldCoinIcon className="w-3.5 h-3.5 text-accent" />
-                    <Lock className="w-3 h-3 text-muted-foreground" />
-                  </div>
-                  <p className="text-sm text-muted-foreground">Advanced pattern modeling</p>
-                  <span className="inline-block mt-1 text-[10px] font-semibold bg-accent/20 text-accent px-2 py-0.5 rounded-full">Upgrade</span>
-                </div>
-              </div>
-            </div>
-          </Link>
-        </motion.div>
-
-        {/* Session Tracker */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="glass-card p-5"
-        >
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="font-display font-semibold">This Week</h3>
-            <span className="text-sm text-primary font-medium">3 sessions</span>
-          </div>
-          <div className="flex gap-1">
-            {[true, true, true, false, false, false, false].map((done, i) => (
-              <div
-                key={i}
-                className={`flex-1 h-2 rounded-full ${done ? "bg-primary" : "bg-muted"}`}
-              />
-            ))}
-          </div>
-          <p className="text-xs text-muted-foreground mt-2">Keep practicing to earn bonus clovers!</p>
-        </motion.div>
-
-        {/* Practice Modules */}
-        <div className="space-y-3">
-          {practiceModules.map((module, index) => (
-            <motion.div
-              key={module.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.05 * index }}
-            >
-              {module.available ? (
-                <Link to={module.path} className="block">
-                  <div className="glass-card p-4 flex items-center justify-between transition-colors hover:bg-primary/5 cursor-pointer">
-                    <div className="flex items-center gap-4">
-                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                        module.tier === "gold" ? "bg-accent/15" : "bg-primary/15"
-                      }`}>
-                        <module.icon className={`w-6 h-6 ${
-                          module.tier === "gold" ? "text-accent" : "text-primary"
-                        }`} />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <p className="font-semibold">{module.title}</p>
-                          {module.tier === "clover" && <CloverIcon className="w-3.5 h-3.5 text-primary" />}
-                          {module.tier === "gold" && <GoldCoinIcon className="w-3.5 h-3.5 text-accent" />}
-                        </div>
-                        <p className="text-sm text-muted-foreground">{module.description}</p>
-                      </div>
-                    </div>
-                    <ChevronRight className="w-5 h-5 text-muted-foreground" />
-                  </div>
-                </Link>
-              ) : (
-                <div className="glass-card p-4 flex items-center justify-between opacity-60">
-                  <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                      module.tier === "gold" ? "bg-accent/15" : "bg-primary/15"
-                    }`}>
-                      <module.icon className={`w-6 h-6 ${
-                        module.tier === "gold" ? "text-accent" : "text-primary"
-                      }`} />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <p className="font-semibold">{module.title}</p>
-                        {module.tier === "clover" && <CloverIcon className="w-3.5 h-3.5 text-primary" />}
-                        {module.tier === "gold" && <GoldCoinIcon className="w-3.5 h-3.5 text-accent" />}
-                      </div>
-                      <p className="text-sm text-muted-foreground">{module.description}</p>
-                    </div>
-                  </div>
-                  <Lock className="w-5 h-5 text-muted-foreground" />
-                </div>
-              )}
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </AppLayout>
-  );
-};
-
-export default Practice;
+aW1wb3J0IHsgbW90aW9uIH0gZnJvbSAiZnJhbWVyLW1vdGlvbiI7CmltcG9y
+dCB7IEFwcExheW91dCB9IGZyb20gIkAvY29tcG9uZW50cy9sYXlvdXQvQXBw
+TGF5b3V0IjsKaW1wb3J0IHsgQnJhaW4sIFRhcmdldCwgTG9jaywgQ2hldnJv
+blJpZ2h0LCBaYXAgfSBmcm9tICJsdWNpZGUtcmVhY3QiOwppbXBvcnQgeyBM
+aW5rIH0gZnJvbSAicmVhY3Qtcm91dGVyLWRvbSI7CmltcG9ydCB7IENsb3Zl
+ckljb24gfSBmcm9tICJAL2NvbXBvbmVudHMvaWNvbnMvQ2xvdmVySWNvbiI7
+CmltcG9ydCB7IEdvbGRDb2luSWNvbiB9IGZyb20gIkAvY29tcG9uZW50cy9p
+Y29ucy9Hb2xkQ29pbkljb24iOwoKY29uc3QgcHJhY3RpY2VNb2R1bGVzID0g
+WwogIHsKICAgIHRpdGxlOiAiUmFuZ2VmaW5kZXIgU2ltdWxhdG9yIiwKICAg
+IGRlc2NyaXB0aW9uOiAiRGlzdGFuY2UgY29udHJvbCBkcmlsbHMiLAogICAg
+aWNvbjogVGFyZ2V0LAogICAgdGllcjogImZyZWUiLAogICAgcGF0aDogIi9y
+YW5nZWZpbmRlciIsCiAgICBhdmFpbGFibGU6IHRydWUsCiAgfSwKICB7CiAg
+ICB0aXRsZTogIlB1dHRpbmcgR3JpZCIsCiAgICBkZXNjcmlwdGlvbjogIlBy
+ZWNpc2lvbiBwdXR0aW5nIGRyaWxscyIsCiAgICBpY29uOiBUYXJnZXQsCiAg
+ICB0aWVyOiAiZnJlZSIsCiAgICBwYXRoOiAiL3ByYWN0aWNlL3B1dHRpbmci
+LAogICAgYXZhaWxhYmxlOiB0cnVlLAogIH0sCl07Cgpjb25zdCBQcmFjdGlj
+ZSA9ICgpID0+IHsKICByZXR1cm4gKAogICAgPEFwcExheW91dD4KICAgICAg
+PGRpdiBjbGFzc05hbWU9Im1heC13LWxnIG14LWF1dG8gcHgtNCBweS02IHNw
+YWNlLXktNiI+CiAgICAgICAgPG1vdGlvbi5kaXYKICAgICAgICAgIGluaXRp
+YWw9e3sgb3BhY2l0eTogMCwgeTogLTEwIH19CiAgICAgICAgICBhbmltYXRl
+PXt7IG9wYWNpdHk6IDEsIHk6IDAgfX0KICAgICAgICA+CiAgICAgICAgICA8
+aDEgY2xhc3NOYW1lPSJ0ZXh0LTJ4bCBmb250LWRpc3BsYXkgZm9udC1ib2xk
+Ij5QcmFjdGljZTwvaDE+CiAgICAgICAgICA8cCBjbGFzc05hbWU9InRleHQt
+bXV0ZWQtZm9yZWdyb3VuZCB0ZXh0LXNtIj5TaGFycGVuIHlvdXIgc2tpbGxz
+IG9mZiB0aGUgY291cnNlPC9wPgogICAgICAgIDwvbW90aW9uLmRpdj4KCiAg
+ICAgICAgey8qIEFJIENvYWNoCBDYXJkICovfQogICAgICAgIDxtb3Rpb24u
+ZGl2CiAgICAgICAgICBpbml0aWFsPXt7IG9wYWNpdHk6IDAsIHk6IDIwIH19
+CiAgICAgICAgICBhbmltYXRlPXt7IG9wYWNpdHk6IDEsIHk6IDAgfX0KICAg
+ICAgICA+CiAgICAgICAgICA8TGluayB0bz0iL2NvYWNoIiBjbGFzc05hbWU9
+ImJsb2NrIj4KICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImdsYXNzLWNh
+cmQgcC0xIGZsZXggaXRlbXMtc3RyZXRjaCBnYXAtMSBvdmVyZmxvdy1oaWRk
+ZW4iPgogICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4LTEgYmct
+cHJpbWFyeS8xNSBib3JkZXIgYm9yZGVyLXByaW1hcnkvMzAgcm91bmRlZC14
+bCBwLTQgZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTMgdHJhbnNpdGlvbi1jb2xv
+cnMgaG92ZXI6YmctcHJpbWFyeS8yMCI+CiAgICAgICAgICAgICAgICA8ZGl2
+IGNsYXNzTmFtZT0idy0xMiBoLTEyIHJvdW5kZWQteGwgYmctcHJpbWFyeS8y
+MCBmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciI+CiAgICAgICAg
+ICAgICAgICAgIDxCcmFpbiBjbGFzc05hbWU9InctNiBoLTYgdGV4dC1wcmlt
+YXJ5IiAvPgogICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAg
+ICA8ZGl2PgogICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxl
+eCBpdGVtcy1jZW50ZXIgZ2FwLTEuNSI+CiAgICAgICAgICAgICAgICAgICAg
+PHAgY2xhc3NOYW1lPSJmb250LXNlbWlib2xkIj5MdWNreSBDb2FjaDwvcD4K
+ICAgICAgICAgICAgICAgICAgICA8Q2xvdmVySWNvbiBjbGFzc05hbWU9Inct
+My41IGgtMy41IHRleHQtcHJpbWFyeSIgLz4KICAgICAgICAgICAgICAgICAg
+PC9kaXY+CiAgICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC1z
+bSB0ZXh0LW11dGVkLWZvcmVncm91bmQiPkFJIHN3aW5nIGFuYWx5c2lzICYg
+dGlwczwvcD4KICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAg
+IDwvZGl2PgogICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4LTEg
+YmctbXV0ZWQvMzAgcm91bmRlZC14bCBwLTQgZmxleCBpdGVtcy1jZW50ZXIg
+Z2FwLTMgb3BhY2l0eS02MCI+CiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNz
+TmFtZT0idy0xMiBoLTEyIHJvdW5kZWQteGwgYmctYWNjZW50LzE1IGZsZXgg
+aXRlbXMtc2VudGVyIGp1c3RpZnktY2VudGVyIj4KICAgICAgICAgICAgICAg
+ICAgPFphcCBjbGFzc05hbWU9InctNiBoLTYgdGV4dC1hY2NlbnQiIC8+CiAg
+ICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgIDxkaXY+CiAg
+ICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNl
+bnRlciBnYXAtMS41Ij4KICAgICAgICAgICAgICAgICAgICA8cCBjbGFzc05h
+bWU9ImZvbnQtc2VtaWJvbGQiPkdvbGQgQ29hY2g8L3A+CiAgICAgICAgICAg
+ICAgICAgICAgPEdvbGRDb2luSWNvbiBjbGFzc05hbWU9InctMy41IGgtMy41
+IHRleHQtYWNjZW50IiAvPgogICAgICAgICAgICAgICAgICAgIDxMb2NrIGNs
+YXNzTmFtZT0idy0zIGgtMyB0ZXh0LW11dGVkLWZvcmVncm91bmQiIC8+CiAg
+ICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICA8cCBj
+bGFzc05hbWU9InRleHQtc20gdGV4dC1tdXRlZC1mb3JlZ3JvdW5kIj5BZHZh
+bmNlZCBwYXR0ZXJuIG1vZGVsaW5nPC9wPgogICAgICAgICAgICAgICAgICA8
+c3BhbiBjbGFzc05hbWU9ImlubGluZS1ibG9jayBtdC0xIHRleHQtWzEwcHhd
+IGZvbnQtc2VtaWJvbGQgYmctYWNjZW50LzIwIHRleHQtYWNjZW50IHB4LTIg
+cHktMC41IHJvdW5kZWQtZnVsbCI+VXBncmFkZTwvc3Bhbj4KICAgICAgICAg
+ICAgICAgIDwvZGl2PgogICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAg
+ICA8L2Rpdj4KICAgICAgICAgIDwvTExpbms+CiAgICAgICAgPC9tb3Rpb24u
+ZGl2PgoKICAgICAgICA8bW90aW9uLmRpdgogICAgICAgICAgaW5pdGlh bD
+PXt7IG9wYWNpdHk6IDAsIHk6IDIwIH19CiAgICAgICAgICBhbmltYXRlPXt7
+IG9wYWNpdHk6IDEsIHk6IDAgfX0KICAgICAgICAgIGNsYXNzTmFtZT0iZ2xh
+c3MtY2FyZCBwLTUiCiAgICAgICAgPgogICAgICAgICAgPGRpdiBjbGFzc05h
+bWU9ImZsZXggaXRlbXMtc3RhcnQganVzdGlmeS1iZXR3ZWVuIG1iLTMiPgog
+ICAgICAgICAgICA8aDMgY2xhc3NOYW1lPSJmb250LWRpc3BsYXkgZm9udC1z
+ZW1pYm9sZCI+VGhpcyBXZWVrPC9oMz4KICAgICAgICAgICAgPHNwYW4gY2xh
+c3NOYW1lPSJ0ZXh0LXNtIHRleHQtcHJpbWFyeSBmb250LW1lZGl1bSI+MyBz
+ZXNzaW9uczwvc3Bhbj4KICAgICAgICAgIDwvZGl2PgogICAgICAgICAgPGRp
+diBjbGFzc05hbWU9ImZsZXggZ2FwLTEiPgogICAgICAgICAgICB7W3RydWUs
+IHRydWUsIHRydWUsIGZhbHNlLCBmYWxzZSwgZmFsc2UsIGZhbHNlXS5tYXAo
+KGRvbmUsIGkpID0+ICgKICAgICAgICAgICAgICA8ZGl2CiAgICAgICAgICAg
+ICAgICBrZXk9e2l9CiAgICAgICAgICAgICAgICBjbGFzc05hbWU9e2BmbGV4
+LTEgaC0yIHJvdW5kZWQtZnVsbCAke2RvbmUgPyAiYmctcHJpbWFyeSIgOiAi
+YmctbXV0ZWQifWB9CiAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgKSl9
+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4
+dC14cyB0ZXh0LW11dGVkLWZvcmVncm91bmQgbXQtMiI+S2VlcCBwcmFjdGlj
+aW5nIHRvIGVhcm4gYm9udXMgY2xvdmVyczE8L3A+CiAgICAgICAgPC9tb3Rp
+b24uZGl2PgoKICAgICAgICA8ZGl2IGNsYXNzTmFtZT0ic3BhY2UteS0zIj4K
+ICAgICAgICAgIHtwcmFjdGljZU1vZHVsZXMubWFwKChtb2R1bGUsIGluZGV4
+KSA9PiAoCiAgICAgICAgICAgIDxtb3Rpb24uZGl2CiAgICAgICAgICAgICAg
+IGtleT17bW9kdWxlLnRpdGxlfQogICAgICAgICAgICAgICBpbml0aWFsPXt7
+IG9wYWNpdHk6IDAsIHk6IDIwIH19CiAgICAgICAgICAgICAgIGFuaW1hdGU9
+e3sgb3BhY2l0eTogMSwgeTogMCB9fQogICAgICAgICAgICAgICB0cmFuc2l0
+aW9uPXt7IGRlbGF5OiAwLjA1ICogaW5kZXggfX0KICAgICAgICAgICAgPgog
+ICAgICAgICAgICAgIDxMaW5rIHRvPXttb2R1bGUucGF0aH0gY2xhc3NOYW1l
+PSJibG9jayI+CiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZ2xh
+c3MtY2FyZCBwLTQgZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1iZXR3ZWVu
+IHRyYW5zaXRpb24tY29sb3JzIGhvdmVyOmJnLXByaW1hcnkvNSBjdXJzb3It
+cG9pbnRlciI+CiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJm
+bGV4IGl0ZW1zLWNlbnRlciBnYXAtNCI+CiAgICAgICAgICAgICAgICAgICAg
+PGRpdiBjbGFzc05hbWU9e2B3LTEyIGgtMTIgcm91bmRlZC14bCBmbGV4IGl0
+ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciAkewogICAgICAgICAgICAgICAg
+ICAgICAgIG1vZHVsZS50aWVyID09PSAiZ29sZCIgPyAiImJnLWFjY2VudC8x
+NSIgOiAiYmctcHJpbWFyeS8xNSIKICAgICAgICAgICAgICAgICAgICAgIH1g
+fT4KICAgICAgICAgICAgICAgICAgICAgIDxtb3R1bGUuaWNvbiBjbGFzc05h
+bWU9e2B3LTYgaC02ICR7CiAgICAgICAgICAgICAgICAgICAgICAgIG1vZHVs
+ZS50aWVyID09PSAiZ29sZCIgPyAidGV4dC1hY2NlbnQiIDogInRleHQtcHJp
+bWFyeSIKICAgICAgICAgICAgICAgICAgICAgIH1gfSAvPgogICAgICAgICAg
+ICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICAgIDxkaXY+CiAg
+ICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBpdGVt
+cy1jZW50ZXIgZ2FwLTIiPgogICAgICAgICAgICAgICAgICAgICAgICAgIDxw
+IGNsYXNzTmFtZT0iZm9udC1zZW1pYm9sZCI+e21vZHVsZS50aXRsZX08L3A+
+CiAgICAgICAgICAgICAgICAgICAgICAgICAge21vZHVsZS50aWVyID09PSAi
+Y2xvdmVyIiAmJiA8Q2xvdmVySWNvbiBjbGFzc05hbWU9InctMy41IGgtMy41
+IHRleHQtcHJpbWFyeSIgLz59CiAgICAgICAgICAgICAgICAgICAgICAgIHtm
+b2R1bGUudGllciA9PT0gImdvbGQiICYmIDxHb2xkQ29pbkljb24gY2xhc3NO
+YW1lPSJ3LTMuNSBoLTMuNSB0ZXh0LWFjY2VudCIgLz59CiAgICAgICAgICAg
+ICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICAgICAgIDxwIGNs
+YXNzTmFtZT0idGV4dC1zbSB0ZXh0LW11dGVkLWZvcmVncm91bmQiPnttb2R1
+bGUuZGVzY3JpcHRpb259PC9wPgogICAgICAgICAgICAgICAgICAgIDwvZGl2
+PgogICAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgICAg
+PENoZXZyb25SaWdodCBjbGFzc05hbWU9InctNSBoLTUgdGV4dC1tdXRlZC1m
+b3JlZ3JvdW5kIiAvPgogICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAg
+ICAgICAgPC9MaW5rPgogICAgICAgICAgICA8L21vdGlvbi5kaXY+CiAgICAg
+ICAgICApKX0KICAgICAgICA8L2Rpdj4KICAgICAgPC9kaXY+CiAgICA8L0Fw
+cExheW91dD4KICApOwp9OwpleHBvcnQgZGVmYXVsdCBQcmFjdGljZTsK
