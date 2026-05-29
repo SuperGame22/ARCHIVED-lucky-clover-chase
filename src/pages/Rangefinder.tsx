@@ -1,234 +1,145 @@
-import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { AppLayout } from "@/components/layout/AppLayout";
-import { Button } from "@/components/ui/button";
-import { CloverIcon } from "@/components/icons/CloverIcon";
-import { Eye, MapPin, Target, Crosshair, Flag, AlertTriangle } from "lucide-react";
-
-const Rangefinder = () => {
-  const [searchParams] = useSearchParams();
-  const [arMode, setArMode] = useState(searchParams.get("ar") === "true");
-  const [showClover, setShowClover] = useState(true);
-
-  const distances = {
-    front: 142,
-    middle: 156,
-    back: 168,
-    hazard: 89,
-  };
-
-  const collectClover = () => {
-    setShowClover(false);
-  };
-
-  return (
-    <AppLayout>
-      <div className="relative min-h-screen flex flex-col bg-gradient-to-b from-background to-secondary/20">
-        {/* Course Background Overlay */}
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=800')] bg-cover bg-center opacity-20" />
-        
-        <div className="relative flex-1 max-w-lg mx-auto px-4 py-6 w-full">
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-between mb-8"
-          >
-            <div>
-              <h1 className="text-xl font-display font-bold">Rangefinder</h1>
-              <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                <MapPin className="w-4 h-4" />
-                <span>Pebble Beach - Hole 7</span>
-              </div>
-            </div>
-            <Button
-              variant={arMode ? "gold" : "glass"}
-              size="sm"
-              onClick={() => setArMode(!arMode)}
-              className="gap-2"
-            >
-              <Eye className="w-4 h-4" />
-              {arMode ? "AR ON" : "AR Mode"}
-            </Button>
-          </motion.div>
-
-          {/* Main Distance Display */}
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="relative glass-card p-8 mb-6 text-center glow-green"
-          >
-            {/* Animated crosshair */}
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 flex items-center justify-center opacity-10"
-            >
-              <Crosshair className="w-40 h-40 text-primary" />
-            </motion.div>
-
-            <div className="relative">
-              <p className="text-sm text-muted-foreground mb-2 uppercase tracking-wider">Distance to Pin</p>
-              <motion.div
-                key={distances.middle}
-                initial={{ scale: 1.1 }}
-                animate={{ scale: 1 }}
-                className="flex items-baseline justify-center gap-2"
-              >
-                <span className="text-7xl font-display font-bold text-gradient-green">
-                  {distances.middle}
-                </span>
-                <span className="text-2xl text-muted-foreground">yds</span>
-              </motion.div>
-
-              <div className="flex justify-center gap-8 mt-6">
-                <div className="text-center">
-                  <p className="text-xs text-muted-foreground uppercase">Front</p>
-                  <p className="text-xl font-bold text-foreground">{distances.front}</p>
-                </div>
-                <div className="text-center">
-                  <Flag className="w-4 h-4 text-primary mx-auto mb-1" />
-                  <p className="text-xl font-bold text-primary">{distances.middle}</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-xs text-muted-foreground uppercase">Back</p>
-                  <p className="text-xl font-bold text-foreground">{distances.back}</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Hazard Alert */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-            className="flex items-center gap-3 bg-accent/10 border border-accent/20 rounded-xl p-4 mb-6"
-          >
-            <AlertTriangle className="w-5 h-5 text-accent" />
-            <div>
-              <p className="text-sm font-medium text-accent">Water Hazard</p>
-              <p className="text-xs text-muted-foreground">{distances.hazard} yards to carry</p>
-            </div>
-          </motion.div>
-
-          {/* AR Mode Content */}
-          <AnimatePresence>
-            {arMode && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                className="space-y-4"
-              >
-                <div className="glass-card p-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Eye className="w-5 h-5 text-primary" />
-                    <h3 className="font-semibold">AR Monocle Active</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Scanning for clovers and leprechauns...
-                  </p>
-
-                  {/* AR Discovery Area */}
-                  <div className="relative aspect-video bg-muted/50 rounded-xl overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-                    
-                    {/* Simulated AR clover */}
-                    <AnimatePresence>
-                      {showClover && (
-                        <motion.button
-                          initial={{ scale: 0, rotate: -180 }}
-                          animate={{ scale: 1, rotate: 0 }}
-                          exit={{ scale: 0, rotate: 180 }}
-                          whileHover={{ scale: 1.2 }}
-                          onClick={collectClover}
-                          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
-                        >
-                          <motion.div
-                            animate={{ 
-                              y: [0, -5, 0],
-                              filter: ["brightness(1)", "brightness(1.3)", "brightness(1)"]
-                            }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                          >
-                            <CloverIcon className="w-16 h-16 text-primary drop-shadow-[0_0_15px_hsl(152,76%,40%)]" />
-                          </motion.div>
-                          <p className="text-xs text-primary font-medium mt-2 text-center">Tap to collect!</p>
-                        </motion.button>
-                      )}
-                    </AnimatePresence>
-
-                    {!showClover && (
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="absolute inset-0 flex items-center justify-center"
-                      >
-                        <div className="text-center">
-                          <motion.div
-                            initial={{ scale: 1.5, opacity: 1 }}
-                            animate={{ scale: 2, opacity: 0 }}
-                            transition={{ duration: 0.5 }}
-                            className="absolute inset-0 flex items-center justify-center"
-                          >
-                            <CloverIcon className="w-20 h-20 text-primary" />
-                          </motion.div>
-                          <p className="text-lg font-display font-bold text-primary">+1 Clover!</p>
-                          <p className="text-sm text-muted-foreground">Keep searching for more</p>
-                        </div>
-                      </motion.div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Rainbow indicator */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="glass-card p-4"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 to-purple-500 animate-rainbow" />
-                    <div>
-                      <p className="font-semibold">Rainbow Spotted!</p>
-                      <p className="text-sm text-muted-foreground">Leprechaun near Hole 9 green</p>
-                    </div>
-                  </div>
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Club Recommendation */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="glass-card p-4 mt-6"
-          >
-            <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Suggested Club</p>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
-                  <Target className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <p className="font-bold text-lg">7 Iron</p>
-                  <p className="text-sm text-muted-foreground">Avg: 150-160 yds</p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="text-sm text-muted-foreground">Wind</p>
-                <p className="font-medium">→ 8 mph</p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </AppLayout>
-  );
-};
-
-export default Rangefinder;
+aW1wb3J0IHsgdXNlU3RhdGUsIHVzZUVmZmVjdCwgdXNlUmVmIH0gZnJvbSAi
+cmVhY3QiOwppbXBvcnQgeyB1c2VTZWFyY2hQYXJhbXMgfSBmcm9tICJyZWFj
+dC1yb3V0ZXItZG9tIjsKaW1wb3J0IHsgbW90aW9uLCBBbmltYXRlUHJlc2Vu
+Y2UgfSBmcm9tICJmcmFtZXItbW90aW9uIjsKaW1wb3J0IHsgQXBwTGF5b3V0
+IH0gZnJvbSAiQC9jb21wb25lbnRzL2xheW91dC9BcHBMYXlvdXQiOwppbXBv
+cnQgeyBCdXR0b24gfSBmcm9tICJAL2NvbXBvbmVudHMvdWkvYnV0dG9uIjsK
+aW1wb3J0IHsgQ2xvdmVySWNvbiBjbGFzc05hbWU9InctNCBoLTQiIC8+IGZy
+b20gIkAvY29tcG9uZW50cy9pY29ucy9DbG92ZXJJY29uIjsKaW1wb3J0IHsg
+RXllLCBNYXBQaW4sIFRhcmdldCwgQ3Jvc3NoYWlyLCBGbGFnLCBBbGVydFRy
+aWFuZ2xlIH0gZnJvbSAibHVpY2lkZS1yZWFjdCI7Cgpjb25zdCBSYW5nZWZp
+bmRlciA9ICgpID0+IHsKICBjb25zdCBbc2VhcmNoUGFyYW1zXSA9IHVzZVNl
+YXJjaFBhcmFtcygpOwogIGNvbnN0IFthck1vZGUsIHNldEFyTW9kZV0gPSB1
+c2VTdGF0ZShzZWFyY2hQYXJhbXMuZ2V0KCJhciIpID09PSAidHJ1ZSIpOwog
+IGNvbnN0IFtzaG93Q2xvdmVyLCBzZXRTaG93Q2xvdmVyXSA9IHVzZVN0YXRl
+KHRydWUpOwogIGNvbnN0IHZpZGVvUmVmID0gdXNlUmVmPEhUTUxWaWRlb0Vs
+ZW1lbnQ+KG51bGwpOwoKICBjb25zdCBkaXN0YW5jZXMgPSB7CiAgICBmcm9u
+dDogMTQyLAogICAgbWlkZGxlOiAxNTYsCiAgICBiYWNrOiAxNjgsCiAgICBo
+YXphcmQ6IDg5LAogIH07CgogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICBpZiAo
+YXJNb2RlKSB7CiAgICAgIG5hdmlnYXRvci5tZWRpYURldmljZXMuZ2V0VXNl
+ck1lZGlhKHsgdmlkZW86IHsgZmFjaW5nTW9kZTogImVudmlyb25tZW50IiB9
+IH0pCiAgICAgICAgLnRoZW4oc3RyZWFtID0+IHsKICAgICAgICAgIGlmICh2
+aWRlb1JlZi5jdXJyZW50KSB2aWRlb1JlZi5jdXJyZW50LnNyY09iamVjdCA9
+IHN0cmVhbTsKICAgICAgICB9KTsKICAgIH0KICAgIHJldHVybiAoKSA9PiB7
+CiAgICAgIGlmICh2aWRlb1JlZi5jdXJyZW50ICYmIHZpZGVvUmVmLmN1cnJl
+bnQuc3JjT2JqZWN0KSB7CiAgICAgICAgKGNvbnN0IHN0cmVhbSA9IHZpZGVv
+UmVmLmN1cnJlbnQuc3JjT2JqZWN0IGFzIE1lZGlhU3RyZWFtKS5nZXRUcmFj
+a3MoKS5mb3JFYWNoKHQgPT4gdC5zdG9wKCkpOwogICAgICB9CiAgICB9Owog
+IH0sIFthck1vZGVdKTsKCiAgcmV0dXJuICgKICAgIDxBcHBMYXlvdXQ+CiAg
+ICAgIDxkaXYgY2xhc3NOYW1lPSJyZWxhdGl2ZSBtaW4taC1zY3JlZW4gZmxl
+eCBmbGV4LWNvbCBiZy1ncmFkaWVudC10by1iIGZyb20tYmFja2dyb3VuZCB0
+by1zZWNvbmRhcnkvMjAiPgogICAgICAgIHsvKiBDb3Vyc2UgQmFja2dyb3Vu
+ZCBPdmVybGF5ICovfQogICAgICAgIDx2aWRlbyByZWY9e3ZpZGVvUmVmfSBh
+dXRvUGxheSBwbGF5c0lubGluZSBjbGFzc05hbWU9e2ByZWxhdGl2ZSBpbnNl
+dC0wIHctZnVsbCBoLWZ1bGwgYmctYmxhY2sgb2JqZWN0LWNvdmVyICR7YXJN
+b2RlID8gIm9wYWNpdHktMTAwIiA6ICJvcGFjaXR5LTAifWB9IC8+CiAgICAg
+ICAgeyFhck1vZGUgJiYgPGRpdiBjbGFzc05hbWU9ImFic29sdXRlIGluc2V0
+LTAgYmctW3VybCgnaHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3Rv
+LTE1ODcxNzQ0ODYwNzMtYWU1ZTVjZmYyM2FhP3c9ODAwJyldIGJnLWNvdmVy
+IGJnLWNlbnRlciBvcGFjaXR5LTIwIiAvPn0KICAgICAgICAKICAgICAgICA8
+dGl2IGNsYXNzTmFtZT0icmVsYXRpdmUgZmxleC0xIG1heC13LWxnIG14LWF1
+dG8gcHgtNCBweS02IHctZnVsbCI+CiAgICAgICAgICB7LyogSGVhZGVyICov
+fQogICAgICAgICAgPG1vdGlvbi5kaXYKICAgICAgICAgICAgaW5pdGlhbD17
+eyBvcGFjaXR5OiAwLCB5OiAtMjAgfX0KICAgICAgICAgICAgYW5pbWF0ZT17
+eyBvcGFjaXR5OiAxLCB5OiAwIH19CiAgICAgICAgICAgIGNsYXNzTmFtZT0i
+ZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1iZXR3ZWVuIG1iLTgiCiAgICAg
+ICAgICA+CiAgICAgICAgICAgIDxkaXY+CiAgICAgICAgICAgICAgPGgxIGNs
+YXNzTmFtZT0idGV4dC14bCBmb250LWRpc3BsYXkgZm9udC1ib2xkIj5SYW5n
+ZWZpbmRlcjwvaDE+CiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZs
+ZXggaXRlbXMtY2VudGVyIGdhcC0xIHRleHQtc20gdGV4dC1tdXRlZC1mb3Jl
+Z3JvdW5nIj4KICAgICAgICAgICAgICAgIDxNYXBQaW4gY2xhc3NOYW1lPSJ3
+LTQgaC00IiAvPgogICAgICAgICAgICAgICAgPHNwYW4+UGViYmxlIEJlYWNo
+IC0gSG9sZSA3PC9zcGFuPgogICAgICAgICAgICAgIDwvZGl2PgogICAgICAg
+ICAgICA8L2Rpdj4KICAgICAgICAgICAgPEJ1dHRvbgogICAgICAgICAgICAg
+IHZhcmlhbnQ9e2FyTW9kZSA/ICJnb2xkIiA6ICJnbGFzcyJ9CiAgICAgICAg
+ICAgICAgc2l6ZT0ic20iCiAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4g
+c2V0QXJNb2RlKCFhck1vZGUpfQogICAgICAgICAgICAgIGNsYXNzTmFtZT0i
+Z2FwLTIiCiAgICAgICAgICAgID4KICAgICAgICAgICAgICA8RXllIGNsYXNz
+TmFtZT0idy00IGgtNCIgLz4KICAgICAgICAgICAgICB7YXJNb2RlID8gIkFS
+IE9OIiA6ICJBUiBNb2RlIn0KICAgICAgICAgICAgPC9CdXR0b24+CiAgICAg
+ICAgICA8L21vdGlvbi5kaXY+CgogICAgICAgICAgey8qIE1haW4gRGlzdGFu
+Y2UgRGlzcGxheSAqL30KICAgICAgICAgIDxtb3Rpb24uZGl2CiAgICAgICAg
+ICAgIGluaXRpYWw9e3sgc2NhbGU6IDAuOSwgb3BhY2l0eTogMCB9fQogICAg
+ICAgICAgYW5pbWF0ZT17eyBzY2FsZTogMSwgb3BhY2l0eTogMSB9fQogICAg
+ICAgICAgY2xhc3NOYW1lPSJyZWxhdGl2ZSBnbGFzcy1jYXJkIHAtOCBtYi02
+IHRleHQtY2VudGVyIGdsb3ctZ3JlZW4iCiAgICAgICAgICA+CiAgICAgICAg
+ICAgIDxtb3Rpb24uZGl2CiAgICAgICAgICAgICAgYW5pbWF0ZT17eyByb3Rh
+dGU6IDM2MCB9fQogICAgICAgICAgICAgIHRyYW5zaXRpb249e3sgZHVyYXRp
+b246IDIwLCByZXBlYXQ6IEluZmluaXR5LCBlYXNlOiAibGluZWFyIiB9fQog
+ICAgICAgICAgICAgIGNsYXNzTmFtZT0iYWJzb2x1dGUgaW5zZXQtMCBmbGV4
+IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW4gb3BhY2l0eS0xMCIKICAg
+ICAgICAgICAgPgogICAgICAgICAgICAgIDxDcm9zc2hhaXIgY2xhc3NOYW1l
+PSJ3LTQwIGgtNDAgdGV4dC1wcmltYXJ5IiAvPgogICAgICAgICAgICA8L21v
+dGlvbi5kaXY+CgogICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0icmVsYXRp
+dmUiPgogICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC1zbIHRleHQt
+bXV0ZWQtZm9yZWdyb3VuZCBtYi0yIHVwcGVyY2FzZSB0cmFja2luZy13aWRl
+ciI+RGlzdGFuY2UgdG8gUGluPC9wPgogICAgICAgICAgICAgIDxtb3Rpb24u
+ZGl2CiAgICAgICAgICAgICAgICBrZXk9e2Rpc3RhbmNlcy5taWRkbGV9CiAg
+ICAgICAgICAgICAgICBpbml0aWFsPXt7IHNjYWxlOiAxLjEgfX0KICAgICAg
+ICAgICAgICAgIGFuaW1hdGU9e3sgc2NhbGU6IDEgfX0KICAgICAgICAgICAg
+ICAgIGNsYXNzTmFtZT0iZmxleCBpdGVtcy1iYXNlbGluZSBqdXN0aWZ5LWNl
+bnRlciBnYXAtMiIKICAgICAgICAgICAgICA+CiAgICAgICAgICAgICAgICA8
+c3BhbiBjbGFzc05hbWU9InRleHQtN3hsIGZvbnQtZGlzcGxheSBmb250LWJv
+bGQgdGV4dC1ncmFkaWVudC1ncmVlbiI+CiAgICAgICAgICAgICAgICAgIHtk
+aXN0YW5jZXMubWlkZGxlfQogICAgICAgICAgICAgICAgPC9zcGFuPgogICAg
+ICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJ0ZXh0LTJ4bCB0ZXh0LW11
+dGVkLWZvcmVncm91bmQiPnlkczwvc3Bhbj4KICAgICAgICAgICAgICA8L21v
+dGlvbi5kaXY+CgogICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4
+IGp1c3RpZnktY2VudGVyIGdhcC04IG10LTYiPgogICAgICAgICAgICAgICAg
+PGRpdiBjbGFzc05hbWU9InRleHQtY2VudGVyIj4KICAgICAgICAgICAgICAg
+ICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXhzIHRleHQtbXV0ZWQtZm9yZWdyb3Vu
+dCB1cHBlcmNhc2UiPkZyb250PC9wPgogICAgICAgICAgICAgICAgICA8cCBj
+bGFzc05hbWU9InRleHQteGwgZm9udC1ib2xkIHRleHQtZm9yZWdyb3VuZCI+
+e2Rpc3RhbmNlcy5mcm9udH08L3A+CiAgICAgICAgICAgICAgICA8L2Rpdj4K
+ICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ0ZXh0LWNlbnRlciI+
+CiAgICAgICAgICAgICAgICAgIDxGbGFnIGNsYXNzTmFtZT0idy00IGgtNCB0
+ZXh0LXByaW1hcnkgbXgtYXV0byBtYi0xIiAvPgogICAgICAgIC2ICAgICAg
+ICAgIDxwIGNsYXNzTmFtZT0idGV4dC14bCBmb250LWJvbGQgdGV4dC1wcmlt
+YXJ5Ij57ZGlzdGFuY2VzLm1pZGRsZX08L3A+CiAgICAgICAgICAgICAgICA8
+L2Rpdj4KICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ0ZXh0LWNl
+bnRlciI+CiAgICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC14
+cyB0ZXh0LW11dGVkLWZvcmVncm91bmQgdXBwZXJjYXNlIj5CYWNrPC9wPgog
+ICAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9InRleHQteGwgZm9udC1i
+b2xkIHRleHQtZm9yZWdyb3VuZCI+e2Rpc3RhbmNlcy5iYWNrfTwvcD4KICAg
+ICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgIDwvZGl2PgogICAg
+ICAgICAgICA8L2Rpdj4KICAgICAgICAgIDwvbW90aW9uLmRpdj4KCiAgICAg
+ICAgICB7LyogSGF6YXJkIEFsZXJ0ICovfQogICAgICAgICAgPG1vdGlvbi5k
+aXYKICAgICAgICAgICAgaW5pdGlhbD17eyBvcGFjaXR5OiAwLCB4OiAtMjAg
+fX0KICAgICAgICAgICAgYW5pbWF0ZT17eyBvcGFjaXR5OiAxLCB4OiAwIH19
+CiAgICAgICAgICAgIHRyYW5zaXRpb249e3sgIGRlbGF5OiAwLjIgfX0KICAg
+ICAgICAgICAgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMyBi
+Zy1hY2NlbnQvMTAgYm9yZGVyIGJvcmRlci1hY2NlbnQvMjAgcm91bmRlZC14
+bCBwLTQgbWItNiIKICAgICAgICAgID4KICAgICAgICAgICAgPEFsZXJ0VHJp
+YW5nbGUgY2xhc3NOYW1lPSJ3LTUgaC01IHRleHQtYWNjZW50IiAvPgogICAg
+ICAgICAgICA8ZGl2PgogICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4
+dC1zbSBmb250LW1lZGl1bSB0ZXh0LWFjY2VudCI+V2F0ZXIgSGF6YXJkPC9w
+PgogICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC14cyB0ZXh0LW11
+dGVkLWZvcmVncm91bmQiPntkaXN0YW5jZXMuaGF6YXJkfSB5YXJkcyB0byBj
+YXJyeTwvcD4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICA8L21vdGlv
+bi5kaXY+CgogICAgICAgICAgey8qIENsdWIgUmVjb21tZW5kYXRpb24gKi99
+CiAgICAgICAgICA8bW90aW9uLmRpdgogICAgICAgICAgICBpbml0aWFsPXt7
+IG9wYWNpdHk6IDAsIHk6IDIwIH19CiAgICAgICAgICAgIGFuaW1hdGU9e3sg
+b3BhY2l0eTogMSwgeTogMCB9fQogICAgICAgICAgICB0cmFuc2l0aW9uPXt7
+IGRlbGF5OiAwLjMgfX0KICAgICAgICAgICAgY2xhc3NOYW1lPSJnbGFzcy1j
+YXJkIHAtNCBtdC02IgogICAgICAgICAgPgogICAgICAgICAgICA8cCBjbGFz
+c05hbWU9InRleHQteHMgdGV4dC1tdXRlZC1mb3JlZ3JvdW5kIHVwcGVyY2Fz
+ZSB0cmFja2luZy13aWRlciBtYi0yIj5TdWdnZXN0ZWQgQ2x1YjwvcD4KICAg
+ICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtc3RhcnQganVz
+dGlmeS1iZXR3ZWVuIj4KICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0i
+ZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTMiPgogICAgICAgICAgICAgICAgPGRp
+diBjbGFzc05hbWU9InctMTIgaC0xMiBiZy1wcmltYXJ5LzEwIHJvdW5kZWQt
+eGwgZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIiPgogICAgICAg
+ICAgICAgICAgICA8VGFyZ2V0IGNsYXNzTmFtZT0idy02IGgtNiB0ZXh0LXBy
+aW1hcnkiIC8+CiAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAg
+ICAgIDxkaXY+CiAgICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0iZm9u
+dC1ib2xkIHRleHQtbGciPjcgSXJvbjwvcD4KICAgICAgICAgICAgICAgICAg
+PHAgY2xhc3NOYW1lPSJ0ZXh0LXhzIHRleHQtbXV0ZWQtZm9yZWdyb3VuZCI+
+QXZnOiAxNTAtMTYwIHlkczwvcD4KICAgICAgICAgICAgICAgIDwvZGl2Pgog
+ICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgIDxkaXYgY2xhc3NO
+YW1lPSJ0ZXh0LXJpZ2h0Ij4KICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFt
+ZT0idGV4dC1zbSB0ZXh0LW11dGVkLWZvcmVncm91bmQiPldpbmQ8L3A+CiAg
+ICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9ImZvbnQtbWVkaXVtIj7ihpIg
+OCBtcGg8L3A+CiAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDwv
+ZGl2PgogICAgICAgICAgPC9tb3Rpb24uZGl2PgogICAgICAgIDwvZGl2Pgog
+ICAgICA8L2Rpdj4KICAgIDwvQXBwTGF5b3V0PgogICk7Cn07CmV4cG9ydCBk
+ZWZhdWx0IFJhbmdlZmluZGVyOwo=
