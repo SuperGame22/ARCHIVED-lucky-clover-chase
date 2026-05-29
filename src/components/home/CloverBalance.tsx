@@ -39,11 +39,11 @@ export const CloverBalance = ({
               litLeaves={litLeaves}
               earnedPulse={earnedPulse}
             />
-            <span className="text-6xl font-display font-bold text-gradient-green">{cloverBalance}</span>
+            <span className="text-8xl font-display font-black flex items-center text-gradient-green">{cloverBalance}</span>
           </div>
           <div className="flex items-center gap-2 mt-3 text-lg font-medium text-primary">
             <Sparkles className="w-5 h-5" />
-            <span>+{todayEarned} this week</span>
+            <span>[a{etodayEarned} this week</span>
           </div>
         </div>
         
@@ -55,7 +55,7 @@ export const CloverBalance = ({
               whileHover={{ scale: 1.02 }}
               className="bg-accent/10 border border-accent/30 rounded-lg px-3 py-2 transition-colors hover:bg-accent/20"
             >
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center justify-between gap-1.5">
                 <Trophy className="w-3.5 h-3.5 text-accent" />
                 <span className="text-[10px] text-muted-foreground uppercase tracking-wide">This Week's Jackpot</span>
               </div>
@@ -67,7 +67,7 @@ export const CloverBalance = ({
           <Link to="/spin" className="block">
             <motion.div 
               whileHover={{ scale: 1.02 }}
-              className="bg-primary/10 border border-primary/30 rounded-lg px-3 py-1.5 transition-colors hover:bg-primary/20"
+              className="bg-primary/10 border-primary/30 rounded-lg px-3 py-1.5 transition-colors hover:bg-primary/20"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
@@ -94,7 +94,7 @@ export const CloverBalance = ({
                   <span className="text-sm font-bold text-foreground">{unreadMessages}</span>
                 </div>
               </motion.div>
-            </Link>
+            </LLink>
           )}
         </div>
       </div>
