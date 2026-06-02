@@ -1,132 +1,227 @@
-aW1wb3J0IHsgbW90aW9uIH0gZnJvbSAiZnJhbWVyLW1vdGlvbiI7CmltcG9y
-dCB7IEFwcExheW91dCB9IGZyb20gIkAvY29tcG9uZW50cy9sYXlvdXQvQXBw
-TGF5b3V0IjsKaW1wb3J0IHsgQnV0dG9uIH0gZnJvbSAiQC9jb21wb25lbnRz
-L3VpL2J1dHRvbiI7CmltcG9ydCB7IENsb3Zlckljb24gfSBmcm9tICJAL2Nv
-bXBvbmVudHMvaWNvbnMvQ2xvdmVySWNvbiI7CmltcG9ydCB7IEdvbGRDb2lu
-SWNvbiB9IGZyb20gIkAvY29tcG9uZW50cy9pY29ucy9Hb2xkQ29pbkljb24i
-OwppbXBvcnQgewogIFVzZXIsCiAgU2V0dGluZ3MsCiAgVHJvcGh5LAogIFRh
-cmdldCwKICBDYWxlbmRhciwKICBDaGV2cm9uUmlnaHQsCiAgQ3Jvd24sCiAg
-TG9nT3V0LAogIENhbWVyYSwKfSBmcm9tICJsdWNpZGUtcmVhY3QiOwppbXBv
-cnQgeyBMaW5rIH0gZnJvbSAicmVhY3Qtcm91dGVyLWRvbSI7CmltcG9ydCB7
-IHZhbGlkYXRlU3ViYXBhc2VDb25maWcgfSBmcm9tICJAL2ludGVncmF0aW9u
-sy9zdXBhYmFzZS9jbGllbnQiOwppbXBvcnQgeyB1c2VTdGF0ZSB9IGZyb20g
-InJlYWN0IjsKCmNvbnN0IHN0YXRzID0gWwogIHsgbGFiZWw6ICJSb3VuZHMg
-UGxheWVkIiwgdmFsdWU6ICI0MiIsIGljb246IFRhcmdldCB9LAogIHsgbGFi
-ZWw6ICJCZXN0IFNjb3JlIiwgdmFsdWU6ICI3OCIsIGljb246IFRyb3BoeSB9
-LAogIHsgbGFiZWw6ICJDbG92ZXJzIEZvdW5kIiwgdmFsdWU6ICIxNTYiLCBp
-Y29uOiBDbG92ZXJJY29uIH0sCiAgeyBsYWJlbDogIk1lbWJlciBTaW5jZSIs
-IHZhbHVlOiAiTWFyICcyNCIsIGljb246IENhbGVuZGFyIH0sCl07Cgpjb25z
-dCBtZW51SXRlbXMgPSBbCiAgeyBsYWJlbDogIk1lbWJlcnNoaXAiLCBwYXRo
-OiAiL21lbWJlcnNoaXAiLCBpY29uOiBDcm93biB9LAogIHsgbGFiZWw6ICJT
-Y29yZWNhcmQgSGlzdG9yeSIsIHBhdGg6ICIvc2NvcmVjYXJkIiwgaWNvbjog
-VHJvcGh5IH0sCiAgeyBsYWJlbDogIlNldHRpbmdzIiwgcGF0aDogIi9zZXR0
-aW5ncyIsIGljb246IFNldHRpbmdzIH0sCl07Cgpjb25zdCBQcm9maWxlID0g
-KCkgPT4gewogIGNvbnN0IFthdmF0YXIsIHNldEF2YXRhcl0gPSB1c2VTdGF0
-ZTxzdHJpbmcgfCBudWxsPihudWxsKTsKCiAgcmV0dXJuICgKICAgIDxBcHBM
-YXlvdXQ+CiAgICAgIDxkaXYgY2xhc3NOYW1lPSJtYXgtdy1sZyBteC1hdXRv
-IHB4LTQgcHktNiBzcGFjZS15LTYiPgogICAgICAgIHsvKiBQcm9maWxlIEhl
-YWRlciAqL30KICAgICAgICA8bW90aW9uLmRpdgogICAgICAgICAgaW5pdGlh
-bD17eyBvcGFjaXR5OiAwLCB5OiAtMTAgfX0KICAgICAgICAgIGFuaW1hdGU9
-e3sgb3BhY2l0eTogMSwgeTogMCB9fQogICAgICAgICAgY2xhc3NOYW1lPSJn
-bGFzcy1jYXJkIHAtNiB0ZXh0LWNlbnRlciIKICAgICAgICA+CiAgICAgICAg
-ICA8ZGl2IGNsYXNzTmFtZT0icmVsYXRpdmUgdy0yMCBoLTIwIG14LWF1dG8g
-bWItNCI+CiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ3LWZ1bGwgaC1m
-dWxsIGJnLWdyYWRpZW50LXRvLWJyIGZyb20tcHJpbWFyeSB0by1sdWNreS1l
-bWVyYWxkIHJvdW5kZWQtZnVsbCBmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5
-LWNlbnRlciBvdmVyZmxvdy1oaWRkZW4iPgogICAgICAgICAgICAgIHtBdmF0
-dXIgPyA8aW1nIHNyYz17YXZhdGFyfSBjbGFzc05hbWU9InctZnVsbCBoLWZ1
-bGwgb2JqZWN0LWNvdmVyIiBhbHQ9ImF2YXRhciIgLz4gOiA8VXNlciBjbGFz
-c05hbWU9InctMTAgaC0xMCB0ZXh0LXByaW1hcnktZm9yZWdyb3VuZCIgLz59
-CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICA8bGFiZWwgY2xhc3NO
-YW1lPSJhYnNvbHV0ZSBib3R0b20tMCByaWdodC0wIGJnLXByaW1hcnkgcC0x
-LjUgcm91bmRlZC1mdWxsIGN1cnNvci1wb2ludGVyIGhvdmVyOnNjYWxlLTEx
-MCB0cmFuc2l0aW9uLXRyYW5zZm9ybSI+CiAgICAgICAgICAgICAgPENhbWVy
-YSBzaXplPXsxNH0gY2xhc3NOYW1lPSJ0ZXh0LXByaW1hcnktZm9yZWdyb3Vu
-dCIgLz4KICAgICAgICAgICAgICA8aW5wdXQgdHlwZT0iZmlsZSIgY2xhc3NO
-YW1lPSJoaWRkZW4iIG9uQ2hhbmdlPXsoZSkgPT4gZS50YXJnZXQuZmlsZXMg
-JiYgc2V0QXZhdGFyKFVSTC5jcmVhdGVPYmplY3RVUkwoZS50YXJnZXQuZmls
-ZXNbMF0pKX0gLz4KICAgICAgICAgICAgPC9sYWJlbD4KICAgICAgICAgIDwv
-dGl2PgogICAgICAgICAgPGgxIGNsYXNzTmFtZT0idGV4dC0yeGwgZm9udC1k
-aXNwbGF5IGZvbnQtYm9sZCBtYi0xIj5MdWNreSBQbGF5ZXI8L2gxPgogICAg
-ICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LW11dGVkLWZvcmVncm91bmQgdGV4
-dC1zbSBtYi00Ij5AbHVja3lnb2xmZXI8L3A+CgogICAgICAgICAgPGRpdiBj
-bGFzc05hbWU9ImlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciBnYXAtMiBiZy1w
-cmltYXJ5LzEwIHB4LTMgcHktMS41IHJvdW5kZWQtZnVsbCI+CiAgICAgICAg
-ICAgIDxDbG92ZXJJY29uIGNsYXNzTmFtZT0idy00IGgtNCB0ZXh0LXByaW1h
-cnkiIC8+CiAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0idGV4dC1zbSBm
-b250LW1lZGl1bSB0ZXh0LXByaW1hcnkiPkZyZWUgTWVtYmVyPC9zcGFuPgog
-ICAgICAgICAgPC9kaXY+CiAgICAgICAgPC9tb3Rpb24uZGl2PgoKICAgICAg
-ICB7LyogQmFsYW5jZSBDYXJkcyAqL30KICAgICAgICA8ZGl2IGNsYXNzTmFt
-ZT0iZ3JpZCBncmlkLWNvbHMtMiBnYXAtNCI+CiAgICAgICAgICA8bW90aW9u
-LmRpdgogICAgICAgICAgICBpbml0aWFsPXt7IG9wYWNpdHk6IDAsIHg6IC0y
-MCB9fQogICAgICAgICAgICBhbmltYXRlPXt7IG9wYWNpdHk6IDEsIHg6IDAg
-fX0KICAgICAgICAgICAgY2xhc3NOYW1lPSJnbGFzcy1jYXJkIHAtNCIKICAg
-ICAgICAgID4KICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRl
-bXMtY2VudGVyIGdhcC0yIG1iLTIiPgogICAgICAgICAgICAgIDxDbG92ZXJJ
-Y29uIGNsYXNzTmFtZT0idy01IGgtNSB0ZXh0LXByaW1hcnkiIC8+CiAgICAg
-ICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJ0ZXh0LXNtIHRleHQtbXV0ZWQt
-Zm9yZWdyb3VuZCI+Q2xvdmVyczwvc3Bhbj4KICAgICAgICAgICAgPC9kaXY+
-CiAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC0zeGwgZm9udC1kaXNw
-bGF5IGZvbnQtYm9sZCB0ZXh0LXByaW1hcnkiPjQ3PC9wPgogICAgICAgICAg
-ICA8cCBjbGFzc05hbWU9InRleHQteHMgdGV4dC1tdXRlZC1mb3JlZ3JvdW5k
-Ij49ICQxMS43NSBjcmVkaXQ8L3A+CiAgICAgICAgICA8L21vdGlvbi5kaXY+
-CgogICAgICAgICAgPG1vdGlvbi5kaXYKICAgICAgICAgICAgaW5pdGlh bD
-PXt7IG9wYWNpdHk6IDAsIHg6IDIwIH19CiAgICAgICAgICAgIGFuaW1hdGU9
-e3sgb3BhY2l0eTogMSwgeDogMCB9fQogICAgICAgICAgICBjbGFzc05hbWU9
-ImdsYXNzLWNhcmQgcC00IgogICAgICAgICAgPgogICAgICAgICAgICA8ZGl2
-IGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTIgbWItMiI+CiAg
-ICAgICAgICAgICAgPEdvbGRDb2luSWNvbiBjbGFzc05hbWU9InctNSBoLTUg
-dGV4dC1hY2NlbnQiIC8+CiAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1l
-PSJ0ZXh0LXNtIHRleHQtbXV0ZWQtZm9yZWdyb3VuZCI+R29sZCBQb3Q8L3Nw
-YW4+CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICA8cCBjbGFzc05h
-bWU9InRleHQtM3hsIGZvbnQtZGlzcGxheSBmb250LWJvbGQgdGV4dC1hY2Nl
-bmQiPiQ0LjcyPC9wPgogICAgICAgICAgICA8cCBjbGFzc05hbWU9InRleHQt
-eHMgdGV4dC1tdXRlZC1mb3JlZ3JvdW5kIj40LDcyMG1nIGNvbGxlY3RlZDwv
-cD4KICAgICAgICAgIDwvbW90aW9uLmRpdj4KICAgICAgICA8L2Rpdj4KCiAg
-ICAgICAgey8qIFN0YXRzIEdyaWQgKi99CiAgICAgICAgPG1vdGlvbi5kaXYK
-ICAgICAgICAgIGluaXRpYWw9e3sgb3BhY2l0eTogMCwgeTogMjAgfX0KICAg
-ICAgICAgIGFuaW1hdGU9e3sgb3BhY2l0eTogMSwgeTogMCB9fQogICAgICAg
-ICAgdHJhbnNpdGlvbj17eyBkZWxheTogMC4xIH19CiAgICAgICAgICBjbGFz
-c05hbWU9ImdsYXNzLWNhcmQgcC01IgogICAgICAgID4KICAgICAgICAgIDxo
-MyBjbGFzc05hbWU9ImZvbnQtZGlzcGxheSBmb250LXNlbWlib2xkIHRleHQt
-bGcgbWItNCI+WW91ciBTdGF0czwvaDM+CiAgICAgICAgICA8ZGl2IGNsYXNz
-TmFtZT0iZ3JpZCBncmlkLWNvbHMtMiBnYXAtNCI+CiAgICAgICAgICAgIHtz
-dGF0cy5tYXAoKHN0YXQsIGluZGV4KSA9PiB7CiAgICAgICAgICAgICAgY29u
-c3QgSWNvbiA9IHN0YXQuaWNvbjsKICAgICAgICAgICAgICByZXR1cm4gKAog
-ICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2Vu
-dGVyIGdhcC0zIHAtMyBiZy1tdXRlZC81MCByb3VuZGVkLXhsIiBrZXk9e2lu
-ZGV4fT4KICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9InctMTAg
-aC0xMCBiZy1wcmltYXJ5LzEwIHJvdW5kZWQtbGcgZmxleCBpdGVtcy1jZW50
-ZXIganVzdGlmeS1jZW50ZXIiPgogICAgICAgICAgICAgICAgICAgIDxJY29u
-IGNsYXNzTmFtZT0idy01IGgtNSB0ZXh0LXByaW1hcnkiIC8+CiAgICAgICAg
-ICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICA8ZGl2PgogICAg
-ICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC1sZyBmb250LWJv
-bGQiPntzdGF0LnZhbHVlfTwvcD4KICAgICAgICAgICAgICAgICAgICA8cCBj
-bGFzc05hbWU9InRleHQteHMgdGV4dC1tdXRlZC1mb3JlZ3JvdW5kIj57c3Rh
-dC5sYWJlbH08L3A+CiAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAg
-ICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgKTsKICAgICAgICAgICAg
-fSl9CiAgICAgICAgICA8L2Rpdj4KICAgICAgICA8L21vdGlvbi5kaXY+Cgog
-ICAgICAgIHsvKiBNZW51IEl0ZW1zICovfQogICAgICAgIDxtb3Rpb24uZGl2
-CiAgICAgICAgICBpbml0aWFsPXt7IG9wYWNpdHk6IDAsIHk6IDIwIH19CiAg
-ICAgICAgICBhbmltYXRlPXt7IG9wYWNpdHk6IDEsIHk6IDAgfX0KICAgICAg
-ICAgIHRyYW5zaXRpb249e3sgIGRlbGF5OiAwLjIgfX0KICAgICAgICAgIGNs
-YXNzTmFtZT0iZ2xhc3MtY2FyZCBvdmVyZmxvdy1oaWRkZW4iCiAgICAgICAg
-PgogICAgICAgICAge21lbnVJdGVtcy5tYXAoKGl0ZW0sIGluZGV4KSA9PiAo
-CiAgICAgICAgICAgIDxMaW5rCiAgICAgICAgICAgICAga2V5PXtpbmRleH0K
-ICAgICAgICAgICAgICB0bz17aXRlbS5wYXRofQogICAgICAgICAgICAgIGNs
-YXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1iZXR3ZWVuIHAt
-NCBob3ZlcjpiZy1tdXRlZC81MCB0cmFuc2l0aW9uLWNvbG9ycyBib3JkZXIt
-YiBib3JkZXItYm9yZGVyIGxhc3Q6Ym9yZGVyLTAiCiAgICAgICAgICAgID4K
-ICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50
-ZXIgaWdhcC0zIj4KICAgICAgICAgICAgICAgIDxpdGVtLmljb24gY2xhc3NO
-YW1lPSJ3LTUgaC01IHRleHQtbXV0ZWQtZm9yZWdyb3VuZCIgLz4KICAgICAg
-ICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0iZm9udC1tZWRpdW0iPntpdGVt
-LmxhYmVsXTwvc3Bhbj4KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAg
-ICAgICA8Q2hldnJvblJpZ2h0IGNsYXNzTmFtZT0idy01IGgtNSB0ZXh0LW11
-dGVkLWZvcmVncm91bmQiIC8+CiAgICAgICAgICAgIDwvTExpbms+CiAgICAg
-ICAgICApKX0KICAgICAgICA8L21vdGlvbi5kaXY+CgogICAgICAgIHsvKiBM
-b2dvdXQgKi99CiAgICAgICAgPEJ1dHRvbiB2YXJpYW50PSJvdXRsaW5lIiBj
-bGFzc05hbWU9InctZnVsbCBnYXAtMiI+CiAgICAgICAgICA8TG9nT3V0IGNs
-YXNzTmFtZT0idy00IGgtNCIgLz4KICAgICAgICAgIFNpZ24gT3V0CiAgICAg
-ICAgPC9CdXR0b24+CiAgICAgIDwvZGl2PgogICAgPC9BcHBMYXlvdXQ+CiAg
-KTsKfTsKCmV4cG9ydCBkZWZhdWx0IFByb2ZpbGU7Cg==
+import { motion } from "framer-motion";
+import { AppLayout } from "@/components/layout/AppLayout";
+import { Button } from "@/components/ui/button";
+import { CloverIcon } from "@/components/icons/CloverIcon";
+import { GoldCoinIcon } from "@/components/icons/GoldCoinIcon";
+import {
+  User,
+  Settings,
+  Trophy,
+  Target,
+  Calendar,
+  ChevronRight,
+  Crown,
+  LogOut,
+  Camera,
+  Loader2,
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from "react";
+import { toast } from "sonner";
+
+const stats = [
+  { label: "Rounds Played", value: "42", icon: Target },
+  { label: "Best Score", value: "78", icon: Trophy },
+  { label: "Clovers Found", value: "156", icon: CloverIcon },
+  { label: "Member Since", value: "Mar '24", icon: Calendar },
+];
+
+const menuItems = [
+  { label: "Membership", path: "/membership", icon: Crown },
+  { label: "Scorecard History", path: "/scorecard", icon: Trophy },
+  { label: "Settings", path: "/settings", icon: Settings },
+];
+
+const Profile = () => {
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setUser(user);
+        const { data: profile } = await supabase
+          .from("golfer_profiles")
+          .select("avatar_url")
+          .eq("user_id", user.id)
+          .single();
+        
+        if (profile?.avatar_url) {
+          setAvatarUrl(profile.avatar_url);
+        }
+      }
+    };
+    fetchProfile();
+  }, []);
+
+  const uploadAvatar = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      setUploading(true);
+      if (!event.target.files || event.target.files.length === 0) {
+        throw new Error("You must select an image to upload.");
+      }
+
+      const file = event.target.files[0];
+      const fileExt = file.name.split(".").pop();
+      const fileName = `${user.id}-${Math.random()}.${fileExt}`;
+      const filePath = `avatars/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("avatars")
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from("avatars")
+        .getPublicUrl(filePath);
+
+      const { error: updateError } = await supabase
+        .from("golfer_profiles")
+        .update({ avatar_url: publicUrl })
+        .eq("user_id", user.id);
+
+      if (updateError) throw updateError;
+
+      setAvatarUrl(publicUrl);
+      toast.success("Profile picture updated!");
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  return (
+    <AppLayout>
+      <div className="max-w-lg mx-auto px-4 py-6 space-y-6">
+        {/* Profile Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="glass-card p-6 text-center"
+        >
+          <div className="relative w-24 h-24 mx-auto mb-4">
+            <div className="w-full h-full bg-gradient-to-br from-primary to-lucky-emerald rounded-full flex items-center justify-center overflow-hidden border-4 border-green-500/20">
+              {avatarUrl ? (
+                <img src={avatarUrl} className="w-full h-full object-cover" alt="avatar" />
+              ) : (
+                <User className="w-12 h-12 text-primary-foreground" />
+              )}
+              {uploading && (
+                <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                  <Loader2 className="w-8 h-8 animate-spin text-white" />
+                </div>
+              )}
+            </div>
+            <label className="absolute bottom-0 right-0 bg-primary p-2 rounded-full cursor-pointer hover:scale-110 transition-transform shadow-lg">
+              <Camera size={16} className="text-primary-foreground" />
+              <input 
+                type="file" 
+                className="hidden" 
+                accept="image/*"
+                onChange={uploadAvatar} 
+                disabled={uploading}
+              />
+            </label>
+          </div>
+          <h1 className="text-2xl font-display font-bold mb-1">Lucky Player</h1>
+          <p className="text-muted-foreground text-sm mb-4">@luckygolfer</p>
+
+          <div className="inline-flex items-center gap-2 bg-primary/10 px-3 py-1.5 rounded-full">
+            <CloverIcon className="w-4 h-4 text-primary" />
+            <span className="text-sm font-medium text-primary">Free Member</span>
+          </div>
+        </motion.div>
+
+        {/* Balance Cards */}
+        <div className="grid grid-cols-2 gap-4">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="glass-card p-4"
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <CloverIcon className="w-5 h-5 text-primary" />
+              <span className="text-sm text-muted-foreground font-bold uppercase tracking-tight">Clovers</span>
+            </div>
+            <p className="text-3xl font-display font-black text-primary">47</p>
+            <p className="text-[10px] text-muted-foreground font-bold uppercase">$11.75 CREDIT</p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="glass-card p-4"
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <GoldCoinIcon className="w-5 h-5 text-accent" />
+              <span className="text-sm text-muted-foreground font-bold uppercase tracking-tight">Gold Pot</span>
+            </div>
+            <p className="text-3xl font-display font-black text-accent">$4.72</p>
+            <p className="text-[10px] text-muted-foreground font-bold uppercase">4,720MG COLLECTED</p>
+          </motion.div>
+        </div>
+
+        {/* Stats Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="glass-card p-5"
+        >
+          <h3 className="font-display font-black uppercase text-lg mb-4 italic text-green-500">Your Stats</h3>
+          <div className="grid grid-cols-2 gap-4">
+            {stats.map((stat, index) => {
+              const Icon = stat.icon;
+              return (
+                <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-xl border border-white/5" key={index}>
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-lg font-black">{stat.value}</p>
+                    <p className="text-[10px] font-bold uppercase opacity-50">{stat.label}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </motion.div>
+
+        {/* Menu Items */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="glass-card overflow-hidden"
+        >
+          {menuItems.map((item, index) => (
+            <Link
+              key={index}
+              to={item.path}
+              className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors border-b border-white/5 last:border-0"
+            >
+              <div className="flex items-center gap-3">
+                <item.icon className="w-5 h-5 text-muted-foreground" />
+                <span className="font-bold uppercase text-sm tracking-tight">{item.label}</span>
+              </div>
+              <ChevronRight className="w-5 h-5 text-muted-foreground" />
+            </Link>
+          ))}
+        </motion.div>
+
+        {/* Logout */}
+        <Button variant="outline" className="w-full gap-2 border-red-500/20 text-red-500 hover:bg-red-500/10 font-bold uppercase tracking-widest text-xs h-12">
+          <LogOut className="w-4 h-4" />
+          Sign Out
+        </Button>
+      </div>
+    </AppLayout>
+  );
+};
+
+export default Profile;
