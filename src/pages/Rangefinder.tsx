@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Button } from "@/components/ui/button";
 import { CloverIcon } from "@/components/icons/CloverIcon";
+import { Link } from "react-router-dom";
 import { Eye, MapPin, Target, Crosshair, Flag, AlertTriangle } from "lucide-react";
 
 const Rangefinder = () => {
@@ -52,6 +53,20 @@ const Rangefinder = () => {
               {arMode ? "AR ON" : "AR Mode"}
             </Button>
           </motion.div>
+
+          {/* Wedge Monocle: the real camera rangefinder */}
+          <Link to="/monocle" className="block mb-6" data-testid="open-monocle">
+            <div className="glass-card p-4 flex items-center gap-4 border-accent/40 hover:bg-primary/5 transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-accent/15 flex items-center justify-center">
+                <Eye className="w-6 h-6 text-accent" />
+              </div>
+              <div className="flex-1">
+                <p className="font-bold">Wedge Monocle</p>
+                <p className="text-sm text-muted-foreground">Point your camera at the flag. 0 to 120 yards, with the wedge to hit.</p>
+              </div>
+              <Button variant="gold" size="sm">Open</Button>
+            </div>
+          </Link>
 
           {/* Main Distance Display */}
           <motion.div

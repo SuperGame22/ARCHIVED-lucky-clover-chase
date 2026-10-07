@@ -2,6 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { WalletProvider } from "@/contexts/WalletContext";
 import { CloverProvider } from "@/contexts/CloverContext";
@@ -12,6 +13,8 @@ import Play from "./pages/Play";
 import Career from "./pages/Career";
 import Earn from "./pages/Earn";
 import Rangefinder from "./pages/Rangefinder";
+// Camera, detector and bracket editor load only when Monocle is opened.
+const Monocle = lazy(() => import("./pages/Monocle"));
 import Course from "./pages/Course";
 import GoldMachine from "./pages/GoldMachine";
 import LuckySpin from "./pages/LuckySpin";
@@ -42,6 +45,14 @@ const App = () => (
               <Route path="/practice" element={<Practice />} />
               <Route path="/practice/coach" element={<LuckyCoach />} />
               <Route path="/rangefinder" element={<Rangefinder />} />
+              <Route
+                path="/monocle"
+                element={
+                  <Suspense fallback={<div className="fixed inset-0 bg-black" />}>
+                    <Monocle />
+                  </Suspense>
+                }
+              />
 
               {/* Play domain */}
               <Route path="/play" element={<Play />} />

@@ -14,6 +14,194 @@ export type Database = {
   }
   public: {
     Tables: {
+      clover_campaigns: {
+        Row: {
+          created_at: string
+          daily_cap: number
+          ends_at: string | null
+          id: string
+          is_active: boolean
+          lifetime_seconds: number
+          min_interval_seconds: number
+          multiplier: number
+          name: string
+          poll_interval_seconds: number
+          priority: number
+          rare_chance: number
+          rare_reward_multiplier: number
+          reward: number
+          slug: string
+          spawn_chance: number
+          starts_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          daily_cap?: number
+          ends_at?: string | null
+          id?: string
+          is_active?: boolean
+          lifetime_seconds?: number
+          min_interval_seconds?: number
+          multiplier?: number
+          name: string
+          poll_interval_seconds?: number
+          priority?: number
+          rare_chance?: number
+          rare_reward_multiplier?: number
+          reward?: number
+          slug: string
+          spawn_chance?: number
+          starts_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          daily_cap?: number
+          ends_at?: string | null
+          id?: string
+          is_active?: boolean
+          lifetime_seconds?: number
+          min_interval_seconds?: number
+          multiplier?: number
+          name?: string
+          poll_interval_seconds?: number
+          priority?: number
+          rare_chance?: number
+          rare_reward_multiplier?: number
+          reward?: number
+          slug?: string
+          spawn_chance?: number
+          starts_at?: string | null
+        }
+        Relationships: []
+      }
+      monocle_clovers: {
+        Row: {
+          campaign_id: string | null
+          collected_at: string | null
+          expires_at: string
+          id: string
+          kind: string
+          reward: number
+          spawned_at: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          campaign_id?: string | null
+          collected_at?: string | null
+          expires_at: string
+          id?: string
+          kind: string
+          reward: number
+          spawned_at?: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          campaign_id?: string | null
+          collected_at?: string | null
+          expires_at?: string
+          id?: string
+          kind?: string
+          reward?: number
+          spawned_at?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "monocle_clovers_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "clover_campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      monocle_sessions: {
+        Row: {
+          avg_fps: number | null
+          avg_proc_ms: number | null
+          brackets: number | null
+          calibrated: boolean | null
+          camera_height: number | null
+          camera_width: number | null
+          created_at: string
+          device_tier: string | null
+          duration_seconds: number
+          frames: number | null
+          id: string
+          locks: number | null
+          max_locked_yards: number | null
+          old_phone_warning: boolean | null
+          started_at: string
+          user_id: string
+        }
+        Insert: {
+          avg_fps?: number | null
+          avg_proc_ms?: number | null
+          brackets?: number | null
+          calibrated?: boolean | null
+          camera_height?: number | null
+          camera_width?: number | null
+          created_at?: string
+          device_tier?: string | null
+          duration_seconds: number
+          frames?: number | null
+          id?: string
+          locks?: number | null
+          max_locked_yards?: number | null
+          old_phone_warning?: boolean | null
+          started_at?: string
+          user_id: string
+        }
+        Update: {
+          avg_fps?: number | null
+          avg_proc_ms?: number | null
+          brackets?: number | null
+          calibrated?: boolean | null
+          camera_height?: number | null
+          camera_width?: number | null
+          created_at?: string
+          device_tier?: string | null
+          duration_seconds?: number
+          frames?: number | null
+          id?: string
+          locks?: number | null
+          max_locked_yards?: number | null
+          old_phone_warning?: boolean | null
+          started_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      monocle_settings: {
+        Row: {
+          calibrations: Json
+          created_at: string
+          stick_height_in: number
+          updated_at: string
+          user_id: string
+          wedge_config: Json | null
+        }
+        Insert: {
+          calibrations?: Json
+          created_at?: string
+          stick_height_in?: number
+          updated_at?: string
+          user_id: string
+          wedge_config?: Json | null
+        }
+        Update: {
+          calibrations?: Json
+          created_at?: string
+          stick_height_in?: number
+          updated_at?: string
+          user_id?: string
+          wedge_config?: Json | null
+        }
+        Relationships: []
+      }
       competition_players: {
         Row: {
           competition_id: string
@@ -233,6 +421,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      monocle_collect_clover: {
+        Args: { p_clover_id: string }
+        Returns: Json
+      }
+      monocle_request_clover: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
       add_wallet_funds: {
         Args: {
           p_amount: number

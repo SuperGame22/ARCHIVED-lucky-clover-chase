@@ -1,12 +1,20 @@
 import { motion } from "framer-motion";
 import { AppLayout } from "@/components/layout/AppLayout";
-import { Brain, Target, BarChart3, Lock, ChevronRight, Zap, TrendingUp } from "lucide-react";
+import { Brain, Target, BarChart3, Lock, ChevronRight, Zap, TrendingUp, Eye } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CloverIcon } from "@/components/icons/CloverIcon";
 import { GoldCoinIcon } from "@/components/icons/GoldCoinIcon";
 
 const practiceModules = [
+  {
+    title: "Wedge Monocle",
+    description: "Point at the flag. Get yards and the wedge",
+    icon: Eye,
+    tier: "free",
+    path: "/monocle",
+    available: true,
+  },
   {
     title: "Lucky Coach",
     description: "AI swing analysis & tips",
